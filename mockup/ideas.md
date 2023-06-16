@@ -8,8 +8,8 @@ Brève description (pourquoi ce site, et pour qui)
 
 ## Sites d'inspiration
 
-- site.com
-- site.com
+- https://www.metacritic.com/
+- https://www.goodreads.com/
 - ...
 
 ## Personnage
