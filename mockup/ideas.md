@@ -10,7 +10,8 @@ Brève description (pourquoi ce site, et pour qui)
 
 - https://www.metacritic.com/
 - https://www.goodreads.com/
-- ...
+- https://www.librarything.com/
+- 
 
 ## Personnage
 
