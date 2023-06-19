@@ -1,46 +1,61 @@
-# Titre
+# Project 2 étape 1
 
-## Description
+### Description du site
 
-Reviewing website
+Le site s'appel ReviewInsight. C'est un site de critique de livres où les usagés peuvent
+laisser des notes et des critique sur une grande selection de livres. Les usagés peuvent aussi
+faire des recherches de livres et lire leurs avis et score.
 
-Brève description (pourquoi ce site, et pour qui)
+J'ai choisi de faire ce site car j'aime bien les livres et je voulait faire un site qui
+permet d'écrire des avis.
 
-## Sites d'inspiration
+ReviewInsight est pour les personnes qui cherche des livres commerciaux mais veulent avoir
+plus de fonctionalité pour l'exploration divergente/convergente similaire aux sites de fanfiction 
+comme AO3.
 
+Sites d'inspiration:
 - https://www.metacritic.com/
 - https://www.goodreads.com/
 - https://www.librarything.com/
 - https://archiveofourown.org/
 
-## Personnage
+### Personnage
 
 Nom: John Doe
 
-Objectifs:
-- objectif 1
-- objectif 2
+- Objectif 1:
+John veut un bon livre de sci-fi des années 90 avec des avis d'au moin 8/10.
+
+- Objectif 2
+John veut écrire une critique pour un livre très mauvais qu'il a lu récament.
 
 Réseau sémentique:
+![Réseau sémentique](reseau.png)
 
-Représentation du domaine avec un réseau sémantique qui comprend au moins 10
-entités importantes et leurs relations. Le réseau doit être présenté sous forme de
-graphe.
+### Protoype
 
-## Processus interactifs
+Processus intéractif:
 
 - Exploration divergent/convergent:
+Rechereche de livre dans la page "Rechercher"
 
-- b
+- Analyser des résultats:
+Diagramme à bandes et moyenne des avis sur la page "Livre"
 
-- c
+- Produire / Concevoir
+Écrire un avis sur un livre sur la page "Avis"  
 
-## Maquette
+Accueil:<br>
+![Accueil](accueil.png)
 
-Scénarimage composé de maquettes ou de croquis papier. La navigation (comment
-atteindre un croquis à partir d'une autre) doit être expliquée.
+Rechercher:<br>
+![Rechercher](rechercher.png)
 
-Il doit y avoir au minimum 4 croquis. Un pour chaque processus interactif et un pour
-la page d'accueil du site.
+Livre:<br>
+![Livre](livre.png)
 
+Avis:<br>
+![Avis](avis.png)
 
+Contribuer:<br>
+![Contribuer](contribuer.png)
