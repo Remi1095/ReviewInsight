@@ -29,7 +29,7 @@ John veut un bon livre de sci-fi des années 90 avec des avis d'au moin 8/10.
 - Objectif 2
 John veut écrire une critique pour un livre très mauvais qu'il a lu récament.
 
-Réseau sémentique:
+Réseau sémentique:<br>
 ![Réseau sémentique](reseau.png)
 
 ### Protoype
