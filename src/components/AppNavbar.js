@@ -4,12 +4,12 @@ import Nav from 'react-bootstrap/Nav';
 
 function AppNavbar() {
     return (
-        <Navbar bg="danger" variant="dark" style={{ paddingLeft: "20%", paddingRight: "20%" }}>
+        <Navbar className="app-navbar">
             <Navbar.Collapse>
                 <Nav className="mr-auto">
-                    <Navbar.Brand href="/"> Hello </Navbar.Brand>
-                    <Nav.Link href="/search"> Hello </Nav.Link>
-                    <Nav.Link href="/contribute"> Hello </Nav.Link>
+                    <Navbar.Brand className="app-brand my-auto" href="/">ReviewInsight</Navbar.Brand>
+                    <Nav.Link className="app-link my-auto" href="/search">Search</Nav.Link>
+                    <Nav.Link className="app-link my-auto" href="/contribute">Contribute</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
