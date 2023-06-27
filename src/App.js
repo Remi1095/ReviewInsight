@@ -1,4 +1,4 @@
-import Navbar from "./components/AppNavbar";
+import AppNavbar from "./components/AppNavbar";
 import Home from "./components/Home";
 import Search from "./components/Search";
 import Contribute from "./components/Contribute";
@@ -16,8 +16,13 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Navbar />
+        <AppNavbar />
         <br />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/contribute" element={<Contribute />} />
+        </Routes>
       </div>
     </BrowserRouter>
   );

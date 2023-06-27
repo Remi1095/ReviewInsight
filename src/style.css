@@ -15,6 +15,7 @@
 
 body {
   margin: 0;
+  width: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -23,25 +24,86 @@ body {
   background-color: var(--background);
 }
 
-.app-navbar {
-  background-color: var(--primary-0);
-  padding: 0% 0% 0% 10% !important;
+hr {
+  margin: 0 1.5% !important;
+  border-top: 2px solid black !important;
+  opacity: 1 !important;
 }
 
-.app-brand {
+.navbar {
+  background-color: var(--primary-0);
+  padding: 0 !important;
+}
+
+.navbar-brand {
   color: var(--secondary) !important;
   font-size: x-large !important;
   font-weight: 600 !important;
   margin-inline: 10px !important;
-
+  margin-block: auto !important;
 }
 
-.app-link {
+.nav-link {
   font-size: large !important;
   font-weight: 500 !important;
+  background-color: var(--primary-1) !important;
   margin-inline: 10px !important;
+  margin-block: auto !important;
   padding-inline: 10px !important;
   padding-block: 2px !important;
-  background-color: var(--primary-1) !important;
   border-radius: 10px !important;
 }
+
+.list-group {
+  width: 100%;
+}
+
+.list-group-item {
+  border: none !important;
+}
+
+.genre-list .list-group-item {
+  display: inline-flex;
+  justify-content: space-evenly;
+  background-color: var(--secondary) !important;
+  width: 20%;
+  padding-block: 6px;
+  margin: 10px 0;
+  border-radius: 30px !important;
+}
+
+.genre-list .list-group-item span {
+  font-size: large;
+  margin-block: auto;
+}
+
+.genre-list .list-group-item svg {
+  width: 30px;
+  height: 30px;
+}
+
+
+.genre-content-box {
+  background-color: var(--primary-2);
+  border-radius: 10px;
+  max-width: 900px;
+}
+
+.book-content-box {
+  background-color: var(--accent-1);
+  border: 1px solid gray;
+  border-radius: 10px;
+  max-width: 900px;
+}
+
+.book-content-box .list-group-item {
+  background-color: inherit !important;
+
+}
+
+.book-content-box img {
+  height: 180px;
+  width: 120px;
+}
+
+

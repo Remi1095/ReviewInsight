@@ -1,19 +1,17 @@
 import React from "react";
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
+import { Container, Navbar, Nav, Row, Col } from 'react-bootstrap';
 
 function AppNavbar() {
-    return (
-        <Navbar className="app-navbar">
-            <Navbar.Collapse>
-                <Nav className="mr-auto">
-                    <Navbar.Brand className="app-brand my-auto" href="/">ReviewInsight</Navbar.Brand>
-                    <Nav.Link className="app-link my-auto" href="/search">Search</Nav.Link>
-                    <Nav.Link className="app-link my-auto" href="/contribute">Contribute</Nav.Link>
-                </Nav>
-            </Navbar.Collapse>
-        </Navbar>
-    );
+  return (
+    <Navbar className="app-navbar">
+      <Nav className="mr-auto">
+        <Navbar.Brand className="my-auto" href="/">ReviewInsight</Navbar.Brand>
+        <Nav.Link href="/search">Search</Nav.Link>
+        <Nav.Link href="/contribute">Contribute</Nav.Link>
+      </Nav>
+    </Navbar>
+
+  );
 }
 
 
