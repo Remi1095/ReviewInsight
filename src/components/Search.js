@@ -1,12 +1,28 @@
 import React from "react";
+import jsonData from '../data.json';
+import bookCover from "../img/book-cover-placeholder.png"
+import BookCard from "./BookCard";
 import { Container, Row, Col } from 'react-bootstrap';
 
-function Search()  {
+
+function Search() {
   return (
-    <Container>
-        <h1 className="text-center">Find the right book</h1>
-        <p className="text-center">Read and write reviews for the best and worst books available!</p>
-    </Container>
+    <Container fluid>
+      <h3 className="text-center fw-normal mb-3">Showing 1-6 of 600 books</h3>
+
+      <Row>
+        <Col xxl={2} xs={0}></Col>
+        <Col xxl={6} xs={8}>
+          {jsonData.books.map((book, index) => (
+            <BookCard key={index} book={book} />
+          ))}
+        </Col>
+        <Col className=" " xxl={2} xs={4}></Col>
+        <Col className=" " xxl={2} xs={0}></Col>
+
+      </Row>
+
+    </Container >
   );
 }
 

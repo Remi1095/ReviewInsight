@@ -21,7 +21,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background);
+  background-color: var(--background) !important;
 }
 
 hr {
@@ -83,27 +83,68 @@ hr {
 }
 
 
-.genre-content-box {
+.genres-box {
   background-color: var(--primary-2);
   border-radius: 10px;
   max-width: 900px;
 }
 
-.book-content-box {
+.contributions-box {
   background-color: var(--accent-1);
   border: 1px solid gray;
   border-radius: 10px;
   max-width: 900px;
 }
 
-.book-content-box .list-group-item {
+.contributions-box .list-group-item {
   background-color: inherit !important;
-
+  padding-block: 20px;
 }
 
-.book-content-box img {
+.contributions-box img {
   height: 180px;
   width: 120px;
 }
 
+.book-box {
+  display: flex;
+  background-color: #ffffff;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 15px;
+}
 
+.book-box img {
+  max-width: 90%;
+  aspect-ratio: 3 / 2;
+}
+
+.book-desc {
+  max-height: 120px;
+  overflow-y: auto;
+  text-overflow: ellipsis;
+}
+
+.rating-box {
+  max-width: 80%;
+  aspect-ratio: 1 / 1;
+  background-color: lightgray;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.rating-fill {
+  width: 100%;
+  background-color: var(--accent-0);
+}
+
+.rating-text {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  text-align: center;
+}

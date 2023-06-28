@@ -18,7 +18,7 @@ function Home() {
         <Col xl={2}></Col>
         <Col xl={8}>
 
-          <div className="genre-content-box mx-auto mb-5">
+          <div className="genres-box mx-auto mb-5">
 
             <h3 className="ms-3 pt-2 mb-0">Fiction</h3>
             <hr className="mb-1" />
@@ -56,8 +56,8 @@ function Home() {
 
           <h2 className="text-center mb-3">Recent contributions:</h2>
 
-          <div className="book-content-box mx-auto mb-5">
-          <ListGroup horizontal className="genre-list justify-content-evenly">
+          <div className="contributions-box mx-auto mb-5">
+          <ListGroup horizontal className="justify-content-evenly">
               <ListGroup.Item> <img src={bookCover} alt="book1" /> </ListGroup.Item>
               <ListGroup.Item> <img src={bookCover} alt="book1" /> </ListGroup.Item>
               <ListGroup.Item> <img src={bookCover} alt="book1" /> </ListGroup.Item>
