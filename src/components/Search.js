@@ -1,7 +1,7 @@
 import React from "react";
 import jsonData from '../data.json';
-import bookCover from "../img/book-cover-placeholder.png"
 import BookCard from "./BookCard";
+import SortAndFilters from "./SortAndFilters";
 import { Container, Row, Col } from 'react-bootstrap';
 
 
@@ -17,7 +17,9 @@ function Search() {
             <BookCard key={index} book={book} />
           ))}
         </Col>
-        <Col className=" " xxl={2} xs={4}></Col>
+        <Col className=" " xxl={2} xs={4}>
+          <SortAndFilters />
+        </Col>
         <Col className=" " xxl={2} xs={0}></Col>
 
       </Row>

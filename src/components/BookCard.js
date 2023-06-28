@@ -35,7 +35,7 @@ function BookCard({ book }) {
                     <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
                         <div className="rating-box mx-auto">
                             <div className="rating-fill" style={{ height: `${avgScore*10}%` }}></div>
-                            <h1 className="rating-text fw-normal">{avgScore}</h1>
+                            <h2 className="rating-text">{avgScore}</h2>
                         </div>
                         <p className="mb-0 text-center" style={{ fontSize: 'smaller' }}>200 reviews<br />2000 scores</p>
                     </div>

@@ -62,6 +62,12 @@ hr {
   border: none !important;
 }
 
+.genres-box {
+  background-color: var(--primary-2);
+  border-radius: 10px;
+  max-width: 900px;
+}
+
 .genre-list .list-group-item {
   display: inline-flex;
   justify-content: space-evenly;
@@ -80,13 +86,6 @@ hr {
 .genre-list .list-group-item svg {
   width: 30px;
   height: 30px;
-}
-
-
-.genres-box {
-  background-color: var(--primary-2);
-  border-radius: 10px;
-  max-width: 900px;
 }
 
 .contributions-box {
@@ -127,7 +126,7 @@ hr {
 }
 
 .rating-box {
-  max-width: 80%;
+  max-width: 70%;
   aspect-ratio: 1 / 1;
   background-color: lightgray;
   position: relative;
@@ -147,4 +146,9 @@ hr {
   width: 100%;
   transform: translateY(-50%);
   text-align: center;
+}
+
+.filters-box {
+  background-color: var(--primary-2);
+  border-radius: 10px;
 }
