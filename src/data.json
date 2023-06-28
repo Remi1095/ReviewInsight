@@ -102,6 +102,418 @@
                     "spoiler": true
                 }
             ]
+        },
+        {
+            "title": "The Hitchhiker's Guide to the Galaxy",
+            "series": "The Hitchhiker's Guide to the Galaxy",
+            "volume": 1,
+            "author": "Douglas Adams",
+            "language": "English",
+            "words": 46333,
+            "published": "2005-01-01",
+            "publisher": "Del Rey Books",
+            "classification": "Teens",
+            "genres": [
+                "Sci-Fi",
+                "Comedy"
+            ],
+            "description": "Seconds before the Earth is demolished to make way for a galactic freeway, Arthur Dent is plucked off the planet by his friend Ford Prefect, a researcher for the revised edition of The Hitchhiker's Guide to the Galaxy who, for the last fifteen years, has been posing as an out-of-work actor.\n\nTogether this dynamic pair begin a journey through space aided by quotes from The Hitchhiker's Guide (\"A towel is about the most massively useful thing an interstellar hitchhiker can have\") and a galaxy-full of fellow travelers: Zaphod Beeblebrox--the two-headed, three-armed ex-hippie and totally out-to-lunch president of the galaxy; Trillian, Zaphod's girlfriend (formally Tricia McMillan), whom Arthur tried to pick up at a cocktail party once upon a time zone; Marvin, a paranoid, brilliant, and chronically depressed robot; Veet Voojagig, a former graduate student who is obsessed with the disappearance of all the ballpoint pens he bought over the years.\n\nWhere are these pens? Why are we born? Why do we die? Why do we spend so much time between wearing digital watches? For all the answers stick your thumb to the stars. And don't forget to bring a towel!",
+            "cover": "book-cover-placeholder.png",
+            "scores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10
+            ],
+            "reviews": [
+                {
+                    "score": 8,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": false
+                },
+                {
+                    "score": 9,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": true
+                }
+            ]
+        },
+        {
+            "title": "The Hitchhiker's Guide to the Galaxy",
+            "series": "The Hitchhiker's Guide to the Galaxy",
+            "volume": 1,
+            "author": "Douglas Adams",
+            "language": "English",
+            "words": 46333,
+            "published": "2005-01-01",
+            "publisher": "Del Rey Books",
+            "classification": "Teens",
+            "genres": [
+                "Sci-Fi",
+                "Comedy"
+            ],
+            "description": "Seconds before the Earth is demolished to make way for a galactic freeway, Arthur Dent is plucked off the planet by his friend Ford Prefect.",
+            "cover": "book-cover-placeholder.png",
+            "scores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "reviews": [
+                {
+                    "score": 8,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": false
+                },
+                {
+                    "score": 9,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": true
+                }
+            ]
+        },
+        {
+            "title": "The Hitchhiker's Guide to the Galaxy",
+            "series": "The Hitchhiker's Guide to the Galaxy",
+            "volume": 1,
+            "author": "Douglas Adams",
+            "language": "English",
+            "words": 46333,
+            "published": "2005-01-01",
+            "publisher": "Del Rey Books",
+            "classification": "Teens",
+            "genres": [
+                "Sci-Fi",
+                "Comedy"
+            ],
+            "description": "Seconds before the Earth is demolished to make way for a galactic freeway, Arthur Dent is plucked off the planet by his friend Ford Prefect, a researcher for the revised edition of The Hitchhiker's Guide to the Galaxy who, for the last fifteen years, has been posing as an out-of-work actor.\n\nTogether this dynamic pair begin a journey through space aided by quotes from The Hitchhiker's Guide (\"A towel is about the most massively useful thing an interstellar hitchhiker can have\") and a galaxy-full of fellow travelers: Zaphod Beeblebrox--the two-headed, three-armed ex-hippie and totally out-to-lunch president of the galaxy; Trillian, Zaphod's girlfriend (formally Tricia McMillan), whom Arthur tried to pick up at a cocktail party once upon a time zone; Marvin, a paranoid, brilliant, and chronically depressed robot; Veet Voojagig, a former graduate student who is obsessed with the disappearance of all the ballpoint pens he bought over the years.\n\nWhere are these pens? Why are we born? Why do we die? Why do we spend so much time between wearing digital watches? For all the answers stick your thumb to the stars. And don't forget to bring a towel!",
+            "cover": "book-cover-placeholder.png",
+            "scores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10
+            ],
+            "reviews": [
+                {
+                    "score": 8,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": false
+                },
+                {
+                    "score": 9,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": true
+                }
+            ]
+        },
+        {
+            "title": "The Hitchhiker's Guide to the Galaxy",
+            "series": "The Hitchhiker's Guide to the Galaxy",
+            "volume": 1,
+            "author": "Douglas Adams",
+            "language": "English",
+            "words": 46333,
+            "published": "2005-01-01",
+            "publisher": "Del Rey Books",
+            "classification": "Teens",
+            "genres": [
+                "Sci-Fi",
+                "Comedy"
+            ],
+            "description": "Seconds before the Earth is demolished to make way for a galactic freeway, Arthur Dent is plucked off the planet by his friend Ford Prefect.",
+            "cover": "book-cover-placeholder.png",
+            "scores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "reviews": [
+                {
+                    "score": 8,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": false
+                },
+                {
+                    "score": 9,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": true
+                }
+            ]
+        },
+        {
+            "title": "The Hitchhiker's Guide to the Galaxy",
+            "series": "The Hitchhiker's Guide to the Galaxy",
+            "volume": 1,
+            "author": "Douglas Adams",
+            "language": "English",
+            "words": 46333,
+            "published": "2005-01-01",
+            "publisher": "Del Rey Books",
+            "classification": "Teens",
+            "genres": [
+                "Sci-Fi",
+                "Comedy"
+            ],
+            "description": "Seconds before the Earth is demolished to make way for a galactic freeway, Arthur Dent is plucked off the planet by his friend Ford Prefect, a researcher for the revised edition of The Hitchhiker's Guide to the Galaxy who, for the last fifteen years, has been posing as an out-of-work actor.\n\nTogether this dynamic pair begin a journey through space aided by quotes from The Hitchhiker's Guide (\"A towel is about the most massively useful thing an interstellar hitchhiker can have\") and a galaxy-full of fellow travelers: Zaphod Beeblebrox--the two-headed, three-armed ex-hippie and totally out-to-lunch president of the galaxy; Trillian, Zaphod's girlfriend (formally Tricia McMillan), whom Arthur tried to pick up at a cocktail party once upon a time zone; Marvin, a paranoid, brilliant, and chronically depressed robot; Veet Voojagig, a former graduate student who is obsessed with the disappearance of all the ballpoint pens he bought over the years.\n\nWhere are these pens? Why are we born? Why do we die? Why do we spend so much time between wearing digital watches? For all the answers stick your thumb to the stars. And don't forget to bring a towel!",
+            "cover": "book-cover-placeholder.png",
+            "scores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10
+            ],
+            "reviews": [
+                {
+                    "score": 8,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": false
+                },
+                {
+                    "score": 9,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": true
+                }
+            ]
+        },
+        {
+            "title": "The Hitchhiker's Guide to the Galaxy",
+            "series": "The Hitchhiker's Guide to the Galaxy",
+            "volume": 1,
+            "author": "Douglas Adams",
+            "language": "English",
+            "words": 46333,
+            "published": "2005-01-01",
+            "publisher": "Del Rey Books",
+            "classification": "Teens",
+            "genres": [
+                "Sci-Fi",
+                "Comedy"
+            ],
+            "description": "Seconds before the Earth is demolished to make way for a galactic freeway, Arthur Dent is plucked off the planet by his friend Ford Prefect.",
+            "cover": "book-cover-placeholder.png",
+            "scores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "reviews": [
+                {
+                    "score": 8,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": false
+                },
+                {
+                    "score": 9,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": true
+                }
+            ]
+        },
+        {
+            "title": "The Hitchhiker's Guide to the Galaxy",
+            "series": "The Hitchhiker's Guide to the Galaxy",
+            "volume": 1,
+            "author": "Douglas Adams",
+            "language": "English",
+            "words": 46333,
+            "published": "2005-01-01",
+            "publisher": "Del Rey Books",
+            "classification": "Teens",
+            "genres": [
+                "Sci-Fi",
+                "Comedy"
+            ],
+            "description": "Seconds before the Earth is demolished to make way for a galactic freeway, Arthur Dent is plucked off the planet by his friend Ford Prefect, a researcher for the revised edition of The Hitchhiker's Guide to the Galaxy who, for the last fifteen years, has been posing as an out-of-work actor.\n\nTogether this dynamic pair begin a journey through space aided by quotes from The Hitchhiker's Guide (\"A towel is about the most massively useful thing an interstellar hitchhiker can have\") and a galaxy-full of fellow travelers: Zaphod Beeblebrox--the two-headed, three-armed ex-hippie and totally out-to-lunch president of the galaxy; Trillian, Zaphod's girlfriend (formally Tricia McMillan), whom Arthur tried to pick up at a cocktail party once upon a time zone; Marvin, a paranoid, brilliant, and chronically depressed robot; Veet Voojagig, a former graduate student who is obsessed with the disappearance of all the ballpoint pens he bought over the years.\n\nWhere are these pens? Why are we born? Why do we die? Why do we spend so much time between wearing digital watches? For all the answers stick your thumb to the stars. And don't forget to bring a towel!",
+            "cover": "book-cover-placeholder.png",
+            "scores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10
+            ],
+            "reviews": [
+                {
+                    "score": 8,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": false
+                },
+                {
+                    "score": 9,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": true
+                }
+            ]
+        },
+        {
+            "title": "The Hitchhiker's Guide to the Galaxy",
+            "series": "The Hitchhiker's Guide to the Galaxy",
+            "volume": 1,
+            "author": "Douglas Adams",
+            "language": "English",
+            "words": 46333,
+            "published": "2005-01-01",
+            "publisher": "Del Rey Books",
+            "classification": "Teens",
+            "genres": [
+                "Sci-Fi",
+                "Comedy"
+            ],
+            "description": "Seconds before the Earth is demolished to make way for a galactic freeway, Arthur Dent is plucked off the planet by his friend Ford Prefect.",
+            "cover": "book-cover-placeholder.png",
+            "scores": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10
+            ],
+            "reviews": [
+                {
+                    "score": 8,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": false
+                },
+                {
+                    "score": 9,
+                    "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mauris massa, iaculis ut dictum vitae, hendrerit non felis. Praesent enim justo, eleifend luctus tempus quis, sollicitudin at est. Aenean mollis quam finibus sodales mollis. Sed sit amet nisi lobortis sapien ultricies eleifend in ac tortor. In placerat nibh quis enim posuere vehicula. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse potenti. Duis dapibus eleifend ligula, a sodales purus consectetur eget. Morbi aliquet mi non velit fermentum, id ultricies libero pellentesque.",
+                    "spoiler": true
+                }
+            ]
         }
     ]
 }

@@ -1,14 +1,9 @@
 import AppNavbar from "./components/AppNavbar";
 import Home from "./components/Home";
 import Search from "./components/Search";
+import BookInfo from "./components/BookInfo";
+import ReviewBook from "./components/ReviewBook";
 import Contribute from "./components/Contribute";
-
-/*
-        <Routes>
-          <Route path="/" component={Home} />
-          <Route path="/search" component={Search} />
-          <Route path="/contribute" component={Contribute} />
-        </Routes>*/
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -21,6 +16,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/BookInfo/:book" element={<BookInfo />} />
+          <Route path="/ReviewBook" element={<ReviewBook />} />
           <Route path="/contribute" element={<Contribute />} />
         </Routes>
       </div>
