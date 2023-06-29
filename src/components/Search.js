@@ -20,7 +20,7 @@ function BookCard({ book }) {
     <div className="book-box" onClick={handleClick}>
 
       <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-        <img className="border book" style={{ maxWidth:"90%" }} src={bookCover} alt="book1" />
+        <img className="border book" style={{ width:"90%" }} src={bookCover} alt="book1" />
       </div>
 
       <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>

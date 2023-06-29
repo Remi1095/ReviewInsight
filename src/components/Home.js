@@ -57,15 +57,15 @@ function Home() {
           <h2 className="text-center mb-3">Recent contributions:</h2>
 
           <div className="contributions-box mx-auto mb-5">
-          <ListGroup horizontal className="justify-content-evenly">
-              <ListGroup.Item> <img className="book" style={{ maxWidth:"90%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
-              <ListGroup.Item> <img className="book" style={{ maxWidth:"90%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
-              <ListGroup.Item> <img className="book" style={{ maxWidth:"90%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
-              <ListGroup.Item> <img className="book" style={{ maxWidth:"90%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
-              <ListGroup.Item> <img className="book" style={{ maxWidth:"90%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
+            <ListGroup horizontal className="justify-content-evenly">
+              <ListGroup.Item> <img className="book" style={{ width: "100%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
+              <ListGroup.Item> <img className="book" style={{ width: "100%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
+              <ListGroup.Item> <img className="book" style={{ width: "100%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
+              <ListGroup.Item> <img className="book" style={{ width: "100%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
+              <ListGroup.Item> <img className="book" style={{ width: "100%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
             </ListGroup>
           </div>
-          
+
         </Col>
         <Col xl={2}></Col>
       </Row>

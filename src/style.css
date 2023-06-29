@@ -30,10 +30,6 @@ hr {
   opacity: 1 !important;
 }
 
-.book {
-  aspect-ratio: 2 / 3;
-}
-
 .navbar {
   background-color: var(--primary-0);
   padding: 0 !important;
