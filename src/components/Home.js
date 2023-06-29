@@ -58,11 +58,11 @@ function Home() {
 
           <div className="contributions-box mx-auto mb-5">
           <ListGroup horizontal className="justify-content-evenly">
-              <ListGroup.Item> <img src={bookCover} alt="book1" /> </ListGroup.Item>
-              <ListGroup.Item> <img src={bookCover} alt="book1" /> </ListGroup.Item>
-              <ListGroup.Item> <img src={bookCover} alt="book1" /> </ListGroup.Item>
-              <ListGroup.Item> <img src={bookCover} alt="book1" /> </ListGroup.Item>
-              <ListGroup.Item> <img src={bookCover} alt="book1" /> </ListGroup.Item>
+              <ListGroup.Item> <img className="book" style={{ maxWidth:"90%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
+              <ListGroup.Item> <img className="book" style={{ maxWidth:"90%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
+              <ListGroup.Item> <img className="book" style={{ maxWidth:"90%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
+              <ListGroup.Item> <img className="book" style={{ maxWidth:"90%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
+              <ListGroup.Item> <img className="book" style={{ maxWidth:"90%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
             </ListGroup>
           </div>
           

@@ -1,31 +1,26 @@
 import React, { useState } from 'react';
-import jsonData from '../data.json';
+import { useNavigate } from 'react-router-dom';
+import { averageScore, getAllBooks, getBookCover } from '../bookUtils';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
-
 function BookCard({ book }) {
-  function averageScore(scores, reviews) {
-    var scoresSum = 0;
-    var reviewsSum = 0;
-    if (scores.length !== 0) {
-      scoresSum = scores.reduce((acc, s) => acc + s, 0);
-    }
-    if (reviews.length !== 0) {
-      reviewsSum = reviews.reduce((acc, r) => acc + r.score, 0);
-    }
-    return (scoresSum + reviewsSum) / (scores.length + reviews.length);
+
+  const navigate = useNavigate();
+
+  function handleClick() {
+    navigate(`/book-info/${book.id}`)
   }
 
-  const bookCover = require(`../img/${book.cover}`);
+  const bookCover = getBookCover(book);
   const avgScore = averageScore(book.scores, book.reviews).toFixed(1);
 
   return (
-    <div className="book-box">
+    <div className="book-box" onClick={handleClick}>
 
       <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-        <img className="border" src={bookCover} alt="book1" />
+        <img className="border book" style={{ maxWidth:"90%" }} src={bookCover} alt="book1" />
       </div>
 
       <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
@@ -44,7 +39,7 @@ function BookCard({ book }) {
           </div>
 
           <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
-            <p className="book-desc ms-1 mb-0">{book.description}</p>
+            <p className="overflow-auto ms-1 mb-0" style={{ maxBlockSize: '120px'}}>{book.description}</p>
           </div>
 
         </div>
@@ -242,7 +237,7 @@ function Search() {
       <Row>
         <Col xxl={2} xs={0}></Col>
         <Col xxl={6} xs={8}>
-          {jsonData.books.map((book, index) => (
+          {getAllBooks().map((book, index) => (
             <BookCard key={index} book={book} />
           ))}
         </Col>

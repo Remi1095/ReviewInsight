@@ -30,6 +30,10 @@ hr {
   opacity: 1 !important;
 }
 
+.book {
+  aspect-ratio: 2 / 3;
+}
+
 .navbar {
   background-color: var(--primary-0);
   padding: 0 !important;
@@ -100,11 +104,6 @@ hr {
   padding-block: 20px;
 }
 
-.contributions-box img {
-  height: 180px;
-  width: 120px;
-}
-
 .book-box {
   display: flex;
   background-color: #ffffff;
@@ -112,17 +111,6 @@ hr {
   border-radius: 10px;
   margin-bottom: 20px;
   padding: 15px;
-}
-
-.book-box img {
-  max-width: 90%;
-  aspect-ratio: 3 / 2;
-}
-
-.book-desc {
-  max-height: 120px;
-  overflow-y: auto;
-  text-overflow: ellipsis;
 }
 
 .rating-box {
