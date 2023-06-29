@@ -1,6 +1,6 @@
 import jsonData from './data.json';
 
-export function averageScore(scores, reviews) {
+export function getAverageScore(scores, reviews) {
     var scoresSum = 0;
     var reviewsSum = 0;
     if (scores.length !== 0) {

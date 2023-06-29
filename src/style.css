@@ -30,6 +30,11 @@ hr {
   opacity: 1 !important;
 }
 
+.highlight {
+  background-color: var(--accent-2);
+  border-radius: 10px;
+}
+
 .navbar {
   background-color: var(--primary-0);
   padding: 0 !important;
@@ -102,7 +107,7 @@ hr {
 
 .book-box {
   display: flex;
-  background-color: #ffffff;
+  background-color: var(--secondary);
   border: 1px solid lightgray;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -110,7 +115,6 @@ hr {
 }
 
 .rating-box {
-  max-width: 70%;
   aspect-ratio: 1 / 1;
   background-color: lightgray;
   position: relative;
@@ -130,6 +134,53 @@ hr {
   width: 100%;
   transform: translateY(-50%);
   text-align: center;
+}
+
+.rating-slider {
+  width: 100%;
+  background-color: transparent;
+}
+
+/* Firefox and Chrome */
+.rating-slider::-webkit-progress-value,
+.rating-slider::-moz-range-progress {
+  background-color: orange;
+  height: 8px;
+  border-radius: 8px;
+}
+
+.rating-slider::-webkit-rating-slider-runnable-track,
+.rating-slider::-moz-range-track {
+  background-color: lightgray;
+  height: 8px;
+  border-radius: 8px;
+}
+
+.rating-slider::-webkit-rating-slider-thumb,
+.rating-slider::-moz-range-thumb {
+  background-color: var(--accent-0);
+  border: 6px solid var(--accent-1);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.rating-slider::-ms-fill-lower {
+  background-color: orange;
+}
+
+.rating-slider::-ms-track {
+  background-color: lightgray;
+  height: 8px;
+  border-radius: 8px;
+}
+
+.rating-slider::-ms-thumb {
+  background-color: var(--accent-0);
+  border: 10px solid var(--accent-1);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
 }
 
 .filters-box {

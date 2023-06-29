@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { averageScore, getAllBooks, getBookCover } from '../bookUtils';
+import { getAllBooks, getAverageScore, getBookCover } from '../bookUtils';
+import RatingBox from './RatingBox';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
@@ -14,13 +15,13 @@ function BookCard({ book }) {
   }
 
   const bookCover = getBookCover(book);
-  const avgScore = averageScore(book.scores, book.reviews).toFixed(1);
+  const avgScore = getAverageScore(book.scores, book.reviews).toFixed(1);
 
   return (
     <div className="book-box" onClick={handleClick}>
 
       <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-        <img className="border book" style={{ width:"90%" }} src={bookCover} alt="book1" />
+        <img className="border book" style={{ width: "90%" }} src={bookCover} alt="book1" />
       </div>
 
       <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
@@ -31,15 +32,12 @@ function BookCard({ book }) {
         <div className="d-flex">
 
           <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-            <div className="rating-box mx-auto">
-              <div className="rating-fill" style={{ height: `${avgScore * 10}%` }}></div>
-              <h2 className="rating-text">{avgScore}</h2>
-            </div>
-            <p className="mb-0 text-center" style={{ fontSize: 'smaller' }}>200 reviews<br />2000 scores</p>
+            <RatingBox score={avgScore} textTag="h2" style={{ width:"70%"}} />
+            <p className="mb-0 text-center" style={{ fontSize: 'smaller' }}>{book.reviews.length} reviews<br />{book.scores.length} scores</p>
           </div>
 
           <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
-            <p className="overflow-auto ms-1 mb-0" style={{ maxBlockSize: '120px'}}>{book.description}</p>
+            <p className="overflow-auto ms-1 mb-0" style={{ maxBlockSize: '120px' }}>{book.description}</p>
           </div>
 
         </div>
@@ -48,146 +46,146 @@ function BookCard({ book }) {
   );
 }
 
-function ToggleFilter({ menuName, content, headerNumber, headerClass = "" }) {
+function ExpandMenu({ menuName, content, headerNumber, headerClass = "" }) {
   const [isExpanded, setExpanded] = useState(false);
 
   function toggleMenu() {
-      setExpanded(!isExpanded);
+    setExpanded(!isExpanded);
   }
 
   const Header = `h${headerNumber}`;
 
   return (
-      <div>
-          {isExpanded ? (
-              <div>
-                  <Header className={headerClass} onClick={toggleMenu}>
-                      <span className="mx-2"><FontAwesomeIcon icon={faCaretDown} /></span>
-                      <span>{menuName}</span>
-                      <hr />
-                  </Header>
-                  {content}
-              </div>
-          ) : (
-              <Header className={headerClass} onClick={toggleMenu}>
-                  <span className="mx-2"><FontAwesomeIcon icon={faCaretRight} /></span>
-                  <span>{menuName}</span>
-                  <hr />
-              </Header>
-          )}
-      </div>
+    <div>
+      {isExpanded ? (
+        <div>
+          <Header className={headerClass} onClick={toggleMenu}>
+            <span className="mx-2"><FontAwesomeIcon icon={faCaretDown} /></span>
+            <span>{menuName}</span>
+            <hr />
+          </Header>
+          {content}
+        </div>
+      ) : (
+        <Header className={headerClass} onClick={toggleMenu}>
+          <span className="mx-2"><FontAwesomeIcon icon={faCaretRight} /></span>
+          <span>{menuName}</span>
+          <hr />
+        </Header>
+      )}
+    </div>
   );
 }
 
 
 function Filters() {
   return (
-      <div>
-          <div className="mx-3 mt-2">
-              <ToggleFilter
-                  menuName="Genres"
-                  content={
-                      <ul>
-                          <li>Menu 2 Item 1</li>
-                          <li>Menu 2 Item 2</li>
-                          <li>Menu 2 Item 3</li>
-                      </ul>
-                  }
-                  headerNumber="5"
-              />
-          </div>
-          <div className="mx-3 mt-2">
-              <ToggleFilter
-                  menuName="Classification"
-                  content={
-                      <ul>
-                          <li>Menu 2 Item 1</li>
-                          <li>Menu 2 Item 2</li>
-                          <li>Menu 2 Item 3</li>
-                      </ul>
-                  }
-                  headerNumber="5"
-              />
-          </div>
-          <div className="mx-3 mt-2">
-              <ToggleFilter
-                  menuName="Author"
-                  content={
-                      <ul>
-                          <li>Menu 2 Item 1</li>
-                          <li>Menu 2 Item 2</li>
-                          <li>Menu 2 Item 3</li>
-                      </ul>
-                  }
-                  headerNumber="5"
-              />
-          </div>
-          <div className="mx-3 mt-2">
-              <ToggleFilter
-                  menuName="Title"
-                  content={
-                      <ul>
-                          <li>Menu 2 Item 1</li>
-                          <li>Menu 2 Item 2</li>
-                          <li>Menu 2 Item 3</li>
-                      </ul>
-                  }
-                  headerNumber="5"
-              />
-          </div>
-          <div className="mx-3 mt-2">
-              <ToggleFilter
-                  menuName="Language"
-                  content={
-                      <ul>
-                          <li>Menu 2 Item 1</li>
-                          <li>Menu 2 Item 2</li>
-                          <li>Menu 2 Item 3</li>
-                      </ul>
-                  }
-                  headerNumber="5"
-              />
-          </div>
-          <div className="mx-3 mt-2">
-              <ToggleFilter
-                  menuName="Number of words"
-                  content={
-                      <ul>
-                          <li>Menu 2 Item 1</li>
-                          <li>Menu 2 Item 2</li>
-                          <li>Menu 2 Item 3</li>
-                      </ul>
-                  }
-                  headerNumber="5"
-              />
-          </div>
-          <div className="mx-3 mt-2">
-              <ToggleFilter
-                  menuName="Reviews"
-                  content={
-                      <ul>
-                          <li>Menu 2 Item 1</li>
-                          <li>Menu 2 Item 2</li>
-                          <li>Menu 2 Item 3</li>
-                      </ul>
-                  }
-                  headerNumber="5"
-              />
-          </div>
-          <div className="mx-3 mt-2">
-              <ToggleFilter
-                  menuName="Date published"
-                  content={
-                      <ul>
-                          <li>Menu 2 Item 1</li>
-                          <li>Menu 2 Item 2</li>
-                          <li>Menu 2 Item 3</li>
-                      </ul>
-                  }
-                  headerNumber="5"
-              />
-          </div>
+    <div>
+      <div className="mx-3 mt-2">
+        <ExpandMenu
+          menuName="Genres"
+          content={
+            <ul>
+              <li>Menu 2 Item 1</li>
+              <li>Menu 2 Item 2</li>
+              <li>Menu 2 Item 3</li>
+            </ul>
+          }
+          headerNumber="5"
+        />
       </div>
+      <div className="mx-3 mt-2">
+        <ExpandMenu
+          menuName="Classification"
+          content={
+            <ul>
+              <li>Menu 2 Item 1</li>
+              <li>Menu 2 Item 2</li>
+              <li>Menu 2 Item 3</li>
+            </ul>
+          }
+          headerNumber="5"
+        />
+      </div>
+      <div className="mx-3 mt-2">
+        <ExpandMenu
+          menuName="Author"
+          content={
+            <ul>
+              <li>Menu 2 Item 1</li>
+              <li>Menu 2 Item 2</li>
+              <li>Menu 2 Item 3</li>
+            </ul>
+          }
+          headerNumber="5"
+        />
+      </div>
+      <div className="mx-3 mt-2">
+        <ExpandMenu
+          menuName="Title"
+          content={
+            <ul>
+              <li>Menu 2 Item 1</li>
+              <li>Menu 2 Item 2</li>
+              <li>Menu 2 Item 3</li>
+            </ul>
+          }
+          headerNumber="5"
+        />
+      </div>
+      <div className="mx-3 mt-2">
+        <ExpandMenu
+          menuName="Language"
+          content={
+            <ul>
+              <li>Menu 2 Item 1</li>
+              <li>Menu 2 Item 2</li>
+              <li>Menu 2 Item 3</li>
+            </ul>
+          }
+          headerNumber="5"
+        />
+      </div>
+      <div className="mx-3 mt-2">
+        <ExpandMenu
+          menuName="Number of words"
+          content={
+            <ul>
+              <li>Menu 2 Item 1</li>
+              <li>Menu 2 Item 2</li>
+              <li>Menu 2 Item 3</li>
+            </ul>
+          }
+          headerNumber="5"
+        />
+      </div>
+      <div className="mx-3 mt-2">
+        <ExpandMenu
+          menuName="Reviews"
+          content={
+            <ul>
+              <li>Menu 2 Item 1</li>
+              <li>Menu 2 Item 2</li>
+              <li>Menu 2 Item 3</li>
+            </ul>
+          }
+          headerNumber="5"
+        />
+      </div>
+      <div className="mx-3 mt-2">
+        <ExpandMenu
+          menuName="Date published"
+          content={
+            <ul>
+              <li>Menu 2 Item 1</li>
+              <li>Menu 2 Item 2</li>
+              <li>Menu 2 Item 3</li>
+            </ul>
+          }
+          headerNumber="5"
+        />
+      </div>
+    </div>
   )
 }
 
@@ -195,35 +193,35 @@ function Filters() {
 function SortAndFilters() {
 
   return (
-      <div className="filters-box">
-          <ToggleFilter
-              menuName="Sort"
-              content={
-                  <div></div>
-              }
-              headerNumber="3"
-              headerClass="pt-2"
-          />
+    <div className="filters-box">
+      <ExpandMenu
+        menuName="Sort"
+        content={
+          <div></div>
+        }
+        headerNumber="3"
+        headerClass="pt-2"
+      />
 
-          <ToggleFilter
-              menuName="Include"
-              content={
-                  <Filters />
-              }
-              headerNumber="3"
-              headerClass="pt-2"
-          />
+      <ExpandMenu
+        menuName="Include"
+        content={
+          <Filters />
+        }
+        headerNumber="3"
+        headerClass="pt-2"
+      />
 
-          <ToggleFilter
-              menuName="Exclude"
-              content={
-                  <Filters />
-              }
-              headerNumber="3"
-              headerClass="pt-2"
-          />
+      <ExpandMenu
+        menuName="Exclude"
+        content={
+          <Filters />
+        }
+        headerNumber="3"
+        headerClass="pt-2"
+      />
 
-      </div>
+    </div>
   )
 
 }

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { getBookById, getBookCover } from "../bookUtils";
+import { getBookById, getBookCover, getAverageScore } from "../bookUtils";
+import RatingBox from "./RatingBox";
+import RatingSlider from "./RatingSlider";
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -15,15 +17,24 @@ function BookInfo() {
   const { bookid } = useParams();
   const book = getBookById(bookid);
   const bookCover = getBookCover(book);
+  const avgScore = getAverageScore(book.scores, book.reviews).toFixed(1);
   return (
     <Container fluid>
       <Row>
+
         <Col className="border" xl={2} xs={0}></Col>
-        <Col className="border d-flex justify-content-center" xl={2} xs={4}>
-          <div className="mx-auto text-center" style={{ width: "90%" }}>
+
+        <Col className="border text-center" xl={2} xs={4}>
+          <div className="mx-auto text-center" style={{ width: "80%" }}>
             <img className="border" style={{ width: "100%" }} src={bookCover} alt="book1" />
           </div>
+          <br />
+          <RatingBox score={avgScore} textTag="h1" style={{width: "50%"}}/>
+          <p className="fs-5">{book.reviews.length} reviews - {book.scores.length} scores</p>
+          <RatingSlider />
+
         </Col>
+
         <Col className="border" xl={6} xs={8}>
           <p className="fs-5 text-black-50 mb-1">{book.series} #{book.volume}</p>
           <h2 className="mb-1">{book.title}</h2>
@@ -46,7 +57,9 @@ function BookInfo() {
             </u></strong>
           )}
         </Col>
+
         <Col className="border" xl={2} xs={0}></Col>
+
       </Row>
     </Container >
   );
