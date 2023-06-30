@@ -34,6 +34,14 @@ td {
   border-block: 1px solid lightgray !important;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+.no-style {
+  all: unset;
+  cursor: pointer;
+}
 
 button[type="submit"]:hover {
   background-color: initial;
@@ -52,6 +60,7 @@ button[type="submit"]:hover {
   width: fit-content !important;
   height: fit-content !important;
   margin: 0 auto;
+  cursor: pointer;
 }
 
 .highlight {
@@ -143,11 +152,10 @@ button[type="submit"]:hover {
 
 .content-box {
   display: flex;
+  flex-direction: column;
   background-color: var(--secondary);
   border: 1px solid lightgray;
   border-radius: 10px;
-  margin-bottom: 20px;
-  padding: 15px;
 }
 
 .rating-box {
@@ -199,6 +207,7 @@ button[type="submit"]:hover {
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .rating-slider::-ms-fill-lower {
@@ -219,6 +228,7 @@ button[type="submit"]:hover {
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .filters-box {

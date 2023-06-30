@@ -1,45 +1,49 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getAllBooks, getAverageScore, getBookCover } from '../bookUtils';
 import RatingBox from './RatingBox';
+import ShowMore from './ShowMore';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 function BookCard({ book }) {
 
-  const navigate = useNavigate();
-
-  function handleClick() {
-    navigate(`/book-info/${book.id}`)
-  }
 
   const bookCover = getBookCover(book);
   const avgScore = getAverageScore(book).toFixed(1);
 
   return (
-    <div className="content-box" onClick={handleClick}>
+    <div className="content-box" style={{ marginBottom: "20px", padding: "15px" }}>
 
-      <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-        <img className="border book" style={{ width: "90%" }} src={bookCover} alt="book1" />
-      </div>
+      <div className="d-flex">
 
-      <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
+        <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
+          <a className='no-style' href={`/book-info/${book.id}`}>
+            <img className="border book" style={{ width: "90%" }} src={bookCover} alt="book1" />
+          </a>
+        </div>
 
-        <h4 className="d-inline">{book.title}</h4>
-        <p className="mb-2 fs-5">by {book.author} - published {book.published}</p>
+        <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
 
-        <div className="d-flex">
+          <a className='no-style' href={`/book-info/${book.id}`}>
+            <h4 className="d-inline">{book.title}</h4>
+            <p className="mb-2 fs-5">by {book.author} - published {book.published}</p>
+          </a>
 
-          <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-            <RatingBox score={avgScore} textTag="h2" style={{ width:"70%"}} />
-            <p className="mb-0 text-center" style={{ fontSize: 'smaller' }}>{book.reviews.length} reviews<br />{book.scores.length} scores</p>
+          <div className="d-flex">
+
+            <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
+              <a className='no-style' href={`/book-info/${book.id}`}>
+                <RatingBox score={avgScore} textTag="h2" style={{ width: "70%" }} />
+                <p className="mb-0 text-center" style={{ fontSize: 'smaller' }}>{book.reviews.length} reviews<br />{book.scores.length} scores</p>
+              </a>
+            </div>
+
+            <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
+              <ShowMore text={book.description} lines={4} />
+            </div>
+
           </div>
-
-          <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
-            <p className="overflow-auto ms-1 mb-0" style={{ maxBlockSize: '120px' }}>{book.description}</p>
-          </div>
-
         </div>
       </div>
     </div>
@@ -59,7 +63,7 @@ function ExpandMenu({ menuName, content, headerNumber, headerClass = "" }) {
     <div>
       {isExpanded ? (
         <div>
-          <Header className={headerClass} onClick={toggleMenu}>
+          <Header className={`${headerClass} pointer`} onClick={toggleMenu}>
             <span className="mx-2"><FontAwesomeIcon icon={faCaretDown} /></span>
             <span>{menuName}</span>
             <hr />
@@ -67,7 +71,7 @@ function ExpandMenu({ menuName, content, headerNumber, headerClass = "" }) {
           {content}
         </div>
       ) : (
-        <Header className={headerClass} onClick={toggleMenu}>
+        <Header className={`${headerClass} pointer`} onClick={toggleMenu}>
           <span className="mx-2"><FontAwesomeIcon icon={faCaretRight} /></span>
           <span>{menuName}</span>
           <hr />

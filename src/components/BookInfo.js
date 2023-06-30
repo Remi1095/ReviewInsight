@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { getBookById, getBookCover, getAverageScore, getScoreArray } from "../bookUtils";
 import RatingBox from "./RatingBox";
 import RatingSlider from "./RatingSlider";
+import ShowMore from "./ShowMore";
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LabelList } from 'recharts';
@@ -9,12 +10,20 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LabelList } from '
 function Review({ review, style = {} }) {
 
   return (
-    <div className="content-box mx-auto" style={style} >
+    <div className="content-box mx-auto" style={{ ...style, marginBottom: "15px", paddingTop: "4px", paddingBottom: "8px", paddingInline: "8px" }}>
 
-      <div style={{ flex: '0 0 100%', maxWidth: '100%' }}>
-        <div className="d-flex justify-content-between">
-          <p>John</p>
-          <p>John</p>
+      <div className="d-flex justify-content-between mb-2" style={{ fontSize: 'smaller' }}>
+        <span>{review.name}</span>
+        <span className="text-black-50">{review.date}</span>
+      </div>
+      <div className="d-flex">
+        <div style={{ flex: '0 0 12%', maxWidth: '12%' }}>
+          <RatingBox score={review.score} textTag="h2" style={{ maxWidth: '80%' }} />
+        </div>
+        <div style={{ flex: '0 0 88%', maxWidth: '88%' }}>
+          <div className="ms-1">
+            <ShowMore text={review.review} lines={3} />
+          </div>
         </div>
       </div>
     </div>
@@ -48,12 +57,6 @@ function ReviewBarChart({ book, className = "" }) {
 
 function BookInfo() {
 
-  const [showMore, setShowMore] = useState(false);
-
-  function toggleDescription() {
-    setShowMore(!showMore);
-  };
-
   const { bookid } = useParams();
   const book = getBookById(bookid);
   const bookCover = getBookCover(book);
@@ -79,7 +82,7 @@ function BookInfo() {
         </Col>
 
         <Col xxl={4} lg={7} xs={8}>
-          <p className="fs-5 text-black-50 mb-1">{book.series} #{book.volume}</p>
+          {book.series !== null && <p className="fs-5 text-black-50 mb-1">{book.series} #{book.volume}</p>}
           <h2 className="mb-1">{book.title}</h2>
           <p className="fs-5 mb-2">{book.author}</p>
 
@@ -90,29 +93,19 @@ function BookInfo() {
             ))}
           </p>
 
-          <p
-            className="ms-1 mb-0"
-            style={{ maxHeight: showMore ? 'none' : '145px', overflow: 'hidden' }}
-          >
-            {book.description}
-          </p>
-          {book.description.length > 100 && (
-            <strong onClick={toggleDescription}><u>
-              {showMore ? 'Show Less' : 'Show More'}
-            </u></strong>
-          )}
+          <ShowMore text={book.description} lines={5} />
 
-          <p className="mt-2 mb-0 light-bold">Book details:</p>
+          <p className="mt-4 mb-0 light-bold">Book details:</p>
           <table className="w-100">
             <tbody>
               <tr>
                 <td>Title</td>
                 <td>{book.title}</td>
               </tr>
-              <tr>
+              {book.series !== null && <tr>
                 <td>Series</td>
                 <td>{book.series} (#{book.volume})</td>
-              </tr>
+              </tr>}
               <tr>
                 <td>Language</td>
                 <td>{book.language}</td>
@@ -148,7 +141,7 @@ function BookInfo() {
           <h4 className="text-center fw-normal mb-3">Showing 1-6 of {book.reviews.length} reviews</h4>
           <div className="w-100">
             {book.reviews.map((review, index) => (
-              <Review review={review} style={{ width: "50%" }} key={index} />
+              <Review review={review} style={{ width: "90%" }} key={index} />
             ))}
           </div>
         </Col>
