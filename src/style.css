@@ -30,9 +30,46 @@ hr {
   opacity: 1 !important;
 }
 
+td {
+  border-block: 1px solid lightgray !important;
+}
+
+
+button[type="submit"]:hover {
+  background-color: initial;
+  color: initial;
+  text-decoration: none;
+}
+
+.button-pill {
+  display: block;
+  padding: 10px 20px;
+  border-radius: 25px;
+  background-color: var(--primary-2);
+  text-decoration: none;
+  border: none;
+  outline: none;
+  width: fit-content !important;
+  height: fit-content !important;
+  margin: 0 auto;
+}
+
 .highlight {
   background-color: var(--accent-2);
   border-radius: 10px;
+}
+
+.light-bold {
+  font-weight: 500 !important;
+}
+
+.square-box {
+  background-color: var(--secondary);
+  border: 1px solid lightgray;
+  width: fit-content;
+  height: fit-content;
+  margin: 15px;
+  padding: 15px;
 }
 
 .navbar {
@@ -50,13 +87,12 @@ hr {
 
 .nav-link {
   font-size: large !important;
-  font-weight: 500 !important;
   background-color: var(--primary-1) !important;
   margin-inline: 10px !important;
   margin-block: auto !important;
-  padding-inline: 10px !important;
   padding-block: 2px !important;
   border-radius: 10px !important;
+  width: 120px;
 }
 
 .list-group {
@@ -105,7 +141,7 @@ hr {
   padding-block: 20px;
 }
 
-.book-box {
+.content-box {
   display: flex;
   background-color: var(--secondary);
   border: 1px solid lightgray;
@@ -144,7 +180,7 @@ hr {
 /* Firefox and Chrome */
 .rating-slider::-webkit-progress-value,
 .rating-slider::-moz-range-progress {
-  background-color: orange;
+  background-color: var(--accent-0);
   height: 8px;
   border-radius: 8px;
 }
@@ -166,7 +202,9 @@ hr {
 }
 
 .rating-slider::-ms-fill-lower {
-  background-color: orange;
+  background-color: var(--accent-0);
+  height: 8px;
+  border-radius: 8px;
 }
 
 .rating-slider::-ms-track {
@@ -177,7 +215,7 @@ hr {
 
 .rating-slider::-ms-thumb {
   background-color: var(--accent-0);
-  border: 10px solid var(--accent-1);
+  border: 6px solid var(--accent-1);
   width: 20px;
   height: 20px;
   border-radius: 50%;

@@ -15,10 +15,10 @@ function BookCard({ book }) {
   }
 
   const bookCover = getBookCover(book);
-  const avgScore = getAverageScore(book.scores, book.reviews).toFixed(1);
+  const avgScore = getAverageScore(book).toFixed(1);
 
   return (
-    <div className="book-box" onClick={handleClick}>
+    <div className="content-box" onClick={handleClick}>
 
       <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
         <img className="border book" style={{ width: "90%" }} src={bookCover} alt="book1" />
