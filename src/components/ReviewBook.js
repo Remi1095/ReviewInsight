@@ -23,8 +23,8 @@ function ReviewBook() {
     <Container fluid>
 
       <Row>
-        <Col className="border" xxl={3} lg={2} xs={1} />
-        <Col className="border" xxl={6} lg={8} xs={10}>
+        <Col xxl={3} lg={2} xs={1} />
+        <Col xxl={6} lg={8} xs={10}>
           <h2 className="text-center mb-3 light-bold">Review "{book.title}"</h2>
 
           <div className="mx-auto" style={{width:"50%", minWidth:"320px"}}>
@@ -68,7 +68,7 @@ function ReviewBook() {
 
           <button className="button-pill mt-3 fs-5 light-bold">Submit your review</button>
         </Col>
-        <Col className="border" xxl={3} lg={2} xs={1} />
+        <Col xxl={3} lg={2} xs={1} />
       </Row>
 
     </Container>
