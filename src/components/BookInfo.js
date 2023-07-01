@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { getBookById, getBookCover, getAverageScore, getScoreArray } from "../bookUtils";
 import RatingBox from "./RatingBox";
 import RatingSlider from "./RatingSlider";
 import ShowMore from "./ShowMore";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LabelList } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, LabelList } from 'recharts';
 
 function Review({ review, style = {} }) {
 
@@ -43,7 +43,7 @@ function ReviewBarChart({ book, className = "" }) {
   function formatYAxis(tick) { return `${(tick / scores.length * 100).toFixed(0)}%` };
 
   return (
-    <BarChart width={600} height={400} data={bins} className={className} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+    <BarChart width={600} height={400} data={bins} className={className} margin={{ top: 20, right: 0, bottom: 0, left: 0 }}>
       <CartesianGrid strokeDasharray="8 8" />
       <XAxis dataKey="bin" stroke="black" />
       <YAxis tickFormatter={formatYAxis} stroke="black" />
@@ -57,10 +57,16 @@ function ReviewBarChart({ book, className = "" }) {
 
 function BookInfo() {
 
+  const navigate = useNavigate();
   const { bookid } = useParams();
   const book = getBookById(bookid);
   const bookCover = getBookCover(book);
   const avgScore = getAverageScore(book).toFixed(1);
+
+  function toReviewBook() {
+    navigate(`/review-book/${book.id}`)
+  }
+
   return (
     <Container fluid>
       <Row className="pb-3" style={{ borderBottom: "1px solid lightgray" }}>
@@ -77,7 +83,8 @@ function BookInfo() {
           <p className="fs-5">{book.reviews.length} reviews - {book.scores.length} scores</p>
           <RatingSlider />
           <u>Rate this book</u>
-          <button className="button-pill mt-3 fs-5 light-bold">Write a review</button>
+
+          <button className="button-pill mt-3 fs-5 light-bold" onClick={toReviewBook}>Write a review</button>
 
         </Col>
 

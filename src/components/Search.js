@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getAllBooks, getAverageScore, getBookCover } from '../bookUtils';
 import RatingBox from './RatingBox';
 import ShowMore from './ShowMore';
@@ -9,6 +10,13 @@ import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 function BookCard({ book }) {
 
 
+  const navigate = useNavigate();
+
+  function toBookInfo() {
+    navigate(`/book-info/${book.id}`);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
   const bookCover = getBookCover(book);
   const avgScore = getAverageScore(book).toFixed(1);
 
@@ -18,25 +26,25 @@ function BookCard({ book }) {
       <div className="d-flex">
 
         <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-          <a className='no-style' href={`/book-info/${book.id}`}>
+          <div className='pointer' onClick={toBookInfo}>
             <img className="border book" style={{ width: "90%" }} src={bookCover} alt="book1" />
-          </a>
+          </div>
         </div>
 
         <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
 
-          <a className='no-style' href={`/book-info/${book.id}`}>
+          <div className='pointer' onClick={toBookInfo}>
             <h4 className="d-inline">{book.title}</h4>
             <p className="mb-2 fs-5">by {book.author} - published {book.published}</p>
-          </a>
+          </div>
 
           <div className="d-flex">
 
             <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-              <a className='no-style' href={`/book-info/${book.id}`}>
+              <div className='pointer' onClick={toBookInfo}>
                 <RatingBox score={avgScore} textTag="h2" style={{ width: "70%" }} />
                 <p className="mb-0 text-center" style={{ fontSize: 'smaller' }}>{book.reviews.length} reviews<br />{book.scores.length} scores</p>
-              </a>
+              </div>
             </div>
 
             <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>

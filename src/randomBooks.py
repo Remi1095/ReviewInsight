@@ -9,81 +9,64 @@ import sys
 
 fake = Faker()
 
-def randomData(num_books):
+def randomData(num_authors):
     books = []
     id = 0
 
-    for i in range(num_books):
-        
-        volumes = random.randint(0, 4)
-        series = {
-            'series': randomSeries(),
-            'author': fake.name(),
-            'genres': randomGenres(),
-            'publisher': fake.company(),
-            'classification': random.choice(['General', 'Teen', 'Mature', 'Explicit']),
-            'volumes': volumes
-        }
-        
-        if volumes == 0:
-            date = randomDate()
-            mean = random.randint(4, 9)
-            std_dev = random.random()* (2 - 0.5) + 0.5
-            book = {
-                'id': id,
-                'title': randomTitle(),
-                'series': None,
-                'volume': None,
-                'author': series['author'],
-                'words': random.randint(10000, 500000),
-                'language': randomLanguage(),
-                'published': date,
-                'publisher': series['publisher'],
-                'classification': series['classification'],
-                'genres': series['genres'],
-                'description': randomDescription(random.randint(1,5)),
-                'cover': 'book-cover-placeholder.png',
-                'scores': randomScores(random.randint(1,1000), mean, std_dev),
-                'reviews': randomReviews(date, mean, std_dev)
-            }
+    for i in range(num_authors):
+        author = fake.name(),
+        for j in range(random.randint(1,5)):
             
-            books.append(book)
-            id += 1
-        else:
-            dates = [randomDate() for _ in range(volumes)]
-            dates.sort()
-            mean = random.randint(4, 9)
-            std_dev = random.random()* (2 - 0.5) + 0.5
-            for v in range(volumes):
-                book = {
-                    'id': id,
-                    'title': randomTitle(),
-                    'series': series['series'],
-                    'volume': v+1,
-                    'author': series['author'],
-                    'words': random.randint(10000, 500000),
-                    'language': randomLanguage(),
-                    'published': dates[v],
-                    'publisher': series['publisher'],
-                    'classification': series['classification'],
-                    'genres': series['genres'],
-                    'description': randomDescription(random.randint(1,5)),
-                    'cover': 'book-cover-placeholder.png',
-                    'scores': randomScores(random.randint(1,1000), mean, std_dev),
-                    'reviews': randomReviews(dates[v], mean, std_dev)
-                }
-                
+            volumes = random.randint(0, 4)
+            series = {
+                'series': randomSeries() if volumes != 0 else None,
+                'author': author,
+                'language': randomLanguage(),
+                'genres': randomGenres(),
+                'publisher': fake.company(),
+                'classification': random.choice(['General', 'Teen', 'Mature', 'Explicit'])
+            }
+
+            if volumes == 0:
+                book = createBook(series, id, None, randomDate())
                 books.append(book)
                 id += 1
-        
-        
-             
-            
+            else:
+                dates = [randomDate() for _ in range(volumes)]
+                dates.sort()
+                for v in range(volumes):
+                    book = createBook(series, id, v+1, dates[v])
+                    books.append(book)
+                    id += 1
+
     data = {
         'books': books
     }
 
     return json.dumps(data, indent=2)
+
+
+def createBook(series, id, volume, date):
+    mean = random.random()* (9.5 - 3.5) + 3.5
+    std_dev = random.random()* (2 - 0.5) + 0.5
+    book = {
+        'id': id,
+        'title': randomTitle(),
+        'series': series['series'],
+        'volume': volume,
+        'author': series['author'],
+        'words': random.randint(10000, 500000),
+        'language': series['language'],
+        'published': date,
+        'publisher': series['publisher'],
+        'classification': series['classification'],
+        'genres': series['genres'],
+        'description': randomDescription(random.randint(1,5)),
+        'cover': 'book-cover-placeholder.png',
+        'scores': randomScores(random.randint(1,1000), mean, std_dev),
+        'reviews': randomReviews(date, mean, std_dev)
+    }
+    return book
 
 def randomSeries():
     words = ""
@@ -167,10 +150,10 @@ def randomReviews(book_date, mean, std_dev):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate random book data')
-    parser.add_argument('num_books', type=int, help='number of books to generate')
+    parser.add_argument('num_authors', type=int, help='number of authors to generate')
     args = parser.parse_args()
 
-    randomData = randomData(args.num_books)
+    randomData = randomData(args.num_authors)
 
 
     file_path = f'{os.path.dirname(os.path.abspath(sys.argv[0]))}/data.json'
