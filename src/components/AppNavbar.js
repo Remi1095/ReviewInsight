@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Navbar, Nav, Row, Col } from 'react-bootstrap';
+import {Navbar, Nav } from 'react-bootstrap';
 
 function AppNavbar() {
   return (
@@ -8,7 +8,7 @@ function AppNavbar() {
         <Navbar.Brand className="my-auto" href="/">ReviewInsight</Navbar.Brand>
         <Nav.Link className="light-bold text-center" href="/search">Search</Nav.Link>
         <Nav.Link className="light-bold text-center" href="/contribute">Contribute</Nav.Link>
-        <Nav.Link className="light-bold text-center" href="/my-list">My List</Nav.Link>
+        <Nav.Link className="light-bold text-center" href="/my-lists">My Lists</Nav.Link>
       </Nav>
     </Navbar>
 

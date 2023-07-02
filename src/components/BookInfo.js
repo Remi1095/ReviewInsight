@@ -1,11 +1,130 @@
 import React, { useState } from "react";
-import { getBookById, getBookCover, getAverageScore, getScoreArray } from "../bookUtils";
+import { getBookById, getBookCover, getAverageScore, getScoreArray, getBookLists, setBookLists } from "../bookUtils";
 import RatingBox from "./RatingBox";
 import RatingSlider from "./RatingSlider";
 import ShowMore from "./ShowMore";
+import AppDropdown from "./AppDropdown"
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, LabelList } from 'recharts';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import Modal from 'react-bootstrap/Modal';
+
+function MyListsModal({ show, handleClose, bookid }) {
+
+  const bookLists = getBookLists();
+  const maxDropdowns = Object.keys(bookLists).length;
+  
+  const [availableLists, setAvailableLists] = useState(Object.keys(bookLists));
+
+  const [selectedLists, setSelectedLists] = useState(Array.from({ length: 1 }, () => ""));
+
+  function handleBookLists(list, index) {
+    const newAvailableLists = availableLists.filter(item => item !== list);
+    if (selectedLists[index] !== "") {
+      newAvailableLists.push(selectedLists[index]);
+    }
+    setAvailableLists(newAvailableLists);
+
+    const newSelectedLists = [...selectedLists];
+    newSelectedLists[index] = list;
+    setSelectedLists(newSelectedLists);
+
+    console.log("user");
+    console.log(newAvailableLists);
+    console.log("selected");
+    console.log(newSelectedLists);
+
+  }
+
+  function addDropdown() {
+    const newSelectedLists = [...selectedLists, ""];
+    setSelectedLists(newSelectedLists);
+
+    console.log("selected");
+    console.log(newSelectedLists);
+  }
+
+  function removeDropdown() {
+    const newSelectedLists = [...selectedLists];
+    const lastList = newSelectedLists.pop();
+    if (lastList !== "") {
+      const newAvailableLists = [...availableLists, lastList];
+      setAvailableLists(newAvailableLists);
+      console.log("user");
+      console.log(newAvailableLists);
+    }
+    setSelectedLists(newSelectedLists);
+
+    console.log("selected")
+    console.log(newSelectedLists);
+
+  }
+
+  function handleSelection() {
+    selectedLists.forEach(list => {
+      console.log(list);
+      if (list !== "") {
+        bookLists[list].push(bookid);
+      }
+    });
+    console.log(bookLists);
+    setBookLists(bookLists)
+    handleClose();
+  }
+
+  return (
+    <Modal
+      show={show}
+      onHide={handleClose}
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Add this book to a list</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+
+        {selectedLists.map((list, index) => (
+          <AppDropdown
+            key={index}
+            className="d-inline mx-2"
+            emptyValue="Select list"
+            initialValue={selectedLists[index]}
+            items={availableLists}
+            handleItemSelect={handleBookLists}
+            index={index}
+          />
+        ))}
+        {selectedLists.length > 1 && (
+          <button
+            className="ms-2 px-2 py-1 button-pill d-inline"
+            style={{ backgroundColor: "lightgray" }}
+            onClick={removeDropdown}
+          >
+            <FontAwesomeIcon icon={faMinus} />
+          </button>
+        )}
+        {selectedLists.length < maxDropdowns && (
+          <button
+            className="ms-2 px-2 py-1 button-pill d-inline"
+            style={{ backgroundColor: "lightgray" }}
+            onClick={addDropdown}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+        )}
+      </Modal.Body>
+      <Modal.Footer className="d-flex justify-content-evenly">
+
+        <button className="button-pill" onClick={handleSelection}>
+          Confirm selection
+        </button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
+
 
 function Review({ review, style = {} }) {
 
@@ -30,6 +149,7 @@ function Review({ review, style = {} }) {
   );
 
 }
+
 
 function ReviewBarChart({ book, className = "" }) {
 
@@ -57,11 +177,8 @@ function ReviewBarChart({ book, className = "" }) {
 
 function BookInfo() {
 
-  const [containsSpoilers, setContainsSpoilers] = useState(true);
-
-  function handleSpoilersChange(event) {
-    setContainsSpoilers(event.target.value === 'yes');
-  }
+  const [spoilers, setSpoilers] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
   const { bookid } = useParams();
@@ -69,12 +186,25 @@ function BookInfo() {
   const bookCover = getBookCover(book);
   const avgScore = getAverageScore(book).toFixed(1);
 
+  function spoilersChange(event) {
+    setSpoilers(event.target.value === 'yes');
+  }
+
+  function showMyListsModal() {
+    setShowModal(true);
+  };
+
+  function closeMyListsModal() {
+    setShowModal(false);
+  };
+
   function toReviewBook() {
     navigate(`/review-book/${book.id}`)
   }
 
   return (
     <Container fluid>
+      <MyListsModal show={showModal} handleClose={closeMyListsModal} bookid={book.id} />
       <Row className="pb-3" style={{ borderBottom: "1px solid lightgray" }}>
 
         <Col xxl={3} lg={1} xs={0}></Col>
@@ -87,10 +217,14 @@ function BookInfo() {
 
           <RatingBox score={avgScore} textTag="h1" style={{ width: "50%" }} />
           <p className="fs-5">{book.reviews.length} reviews - {book.scores.length} scores</p>
-          <RatingSlider />
-          <u>Rate this book</u>
 
-          <button className="button-pill mt-3 fs-5 light-bold" onClick={toReviewBook}>Write a review</button>
+          <button
+            className="button-pill fs-5 text-white light-bold mt-3 px-4"
+            style={{ backgroundColor: "var(--primary-0)" }}
+            onClick={showMyListsModal}>
+            <span>Add to a list</span>
+            <FontAwesomeIcon icon={faChevronDown} className="ps-2" />
+          </button>
 
         </Col>
 
@@ -146,25 +280,41 @@ function BookInfo() {
       <Row>
         <Col xxl={3} lg={1} xs={0}></Col>
         <Col xxl={6} lg={10} xs={12}>
+
+          <h3 className="text-center my-3">Ratings & Reviews</h3>
+          <div className="d-flex justify-content-center text-center py-3" style={{ borderBottom: "1px solid lightgray" }}>
+            <div className="me-5" style={{ width: "40%" }}>
+              <RatingSlider />
+              <u>Rate this book</u>
+            </div>
+            <div style={{ width: "40%" }}>
+              <button className="button-pill mt-3 fs-5 light-bold w-100" onClick={toReviewBook}>Write a review</button>
+            </div>
+          </div>
+
           <div className="warning-box mx-auto mt-3 px-4 py-2">
             <p className="light-bold text-center mb-2">Show spoilers in reviews:</p>
             <div className="text-center">
-              <input
-                name="spoiler"
-                type="radio"
-                value="yes"
-                checked={containsSpoilers}
-                onChange={handleSpoilersChange}
-              />
-              <label className="ms-1 me-4">Yes</label>
-              <input
-                name="spoiler"
-                type="radio"
-                value="no"
-                checked={!containsSpoilers}
-                onChange={handleSpoilersChange}
-              />
-              <label className="ms-1">No</label>
+              <label className="me-4">
+                <input
+                  name="spoiler"
+                  type="radio"
+                  value="yes"
+                  checked={spoilers}
+                  onChange={spoilersChange}
+                />
+                <span className="ms-2">Yes</span>
+              </label>
+              <label>
+                <input
+                  name="spoiler"
+                  type="radio"
+                  value="no"
+                  checked={!spoilers}
+                  onChange={spoilersChange}
+                />
+                <span className="ms-2">No</span>
+              </label>
             </div>
           </div>
 
@@ -172,6 +322,8 @@ function BookInfo() {
             <h5 className="text-center">User reviews</h5>
             <ReviewBarChart book={book} />
           </div>
+
+
           <h4 className="text-center fw-normal mb-3">Showing 1-6 of {book.reviews.length} reviews</h4>
           <div className="w-100">
             {book.reviews.map((review, index) => (

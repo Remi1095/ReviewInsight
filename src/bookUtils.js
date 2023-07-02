@@ -29,3 +29,26 @@ export function getAverageScore(book) {
 export function getScoreArray(book) {
     return book.reviews.map((review) => review.score).concat(book.scores);
 }
+
+export function getBookLists() {
+    const jsonString = localStorage.getItem("bookLists");
+    var bookLists;
+    if (jsonString === null) {
+        bookLists = {
+            "To Read": [],
+            "Favorites": [],
+            "Currently Reading": [],
+            "Something": []
+        };
+    } else {
+        bookLists = JSON.parse(jsonString);
+    }
+
+    return bookLists;
+}
+
+export function setBookLists(bookLists) {
+    localStorage.clear()
+    const jsonString = JSON.stringify(bookLists);
+    localStorage.setItem("bookLists", jsonString);
+}

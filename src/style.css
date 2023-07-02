@@ -40,13 +40,17 @@ td {
 }
 
 .pointer {
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 button[type="submit"]:hover {
   background-color: initial;
   color: initial;
   text-decoration: none;
+}
+
+input[type='radio'] { 
+  transform: scale(1.4); 
 }
 
 input[type="radio"]:checked {
@@ -199,5 +203,27 @@ input[type="radio"]:checked {
   padding: 10px;
   position: sticky;
   top: 2%;
+}
+
+.dropdown-toggle {
+  display: inline;
+  color: black !important;
+  background-color: var(--secondary) !important;
+  border: 1px solid lightgray !important;
+}
+
+
+.dropdown-item:active {
+  background-color: var(--primary-1) !important;
+}
+
+.modal-dialog {
+  width: fit-content !important;
+  min-width: 30% !important;
+  max-width: 100% !important;
+}
+
+.modal-content {
+  background-color: var(--background) !important;
 }
 

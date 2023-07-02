@@ -45,22 +45,27 @@ function ReviewBook() {
           <div className="warning-box mx-auto mt-4 px-3 py-2">
             <p className="light-bold text-center mb-2">My review contains spoilers!</p>
             <div className="text-center">
-              <input
-                name="spoiler"
-                type="radio"
-                value="yes"
-                checked={containsSpoilers}
-                onChange={handleSpoilersChange}
-              />
-              <label className="ms-1 me-4">Yes</label>
-              <input
-                name="spoiler"
-                type="radio"
-                value="no"
-                checked={!containsSpoilers}
-                onChange={handleSpoilersChange}
-              />
-              <label className="ms-1">No</label>
+              <label className="me-4">
+                <input
+                  name="spoiler"
+                  type="radio"
+                  value="yes"
+                  checked={containsSpoilers}
+                  onChange={handleSpoilersChange}
+                />
+                <span className="ms-2">Yes</span>
+              </label>
+
+              <label>
+                <input
+                  name="spoiler"
+                  type="radio"
+                  value="no"
+                  checked={!containsSpoilers}
+                  onChange={handleSpoilersChange}
+                />
+                <span className="ms-2">No</span>
+              </label>
             </div>
           </div>
 

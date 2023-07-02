@@ -2,9 +2,14 @@ import React from "react";
 import { Container, Row, Col } from 'react-bootstrap';
 
 function Contribute()  {
+
   return (
     <Container>
+        <Row>
+          
+        </Row>
         <h1 className="text-center text-danger">Page Under Construction</h1>
+        
     </Container>
   );
 }
