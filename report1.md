@@ -26,11 +26,11 @@ Nom: John Doe
 - Objectif 1:
 John veut un bon livre de sci-fi des années 90 avec des avis d'au moin 8/10.
 
-- Objectif 2
+- Objectif 2:
 John veut écrire une critique pour un livre très mauvais qu'il a lu récament.
 
 Réseau sémentique:<br>
-![Réseau sémentique](https://raw.githubusercontent.com/Remi1095/projet2/main/mockup/reseau.png)
+![Réseau sémentique](https://raw.githubusercontent.com/Remi1095/ReviewInsight/main/mockup/reseau.png)
 
 ### Protoype
 
@@ -46,16 +46,16 @@ Diagramme à bandes et moyenne des avis sur la page "Livre"
 Écrire un avis sur un livre sur la page "Avis"  
 
 Accueil:<br>
-![Accueil](https://raw.githubusercontent.com/Remi1095/projet2/main/mockup/accueil.png)
+![Accueil](https://raw.githubusercontent.com/Remi1095/ReviewInsight/main/mockup/accueil.png)
 
 Rechercher:<br>
-![Rechercher](https://raw.githubusercontent.com/Remi1095/projet2/main/mockup/rechercher.png)
+![Rechercher](https://raw.githubusercontent.com/Remi1095/ReviewInsight/main/mockup/rechercher.png)
 
 Livre:<br>
-![Livre](https://raw.githubusercontent.com/Remi1095/projet2/main/mockup/livre.png)
+![Livre](https://raw.githubusercontent.com/Remi1095/ReviewInsight/main/mockup/livre.png)
 
 Avis:<br>
-![Avis](https://raw.githubusercontent.com/Remi1095/projet2/main/mockup/avis.png)
+![Avis](https://raw.githubusercontent.com/Remi1095/ReviewInsight/main/mockup/avis.png)
 
 Contribuer:<br>
-![Contribuer](https://raw.githubusercontent.com/Remi1095/projet2/main/mockup/contribuer.png)
+![Contribuer](https://raw.githubusercontent.com/Remi1095/ReviewInsight/main/mockup/contribuer.png)

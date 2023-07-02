@@ -63,7 +63,7 @@ def createBook(series, id, volume, date):
         'genres': series['genres'],
         'description': randomDescription(random.randint(1,5)),
         'cover': 'book-cover-placeholder.png',
-        'scores': randomScores(random.randint(1,1000), mean, std_dev),
+        'scores': randomScores(random.randint(1,100), mean, std_dev),
         'reviews': randomReviews(date, mean, std_dev)
     }
     return book
@@ -134,7 +134,7 @@ def randomScores(num_scores, mean, std_dev):
     return [round(min(max(numpy.random.normal(mean, std_dev), 1), 10)) for _ in range(num_scores)]
 
 def randomReviews(book_date, mean, std_dev):
-    num_reviews = random.randint(1, 100)
+    num_reviews = random.randint(1, 50)
     scores = randomScores(num_reviews, mean, std_dev)
     reviews = []
     for i in range(num_reviews):
