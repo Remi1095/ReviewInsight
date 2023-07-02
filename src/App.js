@@ -4,6 +4,7 @@ import Search from "./components/Search";
 import BookInfo from "./components/BookInfo";
 import ReviewBook from "./components/ReviewBook";
 import Contribute from "./components/Contribute";
+import MyList from "./components/MyList"
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/book-info/:bookid" element={<BookInfo />} />
           <Route path="/review-book/:bookid" element={<ReviewBook />} />
           <Route path="/contribute" element={<Contribute />} />
+          <Route path="/my-list" element={<MyList />} />
         </Routes>
       </div>
     </BrowserRouter>

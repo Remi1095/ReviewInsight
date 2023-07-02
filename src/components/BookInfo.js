@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { getBookById, getBookCover, getAverageScore, getScoreArray } from "../bookUtils";
 import RatingBox from "./RatingBox";
 import RatingSlider from "./RatingSlider";
@@ -56,6 +56,12 @@ function ReviewBarChart({ book, className = "" }) {
 
 
 function BookInfo() {
+
+  const [containsSpoilers, setContainsSpoilers] = useState(true);
+
+  function handleSpoilersChange(event) {
+    setContainsSpoilers(event.target.value === 'yes');
+  }
 
   const navigate = useNavigate();
   const { bookid } = useParams();
@@ -140,7 +146,28 @@ function BookInfo() {
       <Row>
         <Col xxl={3} lg={1} xs={0}></Col>
         <Col xxl={6} lg={10} xs={12}>
-          <button className="button-pill mt-3 light-bold">Show spoilers</button>
+          <div className="warning-box mx-auto mt-3 px-4 py-2">
+            <p className="light-bold text-center mb-2">Show spoilers in reviews:</p>
+            <div className="text-center">
+              <input
+                name="spoiler"
+                type="radio"
+                value="yes"
+                checked={containsSpoilers}
+                onChange={handleSpoilersChange}
+              />
+              <label className="ms-1 me-4">Yes</label>
+              <input
+                name="spoiler"
+                type="radio"
+                value="no"
+                checked={!containsSpoilers}
+                onChange={handleSpoilersChange}
+              />
+              <label className="ms-1">No</label>
+            </div>
+          </div>
+
           <div className="mx-auto square-box">
             <h5 className="text-center">User reviews</h5>
             <ReviewBarChart book={book} />

@@ -49,6 +49,10 @@ button[type="submit"]:hover {
   text-decoration: none;
 }
 
+input[type="radio"]:checked {
+  accent-color: var(--primary-0);
+}
+
 .button-pill {
   display: block;
   padding: 10px 20px;
@@ -84,6 +88,8 @@ button[type="submit"]:hover {
 .navbar {
   background-color: var(--primary-0);
   padding: 0 !important;
+  /*position: sticky !important;
+  top: 0;*/
 }
 
 .navbar-brand {
@@ -194,3 +200,4 @@ button[type="submit"]:hover {
   position: sticky;
   top: 2%;
 }
+

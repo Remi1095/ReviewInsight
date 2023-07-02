@@ -27,7 +27,7 @@ function ReviewBook() {
         <Col xxl={6} lg={8} xs={10}>
           <h2 className="text-center mb-3 light-bold">Review "{book.title}"</h2>
 
-          <div className="mx-auto" style={{width:"50%", minWidth:"320px"}}>
+          <div className="mx-auto" style={{ width: "50%", minWidth: "320px" }}>
             <RatingSlider />
           </div>
 
@@ -42,31 +42,29 @@ function ReviewBook() {
             />
           </div>
 
-          <div className="warning-box mx-auto mt-3 px-3 py-2">
+          <div className="warning-box mx-auto mt-4 px-3 py-2">
             <p className="light-bold text-center mb-2">My review contains spoilers!</p>
             <div className="text-center">
-            <label className="mx-2">
               <input
+                name="spoiler"
                 type="radio"
                 value="yes"
                 checked={containsSpoilers}
                 onChange={handleSpoilersChange}
               />
-              Yes
-            </label>
-            <label className="mx-2">
+              <label className="ms-1 me-4">Yes</label>
               <input
+                name="spoiler"
                 type="radio"
                 value="no"
                 checked={!containsSpoilers}
                 onChange={handleSpoilersChange}
               />
-              No
-            </label>
-          </div>
+              <label className="ms-1">No</label>
+            </div>
           </div>
 
-          <button className="button-pill mt-3 fs-5 light-bold">Submit your review</button>
+          <button className="button-pill mt-4 fs-5 light-bold">Submit your review</button>
         </Col>
         <Col xxl={3} lg={2} xs={1} />
       </Row>

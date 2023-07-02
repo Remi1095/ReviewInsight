@@ -97,11 +97,7 @@ function Filters() {
         <ExpandMenu
           menuName="Genres"
           content={
-            <ul>
-              <li>Menu 2 Item 1</li>
-              <li>Menu 2 Item 2</li>
-              <li>Menu 2 Item 3</li>
-            </ul>
+            <div className='text-danger'>Unfinished</div>
           }
           headerNumber="5"
         />
@@ -110,11 +106,7 @@ function Filters() {
         <ExpandMenu
           menuName="Classification"
           content={
-            <ul>
-              <li>Menu 2 Item 1</li>
-              <li>Menu 2 Item 2</li>
-              <li>Menu 2 Item 3</li>
-            </ul>
+            <div className='text-danger'>Unfinished</div>
           }
           headerNumber="5"
         />
@@ -123,11 +115,7 @@ function Filters() {
         <ExpandMenu
           menuName="Author"
           content={
-            <ul>
-              <li>Menu 2 Item 1</li>
-              <li>Menu 2 Item 2</li>
-              <li>Menu 2 Item 3</li>
-            </ul>
+            <div className='text-danger'>Unfinished</div>
           }
           headerNumber="5"
         />
@@ -136,11 +124,7 @@ function Filters() {
         <ExpandMenu
           menuName="Title"
           content={
-            <ul>
-              <li>Menu 2 Item 1</li>
-              <li>Menu 2 Item 2</li>
-              <li>Menu 2 Item 3</li>
-            </ul>
+            <div className='text-danger'>Unfinished</div>
           }
           headerNumber="5"
         />
@@ -149,11 +133,7 @@ function Filters() {
         <ExpandMenu
           menuName="Language"
           content={
-            <ul>
-              <li>Menu 2 Item 1</li>
-              <li>Menu 2 Item 2</li>
-              <li>Menu 2 Item 3</li>
-            </ul>
+            <div className='text-danger'>Unfinished</div>
           }
           headerNumber="5"
         />
@@ -162,11 +142,7 @@ function Filters() {
         <ExpandMenu
           menuName="Number of words"
           content={
-            <ul>
-              <li>Menu 2 Item 1</li>
-              <li>Menu 2 Item 2</li>
-              <li>Menu 2 Item 3</li>
-            </ul>
+            <div className='text-danger'>Unfinished</div>
           }
           headerNumber="5"
         />
@@ -175,11 +151,7 @@ function Filters() {
         <ExpandMenu
           menuName="Reviews"
           content={
-            <ul>
-              <li>Menu 2 Item 1</li>
-              <li>Menu 2 Item 2</li>
-              <li>Menu 2 Item 3</li>
-            </ul>
+            <div className='text-danger'>Unfinished</div>
           }
           headerNumber="5"
         />
@@ -188,11 +160,7 @@ function Filters() {
         <ExpandMenu
           menuName="Date published"
           content={
-            <ul>
-              <li>Menu 2 Item 1</li>
-              <li>Menu 2 Item 2</li>
-              <li>Menu 2 Item 3</li>
-            </ul>
+            <div className='text-danger'>Unfinished</div>
           }
           headerNumber="5"
         />
@@ -209,7 +177,7 @@ function SortAndFilters() {
       <ExpandMenu
         menuName="Sort"
         content={
-          <div></div>
+          <div className='text-danger'>Unfinished</div>
         }
         headerNumber="3"
         headerClass="pt-2"
