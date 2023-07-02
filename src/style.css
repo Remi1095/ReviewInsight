@@ -125,7 +125,6 @@ input[type="radio"]:checked {
 .genres-box {
   background-color: var(--primary-2);
   border-radius: 10px;
-  max-width: 900px;
 }
 
 .genre-list .list-group-item {
@@ -148,16 +147,13 @@ input[type="radio"]:checked {
   height: 30px;
 }
 
-.contributions-box {
-  background-color: var(--accent-1);
+.book-list-box {
   border: 1px solid gray;
   border-radius: 10px;
-  max-width: 900px;
 }
 
-.contributions-box .list-group-item {
+.book-list-box .list-group-item {
   background-color: inherit !important;
-  padding-block: 20px;
 }
 
 .content-box {
