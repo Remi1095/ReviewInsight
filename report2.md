@@ -43,6 +43,7 @@ https://reviewinsight.netlify.app/
 - Home:
     - Onclick de la liste de genres
     - Onclick des contributions récentes
+    - Changer les images placholder 
 
 - Search:
     - UI des filtres
@@ -52,15 +53,15 @@ https://reviewinsight.netlify.app/
     - Tooltip/popup pour expliquer les filtres
     - Bouton "Apply filters and sort"
     - Pagination de 6 livre par page
-    - Fausse couverture de livre aléatoire (icon aléatoire?)
 
 - BookInfo:
     - Onclick de la liste de genres
     - Fonctionnalité de "Rate this book"
-    - Onclick de "Show spoilers"
-    - Changer le UI de "Show spoilers"
+    - Fonctionnalité de "Show spoilers in reviews"
     - Pagination de 6 avis par pages
-    - Bouton pour ajouté un livre à une liste (localstorage)
+    - Empêcher d'ajouter un livre a une liste plus qu'une fois
+    - Fonctionalité pour enlever des livres des listes
+    - Confirmation lors de l'ajout et l'enlevement d'un livre.
 
 - ReviewBook:
     - Fonctionnalité de "Submit your review"
@@ -70,4 +71,5 @@ https://reviewinsight.netlify.app/
     - Toute l'implémentation
 
 - My Lists:
-    - Toute l'implémentation
+    - Fonctionalité pour enlever des livres
+    - Fonctionalité pour créer et enlever des listes
