@@ -48,7 +48,7 @@ function RatingSlider() {
             height: ${width*(8/320)}px;
             cursor: pointer;
             animate: 0.2s;
-            background: var(--accent-1);
+            background: lightgray;
             border-radius: ${width*(8/320)}px;
           }
           input[type=range]::-webkit-slider-thumb {
@@ -62,7 +62,7 @@ function RatingSlider() {
             margin-top: -${width*(12/320)}px;
           }
           input[type=range]:focus::-webkit-slider-runnable-track {
-            background: var(--accent-1);
+            background: lightgray;
           }
           input[type=range]::-moz-range-progress {
             width: 100%;
