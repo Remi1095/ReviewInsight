@@ -24,7 +24,7 @@ function RatingSlider() {
   }, [parentRef]);
 
   function handleChange(event) {
-    const newValue= parseInt(event.target.value);
+    const newValue = parseInt(event.target.value);
     setValue(newValue);
   };
 
@@ -34,27 +34,58 @@ function RatingSlider() {
     <div className='mx-auto' style={{ width: '100%' }} ref={parentRef}>
       <style>
         {`
-          input[type="range"]::-webkit-progress-value,
-          input[type="range"]::-moz-range-progress {
-            background-color: var(--accent-0);
-            height: ${width / 40}px;
-            border-radius: ${width / 40}px;
+          input[type=range] {
+            height: ${width*(34/320)}px;
+            -webkit-appearance: none;
+            margin: 0;
+            width: 100%;
           }
-
-          input[type="range"]::-webkit-slider-runnable-track,
-          input[type="range"]::-moz-range-track {
-            background-color: lightgray;
-            height: ${width / 40}px;
-            border-radius: ${width / 40}px;
+          input[type=range]:focus {
+            outline: none;
           }
-
-          input[type="range"]::-webkit-slider-thumb,
-          input[type="range"]::-moz-range-thumb {
-            background-color: var(--accent-0);
-            border: ${width / (160 / 3)}px solid var(--accent-1);
-            width: ${width / 16}px;
-            height: ${width / 16}px;
+          input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: ${width*(8/320)}px;
+            cursor: pointer;
+            animate: 0.2s;
+            background: var(--accent-1);
+            border-radius: ${width*(8/320)}px;
+          }
+          input[type=range]::-webkit-slider-thumb {
+            border: ${width*(6/320)}px solid var(--accent-1);
+            height: ${width*(32/320)}px;
+            width: ${width*(32/320)}px;
             border-radius: 50%;
+            background: var(--accent-0);
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -${width*(12/320)}px;
+          }
+          input[type=range]:focus::-webkit-slider-runnable-track {
+            background: var(--accent-1);
+          }
+          input[type=range]::-moz-range-progress {
+            width: 100%;
+            height: ${width*(8/320)}px;
+            cursor: pointer;
+            animate: 0.2s;
+            background: var(--accent-0);
+            border-radius: ${width*(8/320)}px;
+          }
+          input[type=range]::-moz-range-track {
+            width: 100%;
+            height: ${width*(8/320)}px;
+            cursor: pointer;
+            animate: 0.2s;
+            background: lightgray;
+            border-radius: ${width*(8/320)}px;
+          }
+          input[type=range]::-moz-range-thumb {
+            border: ${width*(6/320)}px solid var(--accent-1);
+            height: ${width*(20/320)}px;
+            width: ${width*(20/320)}px;
+            border-radius: 50%;
+            background: var(--accent-0);
             cursor: pointer;
           }
         `}
@@ -65,11 +96,11 @@ function RatingSlider() {
         max="10"
         value={value}
         onChange={handleChange}
-        style={{ width: "100%", height: `${width / 16 + width / (80 / 3)}px`, backgroundColor: "transparent"}}
+        style={{ width: "100%", height: `${width / 16 + width / (80 / 3)}px`, backgroundColor: "transparent" }}
       />
       <div className="d-flex">
         {markings.map((number) => (
-          <span className={`text-center ${number === value ? "highlight" : ""}`} style={{ flex: "1", width: `${width}px`, fontSize: `${width/20}px` }} key={number}>{number}</span>
+          <span className={`text-center ${number === value ? "highlight" : ""}`} style={{ flex: "1", width: `${width}px`, fontSize: `${width / 20}px` }} key={number}>{number}</span>
         ))}
       </div>
 
