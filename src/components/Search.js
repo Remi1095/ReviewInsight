@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getAllBooks, getAverageScore, getBookCover } from '../bookUtils';
 import RatingBox from './RatingBox';
 import ShowMore from './ShowMore';
+import BookCover from './BookCover';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
@@ -26,8 +27,8 @@ function BookCard({ book }) {
       <div className="d-flex">
 
         <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-          <div className='pointer' onClick={toBookInfo}>
-            <img className="border book" style={{ width: "90%" }} src={bookCover} alt="book1" />
+          <div className='pointer' onClick={toBookInfo} style={{width:"90%"}}>
+            <BookCover bgColor={book.fakeCover.bgColor} iconColor={book.fakeCover.iconColor} icon={book.fakeCover.icon} />
           </div>
         </div>
 

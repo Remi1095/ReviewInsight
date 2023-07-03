@@ -1,26 +1,39 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDragon } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faRocket, faDragon, faPuzzlePiece, faHeart, faPersonRunning, faSkull, faMasksTheater, faXmarksLines,
+  faBookOpenReader, faLandmark, faFlask, faSackDollar, faBrain, faInfinity, faHandshakeSimple, faPalette
+} from "@fortawesome/free-solid-svg-icons";
 
-function BookCover({ color, iconColor, icon, style }) {
+library.add(
+  faRocket, faDragon, faPuzzlePiece, faHeart, faPersonRunning, faSkull, faMasksTheater, faXmarksLines,
+  faBookOpenReader, faLandmark, faFlask, faSackDollar, faBrain, faInfinity, faHandshakeSimple, faPalette
+);
+
+function BookCover({ bgColor, iconColor, icon, style="" }) {
   const coverStyle = {
-    backgroundColor: color,
-    width: "100%", // Set the width to 100%
-    paddingBottom: "150%", // Set the padding-bottom to maintain the 2:3 aspect ratio
-    position: "relative", // Add relative positioning
-    ...style, // Merge additional style with coverStyle
+    filter: "grayscale(0.5)",
+    backgroundColor: `${bgColor}`,
+    width: "100%",
+    paddingBottom: "150%",
+    position: "relative",
+    border: "1px solid black",
+    ...style
   };
 
   const iconStyle = {
-    position: "absolute", // Position the icon absolutely within the cover
+    position: "absolute",
     top: "50%",
     left: "50%",
-    transform: "translate(-50%, -50%)", // Center the icon using translate
+    width: "50%",
+    height: "50%",
+    transform: "translate(-50%, -50%)"
   };
 
   return (
     <div style={coverStyle}>
-      <FontAwesomeIcon icon={icon} size="5x" color={iconColor} style={iconStyle} />
+      <FontAwesomeIcon icon={icon} color={iconColor} style={iconStyle} />
     </div>
   );
 }

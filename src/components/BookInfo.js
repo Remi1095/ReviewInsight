@@ -4,6 +4,7 @@ import RatingBox from "./RatingBox";
 import RatingSlider from "./RatingSlider";
 import ShowMore from "./ShowMore";
 import AppDropdown from "./AppDropdown"
+import BookCover from "./BookCover";
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, LabelList } from 'recharts';
@@ -211,7 +212,7 @@ function BookInfo() {
 
         <Col className="text-center" xxl={2} lg={3} xs={4}>
           <div className="mx-auto text-center" style={{ width: "80%" }}>
-            <img className="border" style={{ width: "100%" }} src={bookCover} alt="book1" />
+          <BookCover bgColor={book.fakeCover.bgColor} iconColor={book.fakeCover.iconColor} icon={book.fakeCover.icon} />
           </div>
           <br />
 

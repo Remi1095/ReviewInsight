@@ -47,7 +47,7 @@ function Home() {
               <ListGroup.Item> <span>Finance</span> <span><FontAwesomeIcon icon={faSackDollar} /></span> </ListGroup.Item>
             </ListGroup>
             <ListGroup horizontal className="genre-list justify-content-evenly pb-2">
-              <ListGroup.Item> <span>Psychologie</span> <span><FontAwesomeIcon icon={faBrain} /></span> </ListGroup.Item>
+              <ListGroup.Item> <span>Psychology</span> <span><FontAwesomeIcon icon={faBrain} /></span> </ListGroup.Item>
               <ListGroup.Item> <span>Philosophy</span> <span><FontAwesomeIcon icon={faInfinity} /></span> </ListGroup.Item>
               <ListGroup.Item> <span>Politics</span> <span><FontAwesomeIcon icon={faHandshakeSimple} /></span> </ListGroup.Item>
               <ListGroup.Item> <span>Art</span> <span><FontAwesomeIcon icon={faPalette} /></span> </ListGroup.Item>

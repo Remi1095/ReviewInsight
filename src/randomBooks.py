@@ -63,6 +63,7 @@ def createBook(series, id, volume, date):
         'genres': series['genres'],
         'description': randomDescription(random.randint(1,5)),
         'cover': 'book-cover-placeholder.png',
+        'fakeCover': randomFakeCover(series['genres'][0]),
         'scores': randomScores(random.randint(1,100), mean, std_dev),
         'reviews': randomReviews(date, mean, std_dev)
     }
@@ -147,6 +148,37 @@ def randomReviews(book_date, mean, std_dev):
         }
         reviews.append(review)
     return reviews
+
+def randomFakeCover(genre):
+    genreIcons = {
+    'Sci-Fi': 'rocket',
+    'Fantasy': 'dragon',
+    'Mystery': 'puzzle-piece',
+    'Romance': 'heart',
+    'Thriller': 'person-running',
+    'Horror': 'skull',
+    'Comedy': 'masks-theater',
+    'Dystopia': 'xmarks-lines',
+    'Biography': 'book-open-reader',
+    'History': 'landmark',
+    'Science': 'flask',
+    'Finance': 'sack-dollar',
+    'Psychology': 'brain',
+    'Philosophy': 'infinity',
+    'Politics': 'handshake-simple',
+    'Art': 'palette'
+}
+    colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet', 'black', 'darkgray', 'gray', 'lightgray', 'white']
+
+    twoColors = random.sample(colors, 2)
+    
+    fakeCover = {
+        "bgColor": twoColors[0],
+        "iconColor": twoColors[1],
+        "icon": genreIcons[genre]
+    }
+    return fakeCover
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate random book data')

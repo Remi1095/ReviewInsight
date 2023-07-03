@@ -1,4 +1,5 @@
 import React from "react";
+import BookCover from "./BookCover";
 import { getBookLists, setBookLists, getBookById, getBookCover } from "../bookUtils";
 import { Container, Row, Col, ListGroup } from 'react-bootstrap';
 
@@ -16,23 +17,18 @@ function Contribute() {
               <h3>{key} ({bookLists[key].length})</h3>
 
               {bookLists[key].length > 0 && (
-                <div className="book-list-box" style={{ width: "fit-content", backgroundColor: index % 2 === 0 ? 'var(--primary-2)' : 'var(--accent-1)' }}>
-
-                  <ListGroup horizontal className="flex-wrap justify-content-center" style={{ height: "100%", flexShrink: "0" }}>
-
-                    {bookLists[key].map((bookid, index) => (
-                      <ListGroup.Item key={bookid} className="d-flex justify-content-center align-items-center px-2 py-2">
-                        <img
-                          style={{ maxHeight: "100%", width: "80px" }}
-                          src={getBookCover(getBookById(bookid))}
-                          alt={bookid}
-                        />
-                      </ListGroup.Item>
-                    ))}
-
-                  </ListGroup>
-
-                </div>
+                <div className="d-flex book-list-box flex-wrap" style={{ width: "fit-content", backgroundColor: index % 2 === 0 ? 'var(--primary-2)' : 'var(--accent-1)' }}>
+                {bookLists[key].map((bookid, index) => {
+                  // Create a local variable
+                  const book = getBookById(bookid);
+              
+                  return (
+                    <div className="d-flex mx-3 my-3" key={bookid} style={{ width: "80px" }}>
+                      <BookCover bgColor={book.fakeCover.bgColor} iconColor={book.fakeCover.iconColor} icon={book.fakeCover.icon} />
+                    </div>
+                  );
+                })}
+              </div>
               )}
             </div>
           ))}
