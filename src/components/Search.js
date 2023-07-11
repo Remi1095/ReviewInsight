@@ -4,6 +4,7 @@ import { getAllBooks, getAverageScore, getBookCover } from '../bookUtils';
 import RatingBox from './RatingBox';
 import ShowMore from './ShowMore';
 import BookCover from './BookCover';
+import PaginationBar from './PaginationBar';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
@@ -212,7 +213,8 @@ function Search() {
   return (
     <Container fluid>
       <h3 className="text-center fw-normal mb-3">Showing 1-6 of 600 books</h3>
-
+      <PaginationBar totalPages={10}/>
+      
       <Row>
         <Col xxl={2} xs={0}></Col>
         <Col xxl={6} xs={8}>

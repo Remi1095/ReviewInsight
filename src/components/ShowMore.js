@@ -23,7 +23,7 @@ function ShowMore({ text, lines }) {
 
   return (
     <div>
-      <p className="mb-0" ref={textRef} style={{ maxHeight: showMore ? "none" : height, overflow: "hidden" }}>
+      <p className="my-0" ref={textRef} style={{ maxHeight: showMore ? "none" : height, overflow: "hidden" }}>
         {textArray.map((line, index) => (
           <span  key={index}>
             {line}
