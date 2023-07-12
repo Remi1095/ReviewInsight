@@ -16,6 +16,7 @@ function PaginationBar({ totalPages, onPageChange }) {
 
   function pageChange(page) {
     navigate(`?page=${page}`);
+    window.scrollTo({ top: 0, behavior: 'instant' });
     setCurrentPage(page);
     onPageChange(page);
   };
