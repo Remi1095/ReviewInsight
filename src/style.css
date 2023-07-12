@@ -5,8 +5,6 @@
   --primary-1: hsl(180, 40%, 60%);
   --primary-2: hsl(180, 40%, 75%);
 
-  --secondary: hsl(0, 0%, 100%);
-
   --accent-0: hsl(39, 96%, 60%);
   --accent-1: hsl(39, 96%, 75%);
   --accent-2: hsl(39, 96%, 90%);
@@ -81,7 +79,7 @@ input[type="radio"]:checked {
 }
 
 .square-box {
-  background-color: var(--secondary);
+  background-color: white;
   border: 1px solid lightgray;
   width: fit-content;
   height: fit-content;
@@ -97,7 +95,7 @@ input[type="radio"]:checked {
 }
 
 .navbar-brand {
-  color: var(--secondary) !important;
+  color: white !important;
   font-size: x-large !important;
   font-weight: 600 !important;
   margin-inline: 10px !important;
@@ -122,6 +120,20 @@ input[type="radio"]:checked {
   border: none !important;
 }
 
+.pagination {
+  justify-content: center;
+}
+
+.page-item.active .page-link {
+  color: white !important;
+  background-color: var(--primary-0) !important;
+}
+
+.page-link {
+  color: var(--primary-0) !important;
+  cursor: pointer;
+}
+
 .genres-box {
   background-color: var(--primary-2);
   border-radius: 10px;
@@ -130,7 +142,7 @@ input[type="radio"]:checked {
 .genre-list .list-group-item {
   display: inline-flex;
   justify-content: space-evenly;
-  background-color: var(--secondary) !important;
+  background-color: white !important;
   width: 20%;
   padding-block: 6px;
   margin: 10px 0;
@@ -159,7 +171,7 @@ input[type="radio"]:checked {
 .content-box {
   display: flex;
   flex-direction: column;
-  background-color: var(--secondary);
+  background-color: white;
   border: 1px solid lightgray;
   border-radius: 10px;
 }
@@ -204,7 +216,7 @@ input[type="radio"]:checked {
 .dropdown-toggle {
   display: inline;
   color: black !important;
-  background-color: var(--secondary) !important;
+  background-color: white !important;
   border: 1px solid lightgray !important;
 }
 

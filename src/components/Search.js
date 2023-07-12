@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getAllBooks, getAverageScore, getBookCover } from '../bookUtils';
 import RatingBox from './RatingBox';
 import ShowMore from './ShowMore';
@@ -210,15 +210,27 @@ function SortAndFilters() {
 
 
 function Search() {
+
+  const [bookIndexes, setBookIndexes] = useState([0, getAllBooks().length])
+  const [booksDisplayed, setBooksDisplayed] = useState(getAllBooks());
+
+
+  function onPageChange(page) {
+    const startIndex = (page-1)*6;
+    const endIndex = Math.min(page*6, getAllBooks().length)
+    setBooksDisplayed(getAllBooks().slice(startIndex, endIndex))
+    setBookIndexes([startIndex, endIndex])
+  }
+
   return (
     <Container fluid>
-      <h3 className="text-center fw-normal mb-3">Showing 1-6 of 600 books</h3>
-      <PaginationBar totalPages={10}/>
+      <h3 className="text-center fw-normal mb-3">Showing {bookIndexes[0]+1}-{bookIndexes[1]} of {getAllBooks().length} books</h3>
+      <PaginationBar totalPages={Math.ceil(getAllBooks().length/6)} onPageChange={onPageChange}/>
       
       <Row>
         <Col xxl={2} xs={0}></Col>
         <Col xxl={6} xs={8}>
-          {getAllBooks().map((book, index) => (
+          {booksDisplayed.map((book, index) => (
             <BookCard key={index} book={book} />
           ))}
         </Col>
@@ -228,6 +240,8 @@ function Search() {
         <Col className=" " xxl={2} xs={0}></Col>
 
       </Row>
+
+      <PaginationBar totalPages={Math.ceil(getAllBooks().length/6)} onPageChange={onPageChange}/>
 
     </Container >
   );
