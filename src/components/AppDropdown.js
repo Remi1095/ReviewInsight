@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 
-function AppDropdown({ emptyValue, initialValue, items, handleItemSelect, index, className }) {
+function AppDropdown({ items, handleItemSelect, emptyValue, initialValue="", index=null, className="" }) {
   const [selectedItem, setSelectedItem] = useState(initialValue);
 
   function handleItemClick(item) {

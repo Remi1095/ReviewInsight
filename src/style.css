@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Ubuntu");
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 
 :root {
   --primary-0: hsl(180, 100%, 25%);
@@ -16,7 +17,7 @@
 body {
   margin: 0;
   width: 100%;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Roboto', 'Ubuntu', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background) !important;
@@ -47,8 +48,8 @@ button[type="submit"]:hover {
   text-decoration: none;
 }
 
-input[type='radio'] { 
-  transform: scale(1.4); 
+input[type='radio'] {
+  transform: scale(1.4);
 }
 
 input[type="radio"]:checked {
@@ -213,13 +214,17 @@ input[type="radio"]:checked {
   top: 2%;
 }
 
+.dropdown-menu {
+  width: fit-content !important;
+  min-width: unset !important;
+}
+
 .dropdown-toggle {
   display: inline;
   color: black !important;
   background-color: white !important;
   border: 1px solid lightgray !important;
 }
-
 
 .dropdown-item:active {
   background-color: var(--primary-1) !important;
@@ -235,3 +240,25 @@ input[type="radio"]:checked {
   background-color: var(--background) !important;
 }
 
+.suggestions-popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  list-style: none;
+  padding-left: 0;
+}
+
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}

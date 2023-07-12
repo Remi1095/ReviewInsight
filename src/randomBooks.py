@@ -11,6 +11,33 @@ fake = Faker()
 
 def randomData(num_authors):
     books = []
+    values = {
+        'genres': [
+            "Sci-Fi",
+            "Fantasy",
+            "Mystery",
+            "Romance",
+            "Thriller",
+            "Horror",
+            "Comedy",
+            "Dystopia",
+            "Biography",
+            "History",
+            "Science",
+            "Finance",
+            "Psychology",
+            "Philosophy",
+            "Politics",
+            "Art"
+        ],
+        'classifications': [
+            'General', 
+            'Teen',
+            'Mature',
+            'Explicit'
+        ]
+    }
+        
     id = 0
 
     for i in range(num_authors):
@@ -24,7 +51,7 @@ def randomData(num_authors):
                 'language': randomLanguage(),
                 'genres': randomGenres(),
                 'publisher': fake.company(),
-                'classification': random.choice(['General', 'Teen', 'Mature', 'Explicit'])
+                'classification': random.choice(values['classifications'])
             }
 
             if volumes == 0:
@@ -40,7 +67,8 @@ def randomData(num_authors):
                     id += 1
 
     data = {
-        'books': books
+        'books': books,
+        'values': values
     }
 
     return json.dumps(data, indent=2)

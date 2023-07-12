@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { getAllBooks, getAverageScore, getBookCover } from '../bookUtils';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAllBooks, getAverageScore, getBookCover, getBookValues } from '../bookUtils';
 import RatingBox from './RatingBox';
 import ShowMore from './ShowMore';
 import BookCover from './BookCover';
 import PaginationBar from './PaginationBar';
+import AppDropdown from './AppDropdown';
+import Autosuggest from './Autosuggest';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
@@ -28,7 +30,7 @@ function BookCard({ book }) {
       <div className="d-flex">
 
         <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-          <div className='pointer' onClick={toBookInfo} style={{width:"90%"}}>
+          <div className='pointer' onClick={toBookInfo} style={{ width: "90%" }}>
             <BookCover bgColor={book.fakeCover.bgColor} iconColor={book.fakeCover.iconColor} icon={book.fakeCover.icon} />
           </div>
         </div>
@@ -92,83 +94,64 @@ function ExpandMenu({ menuName, content, headerNumber, headerClass = "" }) {
 }
 
 
-function Filters() {
+function GenresFilter() {
+
+  const genres = getBookValues().genres;
+
+  function handleGenreSelect(genres) {
+    console.log(genres)
+  }
+
   return (
     <div>
-      <div className="mx-3 mt-2">
-        <ExpandMenu
-          menuName="Genres"
-          content={
-            <div className='text-danger'>Unfinished</div>
-          }
-          headerNumber="5"
-        />
-      </div>
-      <div className="mx-3 mt-2">
-        <ExpandMenu
-          menuName="Classification"
-          content={
-            <div className='text-danger'>Unfinished</div>
-          }
-          headerNumber="5"
-        />
-      </div>
-      <div className="mx-3 mt-2">
-        <ExpandMenu
-          menuName="Author"
-          content={
-            <div className='text-danger'>Unfinished</div>
-          }
-          headerNumber="5"
-        />
-      </div>
-      <div className="mx-3 mt-2">
-        <ExpandMenu
-          menuName="Title"
-          content={
-            <div className='text-danger'>Unfinished</div>
-          }
-          headerNumber="5"
-        />
-      </div>
-      <div className="mx-3 mt-2">
-        <ExpandMenu
-          menuName="Language"
-          content={
-            <div className='text-danger'>Unfinished</div>
-          }
-          headerNumber="5"
-        />
-      </div>
-      <div className="mx-3 mt-2">
-        <ExpandMenu
-          menuName="Number of words"
-          content={
-            <div className='text-danger'>Unfinished</div>
-          }
-          headerNumber="5"
-        />
-      </div>
-      <div className="mx-3 mt-2">
-        <ExpandMenu
-          menuName="Reviews"
-          content={
-            <div className='text-danger'>Unfinished</div>
-          }
-          headerNumber="5"
-        />
-      </div>
-      <div className="mx-3 mt-2">
-        <ExpandMenu
-          menuName="Date published"
-          content={
-            <div className='text-danger'>Unfinished</div>
-          }
-          headerNumber="5"
-        />
-      </div>
+      <h6 className='mb-1'>Include:</h6>
+      < Autosuggest suggestions={genres} handleElements={handleGenreSelect} placeholder={"Type genres..."}/>
+      <h6 className='mt-2 mb-1'>Exlude:</h6>
+      < Autosuggest suggestions={genres} handleElements={handleGenreSelect} placeholder={"Type genres..."}/>
     </div>
   )
+}
+
+function ClassificationFilter() {
+
+}
+
+function AuthorFilter() {
+  const genres = getBookValues().genres;
+
+  function handleGenreSelect(genres) {
+    console.log(genres)
+  }
+
+  return (
+    <div>
+      <h6 className='mb-1'>Include:</h6>
+      < Autosuggest suggestions={genres} handleElements={handleGenreSelect} placeholder={"Type genres..."}/>
+      <h6 className='mt-2 mb-1'>Exlude:</h6>
+      < Autosuggest suggestions={genres} handleElements={handleGenreSelect} placeholder={"Type genres..."}/>
+    </div>
+  )
+
+}
+
+function TitleFilter() {
+
+}
+
+function LanguageFilter() {
+
+}
+
+function WordsFilter() {
+
+}
+
+function ReviewsFilter() {
+
+}
+
+function DateFilter() {
+
 }
 
 
@@ -179,25 +162,89 @@ function SortAndFilters() {
       <ExpandMenu
         menuName="Sort"
         content={
-          <div className='text-danger'>Unfinished</div>
+          <GenresFilter />
         }
         headerNumber="3"
         headerClass="pt-2"
       />
 
       <ExpandMenu
-        menuName="Include"
+        menuName="Filters"
         content={
-          <Filters />
-        }
-        headerNumber="3"
-        headerClass="pt-2"
-      />
-
-      <ExpandMenu
-        menuName="Exclude"
-        content={
-          <Filters />
+          <div>
+            <div className="mx-3 mt-2">
+              <ExpandMenu
+                menuName="Genres"
+                content={
+                  <GenresFilter />
+                }
+                headerNumber="5"
+              />
+            </div>
+            <div className="mx-3 mt-2">
+              <ExpandMenu
+                menuName="Classification"
+                content={
+                  <GenresFilter />
+                }
+                headerNumber="5"
+              />
+            </div>
+            <div className="mx-3 mt-2">
+              <ExpandMenu
+                menuName="Author"
+                content={
+                  <GenresFilter />
+                }
+                headerNumber="5"
+              />
+            </div>
+            <div className="mx-3 mt-2">
+              <ExpandMenu
+                menuName="Title"
+                content={
+                  <GenresFilter />
+                }
+                headerNumber="5"
+              />
+            </div>
+            <div className="mx-3 mt-2">
+              <ExpandMenu
+                menuName="Language"
+                content={
+                  <GenresFilter />
+                }
+                headerNumber="5"
+              />
+            </div>
+            <div className="mx-3 mt-2">
+              <ExpandMenu
+                menuName="Number of words"
+                content={
+                  <GenresFilter />
+                }
+                headerNumber="5"
+              />
+            </div>
+            <div className="mx-3 mt-2">
+              <ExpandMenu
+                menuName="Reviews"
+                content={
+                  <GenresFilter />
+                }
+                headerNumber="5"
+              />
+            </div>
+            <div className="mx-3 mt-2">
+              <ExpandMenu
+                menuName="Date published"
+                content={
+                  <GenresFilter />
+                }
+                headerNumber="5"
+              />
+            </div>
+          </div>
         }
         headerNumber="3"
         headerClass="pt-2"
@@ -216,17 +263,17 @@ function Search() {
 
 
   function onPageChange(page) {
-    const startIndex = (page-1)*6;
-    const endIndex = Math.min(page*6, getAllBooks().length)
+    const startIndex = (page - 1) * 6;
+    const endIndex = Math.min(page * 6, getAllBooks().length)
     setBooksDisplayed(getAllBooks().slice(startIndex, endIndex))
     setBookIndexes([startIndex, endIndex])
   }
 
   return (
     <Container fluid>
-      <h3 className="text-center fw-normal mb-3">Showing {bookIndexes[0]+1}-{bookIndexes[1]} of {getAllBooks().length} books</h3>
-      <PaginationBar totalPages={Math.ceil(getAllBooks().length/6)} onPageChange={onPageChange}/>
-      
+      <h3 className="text-center fw-normal mb-3">Showing {bookIndexes[0] + 1}-{bookIndexes[1]} of {getAllBooks().length} books</h3>
+      <PaginationBar totalPages={Math.ceil(getAllBooks().length / 6)} onPageChange={onPageChange} />
+
       <Row>
         <Col xxl={2} xs={0}></Col>
         <Col xxl={6} xs={8}>
@@ -241,7 +288,7 @@ function Search() {
 
       </Row>
 
-      <PaginationBar totalPages={Math.ceil(getAllBooks().length/6)} onPageChange={onPageChange}/>
+      <PaginationBar totalPages={Math.ceil(getAllBooks().length / 6)} onPageChange={onPageChange} />
 
     </Container >
   );

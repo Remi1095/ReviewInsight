@@ -1,5 +1,9 @@
 import jsonData from './data.json';
 
+export function getBookValues() {
+    return jsonData.values;
+}
+
 export function getAllBooks() {
     return jsonData.books;
 }
@@ -52,3 +56,4 @@ export function setBookLists(bookLists) {
     const jsonString = JSON.stringify(bookLists);
     localStorage.setItem("bookLists", jsonString);
 }
+

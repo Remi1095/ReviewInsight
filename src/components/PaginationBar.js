@@ -11,10 +11,10 @@ function PaginationBar({ totalPages, onPageChange }) {
   const [currentPage, setCurrentPage] = useState(initialPage);
 
   useEffect(() => {
-    pageChange(initialPage);
+    handlePageChange(initialPage);
   }, [initialPage]);
 
-  function pageChange(page) {
+  function handlePageChange(page) {
     navigate(`?page=${page}`);
     window.scrollTo({ top: 0, behavior: 'instant' });
     setCurrentPage(page);
@@ -36,7 +36,7 @@ function PaginationBar({ totalPages, onPageChange }) {
           <li
             key={i}
             className={`page-item${currentPage === i ? ' active' : ''}`}
-            onClick={() => pageChange(i)}
+            onClick={() => handlePageChange(i)}
             style={{ width: "2%" }}
           >
             <span className="page-link">{i}</span>
@@ -65,14 +65,14 @@ function PaginationBar({ totalPages, onPageChange }) {
       <ul className="pagination">
         <li
           className={`page-item${currentPage === 1 ? ' disabled' : ''}`}
-          onClick={currentPage !== 1 ? () => pageChange(currentPage - 1) : null}
+          onClick={currentPage !== 1 ? () => handlePageChange(currentPage - 1) : null}
         >
           <span className="page-link"><span><FontAwesomeIcon icon={faArrowLeft} /></span> Previous</span>
         </li>
         {renderPageNumbers()}
         <li
           className={`page-item${currentPage === totalPages ? ' disabled' : ''}`}
-          onClick={currentPage !== totalPages ? () => pageChange(currentPage + 1) : null}
+          onClick={currentPage !== totalPages ? () => handlePageChange(currentPage + 1) : null}
         >
           <span className="page-link">Next <span><FontAwesomeIcon icon={faArrowRight} /></span></span>
         </li>

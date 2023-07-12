@@ -32,19 +32,12 @@ function MyListsModal({ show, handleClose, bookid }) {
     newSelectedLists[index] = list;
     setSelectedLists(newSelectedLists);
 
-    console.log("user");
-    console.log(newAvailableLists);
-    console.log("selected");
-    console.log(newSelectedLists);
 
   }
 
   function addDropdown() {
     const newSelectedLists = [...selectedLists, ""];
     setSelectedLists(newSelectedLists);
-
-    console.log("selected");
-    console.log(newSelectedLists);
   }
 
   function removeDropdown() {
@@ -53,24 +46,17 @@ function MyListsModal({ show, handleClose, bookid }) {
     if (lastList !== "") {
       const newAvailableLists = [...availableLists, lastList];
       setAvailableLists(newAvailableLists);
-      console.log("user");
-      console.log(newAvailableLists);
     }
     setSelectedLists(newSelectedLists);
-
-    console.log("selected")
-    console.log(newSelectedLists);
 
   }
 
   function handleSelection() {
     selectedLists.forEach(list => {
-      console.log(list);
       if (list !== "") {
         bookLists[list].push(bookid);
       }
     });
-    console.log(bookLists);
     setBookLists(bookLists)
     handleClose();
   }
