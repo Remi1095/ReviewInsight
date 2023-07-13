@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getAllBooks, getAverageScore, getBookCover, getBookValues, getAllAuthors } from '../bookUtils';
 import RatingBox from './RatingBox';
@@ -348,7 +348,7 @@ function DateFilter({ parameters, setParameters }) {
         value={parameters.date.min}
         onChange={handleMinDateChange}
         className='my-1'
-        style={{ width: "100%"}}
+        style={{ width: "100%" }}
       />
       <h6 className='mt-2 mb-1'>Maximum:</h6>
       <input
@@ -363,38 +363,10 @@ function DateFilter({ parameters, setParameters }) {
 }
 
 
-function SortAndFilters() {
+function SortAndFilters({ parameters, setParameters }) {
 
   const navigate = useNavigate();
   const location = useLocation();
-
-  const [parameters, setParameters] = useState({
-    sort: '',
-    genres: {
-      include: [],
-      exclude: []
-    },
-    classifications: [],
-    authors: {
-      include: [],
-      exclude: []
-    },
-    title: '',
-    language: '',
-    words: {
-      min: 0,
-      max: Infinity
-    },
-    reviews: {
-      rating: 1,
-      sample: 0
-    },
-    date: {
-      min: '',
-      max: ''
-    }
-
-  });
 
   function applyParameters() {
     console.log(parameters);
@@ -404,59 +376,45 @@ function SortAndFilters() {
     if (parameters.sort !== '') {
       queryParams.append('sort', parameters.sort);
     }
-
     if (parameters.genres.include.length > 0) {
       queryParams.append('genres.include', parameters.genres.include.join(','));
     }
-
     if (parameters.genres.exclude.length > 0) {
       queryParams.append('genres.exclude', parameters.genres.exclude.join(','));
     }
-
     if (parameters.classifications.length > 0) {
       queryParams.append('classifications', parameters.classifications.join(','));
     }
-
     if (parameters.authors.include.length > 0) {
       queryParams.append('authors.include', parameters.authors.include.join(','));
     }
-
     if (parameters.authors.exclude.length > 0) {
       queryParams.append('authors.exclude', parameters.authors.exclude.join(','));
     }
-
     if (parameters.title !== '') {
       queryParams.append('title', parameters.title);
     }
-
     if (parameters.language !== '') {
       queryParams.append('language', parameters.language);
     }
-
     if (parameters.words.min !== 0) {
       queryParams.append('words.min', parameters.words.min);
     }
-
     if (parameters.words.max !== Infinity) {
       queryParams.append('words.max', parameters.words.max);
     }
-
     if (parameters.reviews.rating !== 1) {
       queryParams.append('reviews.rating', parameters.reviews.rating);
     }
-
     if (parameters.reviews.sample !== 0) {
       queryParams.append('reviews.sample', parameters.reviews.sample);
     }
-
     if (parameters.date.min !== '') {
       queryParams.append('date.min', parameters.date.min);
     }
-
     if (parameters.date.max !== '') {
       queryParams.append('date.max', parameters.date.max);
     }
-
 
     navigate(`${location.pathname}?${queryParams.toString()}`)
   }
@@ -568,9 +526,53 @@ function SortAndFilters() {
 
 function Search() {
 
-  const [bookIndexes, setBookIndexes] = useState([0, getAllBooks().length])
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const [parameters, setParameters] = useState({
+    sort: '',
+    genres: {
+      include: [],
+      exclude: []
+    },
+    classifications: [],
+    authors: {
+      include: [],
+      exclude: []
+    },
+    title: '',
+    language: '',
+    words: {
+      min: 0,
+      max: Infinity
+    },
+    reviews: {
+      rating: 1,
+      sample: 0
+    },
+    date: {
+      min: '',
+      max: ''
+    }
+
+  });
+  const [bookIndexes, setBookIndexes] = useState([0, getAllBooks().length]);
   const [booksDisplayed, setBooksDisplayed] = useState(getAllBooks());
 
+
+  useEffect(() => {
+
+    const newParameters = { ...parameters };
+    newParameters.genres.include = searchParams.get('genres.include')?.split(',') ?? [];
+    newParameters.genres.exclude = searchParams.get('genres.exclude')?.split(',') ?? [];
+    newParameters.classifications = searchParams.get('classifications')?.split(',') ?? [];
+    newParameters.authors.include = searchParams.get('authors.include')?.split(',') ?? [];
+    newParameters.authors.exclude = searchParams.get('authors.exclude')?.split(',') ?? [];
+    newParameters.title = searchParams.get('title') ?? '';
+    newParameters.language = searchParams.get('language') ?? '';
+
+
+    console.log(newParameters);
+  }, [location.search]);
 
   function onPageChange(page) {
     const startIndex = (page - 1) * 6;
@@ -592,7 +594,7 @@ function Search() {
           ))}
         </Col>
         <Col xxl={2} xs={4}>
-          <SortAndFilters />
+          <SortAndFilters parameters={parameters} setParameters={setParameters} />
         </Col>
         <Col className=" " xxl={2} xs={0}></Col>
 
