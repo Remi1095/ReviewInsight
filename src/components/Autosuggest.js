@@ -3,11 +3,11 @@ import { getBookValues } from '../bookUtils';
 import { type } from '@testing-library/user-event/dist/type';
 
 
-function Autosuggest({ suggestions, handleElements, placeholder }) {
+function Autosuggest({ suggestions, handleElements, placeholder, initalElements=[] }) {
 
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(initalElements.join('\n') + ((initalElements.length > 0) ? '\n' : ''));
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
-  const [rows, setRows] = useState(1);
+  const [rows, setRows] = useState(initalElements.length+1);
 
   function handleChange(event) {
     let elements = event.target.value.split('\n');
@@ -15,11 +15,9 @@ function Autosuggest({ suggestions, handleElements, placeholder }) {
     if (elements.length > rows && elements[elements.length - 2] !== '' && filteredSuggestions.length > 0) {
       elements[elements.length - 2] = filteredSuggestions[0];
     }
-    if (elements.length != rows) {
-      setRows(elements.length)
-    }
-
+    
     setValue(elements.join('\n'))
+    setRows(elements.length)
     handleElements(elements.filter(element => element !== ''));
 
     const filtered = suggestions.filter((suggestion) =>
@@ -29,7 +27,11 @@ function Autosuggest({ suggestions, handleElements, placeholder }) {
   };
 
   function handleSuggestionClick(suggestion) {
-    setValue(suggestion);
+    let elements = value.split('\n');
+    elements[elements.length - 1] = suggestion;
+    setValue(elements.join('\n') + '\n');
+    setRows(elements.length+1)
+    handleElements(elements.filter(element => element !== ''))
     setFilteredSuggestions([]);
   };
 
@@ -41,7 +43,7 @@ function Autosuggest({ suggestions, handleElements, placeholder }) {
         onChange={handleChange}
         placeholder={placeholder}
         rows={rows}
-        style={{ resize: 'none', width: "100%" }}
+        style={{ resize: 'none', width: "100%"}}
       />
       {(filteredSuggestions.length > 0 && value !== '' && value[value.length-1] !== '\n') && (
         <ul className='suggestions-popup'>

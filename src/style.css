@@ -48,11 +48,16 @@ button[type="submit"]:hover {
   text-decoration: none;
 }
 
+input[type='checkbox'],
 input[type='radio'] {
   transform: scale(1.4);
 }
 
-input[type="radio"]:checked {
+input {
+  accent-color: var(--primary-0);
+}
+
+textarea {
   accent-color: var(--primary-0);
 }
 
@@ -210,8 +215,8 @@ input[type="radio"]:checked {
   background-color: var(--primary-2);
   border-radius: 10px;
   padding: 10px;
-  position: sticky;
-  top: 2%;
+  /*position: sticky;
+  top: 2%;*/
 }
 
 .dropdown-menu {
@@ -223,7 +228,7 @@ input[type="radio"]:checked {
   display: inline;
   color: black !important;
   background-color: white !important;
-  border: 1px solid lightgray !important;
+  border: 1px solid gray !important;
 }
 
 .dropdown-item:active {

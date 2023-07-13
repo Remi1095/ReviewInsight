@@ -34,6 +34,10 @@ export function getScoreArray(book) {
     return book.reviews.map((review) => review.score).concat(book.scores);
 }
 
+export function getAllAuthors() {
+    return [...new Set(jsonData.books.map(book => book.author))];
+}
+
 export function getBookLists() {
     const jsonString = localStorage.getItem("bookLists");
     var bookLists;

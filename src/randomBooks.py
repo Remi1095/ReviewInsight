@@ -35,13 +35,18 @@ def randomData(num_authors):
             'Teen',
             'Mature',
             'Explicit'
+        ],
+        'languages': [
+            'English',
+            'Spanish',
+            'French'
         ]
     }
         
     id = 0
 
     for i in range(num_authors):
-        author = fake.name(),
+        author = fake.name()
         for j in range(random.randint(1,5)):
             
             volumes = random.randint(0, 4)

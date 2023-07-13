@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getAllBooks, getAverageScore, getBookCover, getBookValues } from '../bookUtils';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { getAllBooks, getAverageScore, getBookCover, getBookValues, getAllAuthors } from '../bookUtils';
 import RatingBox from './RatingBox';
 import ShowMore from './ShowMore';
 import BookCover from './BookCover';
@@ -10,6 +10,7 @@ import Autosuggest from './Autosuggest';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import RatingSlider from './RatingSlider';
 
 function BookCard({ book }) {
 
@@ -94,75 +95,384 @@ function ExpandMenu({ menuName, content, headerNumber, headerClass = "" }) {
 }
 
 
-function GenresFilter() {
+function GenresFilter({ parameters, setParameters }) {
 
   const genres = getBookValues().genres;
 
-  function handleGenreSelect(genres) {
-    console.log(genres)
+  function handleIncludeGenre(genres) {
+    const newParameters = { ...parameters };
+    newParameters.genres.include = genres;
+    setParameters(newParameters);
+  }
+
+  function handleExcludeGenre(genres) {
+    const newParameters = { ...parameters };
+    newParameters.genres.exclude = genres;
+    setParameters(newParameters);
   }
 
   return (
     <div>
       <h6 className='mb-1'>Include:</h6>
-      < Autosuggest suggestions={genres} handleElements={handleGenreSelect} placeholder={"Type genres..."}/>
-      <h6 className='mt-2 mb-1'>Exlude:</h6>
-      < Autosuggest suggestions={genres} handleElements={handleGenreSelect} placeholder={"Type genres..."}/>
+      < Autosuggest suggestions={genres} handleElements={handleIncludeGenre} placeholder={"Type genres..."} initalElements={parameters.genres.include} />
+      <h6 className='mt-2 mb-1'>Exclude:</h6>
+      < Autosuggest suggestions={genres} handleElements={handleExcludeGenre} placeholder={"Type genres..."} initalElements={parameters.genres.exclude} />
     </div>
   )
 }
 
-function ClassificationFilter() {
+function ClassificationFilter({ parameters, setParameters }) {
 
-}
+  const classifications = getBookValues().classifications;
 
-function AuthorFilter() {
-  const genres = getBookValues().genres;
+  function handleClassificationSelect(classification) {
+    const newParameters = { ...parameters };
+    const index = newParameters.classifications.indexOf(classification);
 
-  function handleGenreSelect(genres) {
-    console.log(genres)
+    if (index !== -1) {
+      newParameters.classifications.splice(index, 1);
+    } else {
+      newParameters.classifications.push(classification);
+    }
+
+    setParameters(newParameters);
   }
 
   return (
     <div>
+      {classifications.map(classification => (
+        <label key={classification} className='d-block ms-3'>
+          <input
+            type="checkbox"
+            checked={parameters.classifications.includes(classification)}
+            onChange={() => handleClassificationSelect(classification)}
+            className='me-2'
+          />
+          {classification}
+        </label>
+      ))}
+    </div>
+  )
+}
+
+function AuthorFilter({ parameters, setParameters }) {
+
+  const authors = getAllAuthors();
+
+  function handleIncludeAuthor(authors) {
+    const newParameters = { ...parameters };
+    newParameters.authors.include = authors;
+    setParameters(newParameters);
+  }
+
+  function handleExcludeAuthor(authors) {
+    const newParameters = { ...parameters };
+    newParameters.authors.exclude = authors;
+    setParameters(newParameters);
+  }
+
+
+  return (
+    <div>
       <h6 className='mb-1'>Include:</h6>
-      < Autosuggest suggestions={genres} handleElements={handleGenreSelect} placeholder={"Type genres..."}/>
-      <h6 className='mt-2 mb-1'>Exlude:</h6>
-      < Autosuggest suggestions={genres} handleElements={handleGenreSelect} placeholder={"Type genres..."}/>
+      < Autosuggest suggestions={authors} handleElements={handleIncludeAuthor} placeholder={"Author names..."} initalElements={parameters.authors.include} />
+      <h6 className='mt-2 mb-1'>Exclude:</h6>
+      < Autosuggest suggestions={authors} handleElements={handleExcludeAuthor} placeholder={"Author names..."} initalElements={parameters.authors.exclude} />
     </div>
   )
 
 }
 
-function TitleFilter() {
+function TitleFilter({ parameters, setParameters }) {
+
+  function handleTitleChange(event) {
+    const newParameters = { ...parameters };
+    newParameters.title = event.target.value;
+    setParameters(newParameters);
+  }
+
+  return (
+    <div className="mx-auto px-2">
+      <input
+        type='text'
+        value={parameters.title}
+        onChange={handleTitleChange}
+        placeholder={'Book title...'}
+        className='my-1'
+        style={{ width: "100%" }}
+      />
+    </div>
+  )
+}
+
+function LanguageFilter({ parameters, setParameters }) {
+
+  const languages = getBookValues().languages;
+
+  function handleLanguageSelect(language) {
+    const newParameters = { ...parameters };
+    newParameters.language = language;
+    setParameters(newParameters);
+  }
+
+  return (
+    <div className="ms-2">
+      <AppDropdown
+        emptyValue="Select language"
+        initialValue={parameters.language}
+        items={languages}
+        handleItemSelect={handleLanguageSelect}
+      />
+    </div>
+  )
 
 }
 
-function LanguageFilter() {
+function WordsFilter({ parameters, setParameters }) {
+
+  function handleMinWordsChange(event) {
+    const newParameters = { ...parameters };
+    const value = event.target.value.replace(/\D/g, '');
+    if (value === '') {
+      newParameters.words.min = 0;
+    } else {
+      newParameters.words.min = parseInt(value);
+    }
+    setParameters(newParameters);
+  }
+
+  function handleMaxWordsChange(event) {
+    const newParameters = { ...parameters };
+    const value = event.target.value.replace(/\D/g, '');
+    if (value === '') {
+      newParameters.words.max = Infinity;
+    } else {
+      newParameters.words.max = parseInt(value);
+    }
+    setParameters(newParameters);
+  }
+
+  function parseNumber(number) {
+    const digits = number.toString().split('').reverse();
+    const formattedNumber = [];
+
+    for (let i = 0; i < digits.length; i++) {
+      if (i > 0 && i % 3 === 0) {
+        formattedNumber.push(' ');
+      }
+      formattedNumber.push(digits[i]);
+    }
+
+    return formattedNumber.reverse().join('');
+  }
+
+  return (
+    <div className="mx-auto px-2">
+      <h6 className='mb-1'>Minimum:</h6>
+      <input
+        type='text'
+        value={(parameters.words.min !== 0) ? parseNumber(parameters.words.min) : ''}
+        onChange={handleMinWordsChange}
+        placeholder={'10 000'}
+        className='my-1'
+        style={{ width: "100%" }}
+      />
+      <h6 className='mt-2 mb-1'>Maximum:</h6>
+      <input
+        type='text'
+        value={(parameters.words.max !== Infinity) ? parseNumber(parameters.words.max) : ''}
+        onChange={handleMaxWordsChange}
+        placeholder={'500 000'}
+        className='my-1'
+        style={{ width: "100%" }}
+      />
+    </div>
+  )
+}
+
+function ReviewsFilter({ parameters, setParameters }) {
+  function handleRatingSelect(rating) {
+    const newParameters = { ...parameters };
+    newParameters.reviews.rating = rating;
+    setParameters(newParameters);
+  }
+
+  function handleSampleChange(event) {
+    const newParameters = { ...parameters };
+    const value = event.target.value.replace(/\D/g, '');
+    if (value === '') {
+      newParameters.reviews.sample = 0;
+    } else {
+      newParameters.reviews.sample = parseInt(value);
+    }
+    setParameters(newParameters);
+  }
+
+  return (
+    <div className="mx-auto px-2">
+      <h6 className='mb-1'>Score:</h6>
+      <RatingSlider handleRating={handleRatingSelect} initialRating={parameters.reviews.rating} />
+      <h6 className='mt-2 mb-1'>Sample size:</h6>
+      <input
+        type='text'
+        value={(parameters.reviews.sample !== 0) ? parameters.reviews.sample.toString() : ''}
+        onChange={handleSampleChange}
+        placeholder={'100'}
+        className='my-1'
+        style={{ width: "100%" }}
+      />
+    </div>
+  )
 
 }
 
-function WordsFilter() {
+function DateFilter({ parameters, setParameters }) {
 
-}
+  function handleMinDateChange(event) {
+    const newParameters = { ...parameters };
+    newParameters.date.min = event.target.value;
+    setParameters(newParameters);
+  }
 
-function ReviewsFilter() {
+  function handleMaxDateChange(event) {
+    const newParameters = { ...parameters };
+    newParameters.date.max = event.target.value;
+    setParameters(newParameters);
+  }
 
-}
-
-function DateFilter() {
-
+  return (
+    <div className="mx-auto px-2">
+      <h6 className='mb-1'>Minimum:</h6>
+      <input
+        type='date'
+        value={parameters.date.min}
+        onChange={handleMinDateChange}
+        className='my-1'
+        style={{ width: "100%"}}
+      />
+      <h6 className='mt-2 mb-1'>Maximum:</h6>
+      <input
+        type='date'
+        value={parameters.date.max}
+        onChange={handleMaxDateChange}
+        className='my-1'
+        style={{ width: "100%" }}
+      />
+    </div>
+  )
 }
 
 
 function SortAndFilters() {
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [parameters, setParameters] = useState({
+    sort: '',
+    genres: {
+      include: [],
+      exclude: []
+    },
+    classifications: [],
+    authors: {
+      include: [],
+      exclude: []
+    },
+    title: '',
+    language: '',
+    words: {
+      min: 0,
+      max: Infinity
+    },
+    reviews: {
+      rating: 1,
+      sample: 0
+    },
+    date: {
+      min: '',
+      max: ''
+    }
+
+  });
+
+  function applyParameters() {
+    console.log(parameters);
+
+    const queryParams = new URLSearchParams();
+
+    if (parameters.sort !== '') {
+      queryParams.append('sort', parameters.sort);
+    }
+
+    if (parameters.genres.include.length > 0) {
+      queryParams.append('genres.include', parameters.genres.include.join(','));
+    }
+
+    if (parameters.genres.exclude.length > 0) {
+      queryParams.append('genres.exclude', parameters.genres.exclude.join(','));
+    }
+
+    if (parameters.classifications.length > 0) {
+      queryParams.append('classifications', parameters.classifications.join(','));
+    }
+
+    if (parameters.authors.include.length > 0) {
+      queryParams.append('authors.include', parameters.authors.include.join(','));
+    }
+
+    if (parameters.authors.exclude.length > 0) {
+      queryParams.append('authors.exclude', parameters.authors.exclude.join(','));
+    }
+
+    if (parameters.title !== '') {
+      queryParams.append('title', parameters.title);
+    }
+
+    if (parameters.language !== '') {
+      queryParams.append('language', parameters.language);
+    }
+
+    if (parameters.words.min !== 0) {
+      queryParams.append('words.min', parameters.words.min);
+    }
+
+    if (parameters.words.max !== Infinity) {
+      queryParams.append('words.max', parameters.words.max);
+    }
+
+    if (parameters.reviews.rating !== 1) {
+      queryParams.append('reviews.rating', parameters.reviews.rating);
+    }
+
+    if (parameters.reviews.sample !== 0) {
+      queryParams.append('reviews.sample', parameters.reviews.sample);
+    }
+
+    if (parameters.date.min !== '') {
+      queryParams.append('date.min', parameters.date.min);
+    }
+
+    if (parameters.date.max !== '') {
+      queryParams.append('date.max', parameters.date.max);
+    }
+
+
+    navigate(`${location.pathname}?${queryParams.toString()}`)
+  }
+
   return (
     <div className="filters-box">
+      <div className='text-center mb-1 mt-2'>
+        <u className="border border-dark px-2 py-1 pointer" style={{ backgroundColor: "var(--primary-1)" }} onClick={applyParameters}>
+          Apply Filters and Sort
+        </u>
+      </div>
+
       <ExpandMenu
         menuName="Sort"
         content={
-          <GenresFilter />
+          <p>Unfinished</p>
         }
         headerNumber="3"
         headerClass="pt-2"
@@ -176,7 +486,7 @@ function SortAndFilters() {
               <ExpandMenu
                 menuName="Genres"
                 content={
-                  <GenresFilter />
+                  <GenresFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
               />
@@ -185,7 +495,7 @@ function SortAndFilters() {
               <ExpandMenu
                 menuName="Classification"
                 content={
-                  <GenresFilter />
+                  <ClassificationFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
               />
@@ -194,7 +504,7 @@ function SortAndFilters() {
               <ExpandMenu
                 menuName="Author"
                 content={
-                  <GenresFilter />
+                  <AuthorFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
               />
@@ -203,7 +513,7 @@ function SortAndFilters() {
               <ExpandMenu
                 menuName="Title"
                 content={
-                  <GenresFilter />
+                  <TitleFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
               />
@@ -212,7 +522,7 @@ function SortAndFilters() {
               <ExpandMenu
                 menuName="Language"
                 content={
-                  <GenresFilter />
+                  <LanguageFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
               />
@@ -221,7 +531,7 @@ function SortAndFilters() {
               <ExpandMenu
                 menuName="Number of words"
                 content={
-                  <GenresFilter />
+                  <WordsFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
               />
@@ -230,7 +540,7 @@ function SortAndFilters() {
               <ExpandMenu
                 menuName="Reviews"
                 content={
-                  <GenresFilter />
+                  <ReviewsFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
               />
@@ -239,7 +549,7 @@ function SortAndFilters() {
               <ExpandMenu
                 menuName="Date published"
                 content={
-                  <GenresFilter />
+                  <DateFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
               />

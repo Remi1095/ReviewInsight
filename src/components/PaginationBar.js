@@ -15,7 +15,9 @@ function PaginationBar({ totalPages, onPageChange }) {
   }, [initialPage]);
 
   function handlePageChange(page) {
-    navigate(`?page=${page}`);
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('page', page);
+    navigate(`${location.pathname}?${urlParams.toString()}`);
     window.scrollTo({ top: 0, behavior: 'instant' });
     setCurrentPage(page);
     onPageChange(page);
