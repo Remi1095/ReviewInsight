@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getAllBooks, getAverageScore, getBookCover, getBookValues, getAllAuthors } from '../bookUtils';
+import cloneDeep from 'lodash.clonedeep';
 import RatingBox from './RatingBox';
 import ShowMore from './ShowMore';
 import BookCover from './BookCover';
@@ -363,66 +364,12 @@ function DateFilter({ parameters, setParameters }) {
 }
 
 
-function SortAndFilters({ parameters, setParameters }) {
-
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  function applyParameters() {
-    console.log(parameters);
-
-    const queryParams = new URLSearchParams();
-
-    if (parameters.sort !== '') {
-      queryParams.append('sort', parameters.sort);
-    }
-    if (parameters.genres.include.length > 0) {
-      queryParams.append('genres.include', parameters.genres.include.join(','));
-    }
-    if (parameters.genres.exclude.length > 0) {
-      queryParams.append('genres.exclude', parameters.genres.exclude.join(','));
-    }
-    if (parameters.classifications.length > 0) {
-      queryParams.append('classifications', parameters.classifications.join(','));
-    }
-    if (parameters.authors.include.length > 0) {
-      queryParams.append('authors.include', parameters.authors.include.join(','));
-    }
-    if (parameters.authors.exclude.length > 0) {
-      queryParams.append('authors.exclude', parameters.authors.exclude.join(','));
-    }
-    if (parameters.title !== '') {
-      queryParams.append('title', parameters.title);
-    }
-    if (parameters.language !== '') {
-      queryParams.append('language', parameters.language);
-    }
-    if (parameters.words.min !== 0) {
-      queryParams.append('words.min', parameters.words.min);
-    }
-    if (parameters.words.max !== Infinity) {
-      queryParams.append('words.max', parameters.words.max);
-    }
-    if (parameters.reviews.rating !== 1) {
-      queryParams.append('reviews.rating', parameters.reviews.rating);
-    }
-    if (parameters.reviews.sample !== 0) {
-      queryParams.append('reviews.sample', parameters.reviews.sample);
-    }
-    if (parameters.date.min !== '') {
-      queryParams.append('date.min', parameters.date.min);
-    }
-    if (parameters.date.max !== '') {
-      queryParams.append('date.max', parameters.date.max);
-    }
-
-    navigate(`${location.pathname}?${queryParams.toString()}`)
-  }
+function SortAndFilters({ parameters, setParameters, setURLParameters }) {
 
   return (
     <div className="filters-box">
       <div className='text-center mb-1 mt-2'>
-        <u className="border border-dark px-2 py-1 pointer" style={{ backgroundColor: "var(--primary-1)" }} onClick={applyParameters}>
+        <u className="border border-dark px-2 py-1 pointer" style={{ backgroundColor: "var(--primary-1)" }} onClick={() => setURLParameters()}>
           Apply Filters and Sort
         </u>
       </div>
@@ -526,9 +473,10 @@ function SortAndFilters({ parameters, setParameters }) {
 
 function Search() {
 
+  const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const [parameters, setParameters] = useState({
+  const defaultParameters = {
     sort: '',
     genres: {
       include: [],
@@ -553,26 +501,136 @@ function Search() {
       min: '',
       max: ''
     }
+  }
 
-  });
+  const [parameters, setParameters] = useState(getURLParameters());
+  console.log('initial');
+  console.log(parameters);
+
   const [bookIndexes, setBookIndexes] = useState([0, getAllBooks().length]);
   const [booksDisplayed, setBooksDisplayed] = useState(getAllBooks());
 
+  function setURLParameters1() {
+    console.log("set")
+    console.log(parameters);
 
-  useEffect(() => {
+    const queryParams = new URLSearchParams();
 
-    const newParameters = { ...parameters };
-    newParameters.genres.include = searchParams.get('genres.include')?.split(',') ?? [];
-    newParameters.genres.exclude = searchParams.get('genres.exclude')?.split(',') ?? [];
-    newParameters.classifications = searchParams.get('classifications')?.split(',') ?? [];
-    newParameters.authors.include = searchParams.get('authors.include')?.split(',') ?? [];
-    newParameters.authors.exclude = searchParams.get('authors.exclude')?.split(',') ?? [];
-    newParameters.title = searchParams.get('title') ?? '';
-    newParameters.language = searchParams.get('language') ?? '';
+    if (parameters.sort !== '') {
+      queryParams.append('sort', parameters.sort);
+    }
+    if (parameters.genres.include.length > 0) {
+      queryParams.append('genres.include', parameters.genres.include.join(','));
+    }
+    if (parameters.genres.exclude.length > 0) {
+      queryParams.append('genres.exclude', parameters.genres.exclude.join(','));
+    }
+    if (parameters.classifications.length > 0) {
+      queryParams.append('classifications', parameters.classifications.join(','));
+    }
+    if (parameters.authors.include.length > 0) {
+      queryParams.append('authors.include', parameters.authors.include.join(','));
+    }
+    if (parameters.authors.exclude.length > 0) {
+      queryParams.append('authors.exclude', parameters.authors.exclude.join(','));
+    }
+    if (parameters.title !== '') {
+      queryParams.append('title', parameters.title);
+    }
+    if (parameters.language !== '') {
+      queryParams.append('language', parameters.language);
+    }
+    if (parameters.words.min !== 0) {
+      queryParams.append('words.min', parameters.words.min);
+    }
+    if (parameters.words.max !== Infinity) {
+      queryParams.append('words.max', parameters.words.max);
+    }
+    if (parameters.reviews.rating !== 1) {
+      queryParams.append('reviews.rating', parameters.reviews.rating);
+    }
+    if (parameters.reviews.sample !== 0) {
+      queryParams.append('reviews.sample', parameters.reviews.sample);
+    }
+    if (parameters.date.min !== '') {
+      queryParams.append('date.min', parameters.date.min);
+    }
+    if (parameters.date.max !== '') {
+      queryParams.append('date.max', parameters.date.max);
+    }
 
+    navigate(`${location.pathname}?${queryParams.toString()}`)
+  }
 
-    console.log(newParameters);
-  }, [location.search]);
+  function setURLParameters(obj = parameters, initialObj = defaultParameters, keyPath = []) {
+
+    if (keyPath.length === 0) {
+      obj = cloneDeep(obj);
+      for (const param of searchParams.keys()) {
+        searchParams.delete(param);
+      }
+      console.log(searchParams.toString())
+      console.log(obj)
+    }
+
+    for (const key in obj) {
+      const currentKeyPath = [...keyPath, key];
+      
+      if (typeof obj[key] === 'object' && !Array.isArray(obj[key]) && obj[key] !== null) {
+        setURLParameters(obj[key], initialObj[key], currentKeyPath);
+
+      } else if (typeof obj[key] === 'string' || typeof obj[key] === 'number') {
+        if (obj[key] !== initialObj[key]) {
+          searchParams.append(currentKeyPath.join('.'), obj[key]);
+        }
+
+      } else if (Array.isArray(obj[key])) {
+        if (obj[key].length !== initialObj[key].length || !obj[key].every((element, index) => element === initialObj[key][index])) {
+          searchParams.append(currentKeyPath.join('.'), obj[key].join(','));
+        }
+
+      } else {
+      }
+      
+    }
+
+    if (keyPath.length === 0) {
+      navigate(`${location.pathname}?${searchParams.toString()}`)
+    }
+  }
+
+  function getURLParameters(obj = defaultParameters, initialObj = defaultParameters, keyPath = []) {
+
+    if (keyPath.length === 0) {
+      obj = cloneDeep(obj);
+    }
+
+    for (const key in obj) {
+      const currentKeyPath = [...keyPath, key];
+      if (typeof obj[key] === 'object' && !Array.isArray(obj[key]) && obj[key] !== null) {
+        getURLParameters(obj[key], initialObj[key], currentKeyPath);
+
+      } else if (typeof obj[key] === 'string') {
+        obj[key] = searchParams.get(currentKeyPath.join('.')) ?? initialObj[key];
+
+      } else if (typeof obj[key] === 'number') {
+        obj[key] = parseInt(searchParams.get(currentKeyPath.join('.'))) || initialObj[key];
+
+      } else if (Array.isArray(obj[key])) {
+        obj[key] = searchParams.get(currentKeyPath.join('.'))?.split(',') || initialObj[key];
+
+      } else {
+        console.log('Object not recognised');
+        console.log(currentKeyPath);
+        console.log(obj[key]);
+      }
+      
+    }
+
+    if (keyPath.length === 0) {
+      return obj;
+    }
+  }
 
   function onPageChange(page) {
     const startIndex = (page - 1) * 6;
@@ -594,7 +652,7 @@ function Search() {
           ))}
         </Col>
         <Col xxl={2} xs={4}>
-          <SortAndFilters parameters={parameters} setParameters={setParameters} />
+          <SortAndFilters parameters={parameters} setParameters={setParameters} setURLParameters={setURLParameters} />
         </Col>
         <Col className=" " xxl={2} xs={0}></Col>
 
