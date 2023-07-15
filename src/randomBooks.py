@@ -13,6 +13,7 @@ def randomData(num_authors):
     books = []
     values = {
         'genres': [
+            "Fiction",
             "Sci-Fi",
             "Fantasy",
             "Mystery",
@@ -21,6 +22,7 @@ def randomData(num_authors):
             "Horror",
             "Comedy",
             "Dystopia",
+            "Non-Fiction",
             "Biography",
             "History",
             "Science",
