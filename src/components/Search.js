@@ -511,7 +511,7 @@ function Search() {
   console.log("mount")
 
   useEffect(() => {
-    filterBooks();
+    filterBooks(getURLParameters());
   }, []);
 
 
@@ -543,7 +543,7 @@ function Search() {
 
     if (keyPath.length === 0) {
       navigate(`${location.pathname}?${queryParams.toString()}`);
-      filterBooks();
+      filterBooks(obj);
     }
   }
 
@@ -580,11 +580,10 @@ function Search() {
     }
   }
 
-  function filterBooks() {
-    const urlParameters = getURLParameters();
+  function filterBooks(newParameters) {
     const newFilteredBooks = getAllBooks().filter(
-      (book) => urlParameters.genres.include.every((genre) => book.genres.includes(genre)) &&
-      urlParameters.genres.exclude.every((genre) => !book.genres.includes(genre))
+      (book) => newParameters.genres.include.every((genre) => book.genres.includes(genre)) &&
+      newParameters.genres.exclude.every((genre) => !book.genres.includes(genre))
     );
     setFilteredBooks(newFilteredBooks);
     setBooksDisplayed(newFilteredBooks.slice(0, 6));
