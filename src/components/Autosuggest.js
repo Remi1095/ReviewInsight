@@ -3,49 +3,68 @@ import { getBookValues } from '../bookUtils';
 import { type } from '@testing-library/user-event/dist/type';
 
 
-function Autosuggest({ suggestions, handleElements, placeholder, initalElements=[] }) {
+function Autosuggest({ elements, handleElements, suggestions, placeholder }) {
 
-  const [value, setValue] = useState(initalElements.join('\n') + ((initalElements.length > 0) ? '\n' : ''));
+  const [hasEmptyRow, setHasEmptyRow] = useState(elements.length === 0);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
-  const [rows, setRows] = useState(initalElements.length+1);
 
   function handleChange(event) {
-    let elements = event.target.value.split('\n');
+    console.log('handleChange');
+    const values = event.target.value.split('\n');
 
-    if (elements.length > rows && elements[elements.length - 2] !== '' && filteredSuggestions.length > 0) {
-      elements[elements.length - 2] = filteredSuggestions[0];
+    if (elements.length > 0 && values.length > elements.length && filteredSuggestions.length > 0) {
+      values[values.length - 2] = filteredSuggestions[0];
     }
-    
-    setValue(elements.join('\n'))
-    setRows(elements.length)
-    handleElements(elements.filter(element => element !== ''));
+    console.log(values);
+    console.log(elements);
+    setHasEmptyRow(values[values.length - 1] === '');
 
-    const filtered = suggestions.filter((suggestion) =>
-      suggestion.toLowerCase().startsWith(elements[elements.length - 1].toLowerCase())
-    );
-    setFilteredSuggestions(filtered);
+    if (values[values.length - 1] !== '') {
+      const filtered = suggestions.filter((suggestion) =>
+        suggestion.toLowerCase().startsWith(values[values.length - 1].toLowerCase())
+      );
+      console.log(filtered);
+      setFilteredSuggestions(filtered);
+    } else {
+      setFilteredSuggestions([]);
+    }
+
+
+    handleElements(values.filter((value) => value !== ''));
+
+
   };
 
   function handleSuggestionClick(suggestion) {
-    let elements = value.split('\n');
-    elements[elements.length - 1] = suggestion;
-    setValue(elements.join('\n') + '\n');
-    setRows(elements.length+1)
-    handleElements(elements.filter(element => element !== ''))
+    const values = [...elements];
+    values[values.length - 1] = suggestion;
+    setHasEmptyRow(true);
     setFilteredSuggestions([]);
+    handleElements(values.filter((value) => value !== ''))
+  };
+
+  const handleKeyEnter = (event) => {
+    if (event.key === "Enter") {
+      //event.preventDefault(); // Prevent the default Enter key behavior
+
+      // Your custom code here
+      console.log("Enter key was pressed!");
+      // Perform any additional actions or manipulate the textarea content as needed
+    }
   };
 
 
   return (
     <div className="mx-auto" style={{ position: "relative", width: "90%" }}>
       <textarea
-        value={value}
+        value={elements.join('\n') + ((hasEmptyRow && elements.length > 0) ? '\n' : '')}
         onChange={handleChange}
+        onKeyDown={handleKeyEnter}
         placeholder={placeholder}
-        rows={rows}
-        style={{ resize: 'none', width: "100%"}}
+        rows={elements.length + ((hasEmptyRow) ? 1 : 0)}
+        style={{ resize: 'none', width: "100%" }}
       />
-      {(filteredSuggestions.length > 0 && value !== '' && value[value.length-1] !== '\n') && (
+      {(filteredSuggestions.length > 0 && elements.length !== 0 && elements[elements.length - 1] !== '') && (
         <ul className='suggestions-popup'>
           {filteredSuggestions.map((suggestion, index) => (
             <li className='suggestion-item' key={index} onClick={() => handleSuggestionClick(suggestion)}>

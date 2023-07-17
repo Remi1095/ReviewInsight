@@ -1,7 +1,6 @@
 import React, { useState, useRef, useLayoutEffect } from 'react';
 
-function RatingSlider({handleRating, initialRating=5}) {
-  const [value, setValue] = useState(initialRating);
+function RatingSlider({rating, handleRating}) {
   const parentRef = useRef(null);
   const [width, setWidth] = useState(100)
 
@@ -24,13 +23,11 @@ function RatingSlider({handleRating, initialRating=5}) {
   }, [parentRef]);
 
   function handleChange(event) {
-    const newValue = parseInt(event.target.value);
-    setValue(newValue);
-    handleRating(newValue)
+    const newRating = parseInt(event.target.value);
+    handleRating(newRating)
   };
 
   function handleNumberClick(rating) {
-    setValue(rating);
     handleRating(rating)
   }
 
@@ -102,14 +99,14 @@ function RatingSlider({handleRating, initialRating=5}) {
         type="range"
         min="1"
         max="10"
-        value={value}
+        value={rating}
         onChange={handleChange}
         style={{ width: "100%", height: `${width / 16 + width / (80 / 3)}px`, backgroundColor: "transparent" }}
       />
       <div className="d-flex">
         {markings.map((number) => (
           <span
-            className={`text-center pointer ${number === value ? "highlight" : ""}`}
+            className={`text-center pointer ${number === rating ? "highlight" : ""}`}
             style={{ flex: "1", width: `${width}px`, fontSize: `${width / 20}px` }}
             key={number}
             onClick={() => handleNumberClick(number)}

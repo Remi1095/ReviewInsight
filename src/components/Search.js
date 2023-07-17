@@ -142,7 +142,7 @@ function Sort({ parameters, setParameters }) {
         <h6 className='d-inline me-2'>Sort by:</h6>
         <AppDropdown
           emptyValue="Sort by..."
-          initialValue={parameters.sort.type}
+          selectedItem={parameters.sort.type}
           items={sortOptions}
           handleItemSelect={handleSortSelect}
           hasReset={false}
@@ -196,9 +196,9 @@ function GenresFilter({ parameters, setParameters }) {
   return (
     <div>
       <h6 className='mb-1'>Include:</h6>
-      < Autosuggest suggestions={genres} handleElements={handleIncludeGenre} placeholder={"Type genres..."} initalElements={parameters.genres.include} />
+      < Autosuggest elements={parameters.genres.include} handleElements={handleIncludeGenre} suggestions={genres} placeholder={"Type genres..."} />
       <h6 className='mt-2 mb-1'>Exclude:</h6>
-      < Autosuggest suggestions={genres} handleElements={handleExcludeGenre} placeholder={"Type genres..."} initalElements={parameters.genres.exclude} />
+      < Autosuggest elements={parameters.genres.exclude} handleElements={handleExcludeGenre} suggestions={genres} placeholder={"Type genres..."}/>
     </div>
   )
 }
@@ -257,9 +257,9 @@ function AuthorFilter({ parameters, setParameters }) {
   return (
     <div>
       <h6 className='mb-1'>Include:</h6>
-      < Autosuggest suggestions={authors} handleElements={handleIncludeAuthor} placeholder={"Author names..."} initalElements={parameters.authors.include} />
+      < Autosuggest elements={parameters.authors.include} handleElements={handleIncludeAuthor} suggestions={authors} placeholder={"Author names..."} />
       <h6 className='mt-2 mb-1'>Exclude:</h6>
-      < Autosuggest suggestions={authors} handleElements={handleExcludeAuthor} placeholder={"Author names..."} initalElements={parameters.authors.exclude} />
+      < Autosuggest elements={parameters.authors.exclude} handleElements={handleExcludeAuthor} suggestions={authors} placeholder={"Author names..."}  />
     </div>
   )
 
@@ -301,7 +301,7 @@ function LanguageFilter({ parameters, setParameters }) {
     <div className="ms-2">
       <AppDropdown
         emptyValue="Select language"
-        initialValue={parameters.language}
+        selectedItem={parameters.language}
         items={languages}
         handleItemSelect={handleLanguageSelect}
       />
@@ -393,7 +393,7 @@ function ReviewsFilter({ parameters, setParameters }) {
   return (
     <div className="mx-auto px-2">
       <h6 className='mb-1'>Rating:</h6>
-      <RatingSlider handleRating={handleRatingSelect} initialRating={parameters.reviews.rating} />
+      <RatingSlider rating={parameters.reviews.rating} handleRating={handleRatingSelect} />
       <h6 className='mt-2 mb-1'>Sample size:</h6>
       <input
         type='text'
@@ -653,7 +653,7 @@ function Search() {
   const [filteredBooks, setFilteredBooks] = useState(getFilteredBooks(getURLParameters()));
   const [booksDisplayed, setBooksDisplayed] = useState([]);
   const [bookIndexes, setBookIndexes] = useState([0, 0]);
-  console.log(parameters);
+  //console.log(parameters);
 
   useEffect(() => {
     setFilteredBooks(getFilteredBooks(getURLParameters()));

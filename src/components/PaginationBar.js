@@ -38,7 +38,6 @@ function PaginationBar({ totalPages, onPageChange }) {
             key={i}
             className={`page-item${currentPage === i ? ' active' : ''}`}
             onClick={() => handlePageChange(i)}
-            style={{ width: "2%" }}
           >
             <span className="page-link">{i}</span>
           </li>
@@ -49,7 +48,6 @@ function PaginationBar({ totalPages, onPageChange }) {
           <li
             key={i}
             className='page-item'
-            style={{ width: "2%" }}
           >
             <span className="page-link">...</span>
           </li>
