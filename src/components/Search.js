@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getAllBooks, getAverageScore, getBookCover, getBookValues, getAllAuthors } from '../bookUtils';
-import cloneDeep from 'lodash.clonedeep';
+import { getAllBooks, getAverageRating, getBookCover, getBookValues, getAllAuthors } from '../bookUtils';
+import _ from 'lodash'
 import RatingBox from './RatingBox';
 import ShowMore from './ShowMore';
 import BookCover from './BookCover';
@@ -12,6 +12,30 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import RatingSlider from './RatingSlider';
+
+function iterateObject(obj, callbacks = {}, ...args) {
+  const { onValue, onFinal } = callbacks;
+
+  for (const key in obj) {
+    iterateObjectRecursive(obj[key], onValue, [key], ...args);
+  }
+  if (typeof onFinal === 'function') {
+    return onFinal(obj, ...args);
+  }
+}
+
+function iterateObjectRecursive(obj, onValue, keyPath = [], ...args) {
+
+  if (typeof obj === 'object' && !Array.isArray(obj) && obj !== null) {
+    for (const key in obj) {
+      iterateObjectRecursive(obj[key], onValue, [...keyPath, key], ...args);
+    }
+  } else if (typeof onValue === 'function') {
+    onValue(obj, keyPath, ...args);
+  }
+
+}
+
 
 function BookCard({ book }) {
 
@@ -24,7 +48,7 @@ function BookCard({ book }) {
   }
 
   const bookCover = getBookCover(book);
-  const avgScore = getAverageScore(book).toFixed(1);
+  const avgRating = getAverageRating(book).toFixed(1);
 
   return (
     <div className="content-box" style={{ marginBottom: "20px", padding: "15px" }}>
@@ -48,8 +72,8 @@ function BookCard({ book }) {
 
             <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
               <div className='pointer' onClick={toBookInfo}>
-                <RatingBox score={avgScore} textTag="h2" style={{ width: "70%" }} />
-                <p className="mb-0 text-center" style={{ fontSize: 'smaller' }}>{book.reviews.length} reviews<br />{book.scores.length} scores</p>
+                <RatingBox rating={avgRating} textTag="h2" style={{ width: "70%" }} />
+                <p className="mb-0 text-center" style={{ fontSize: 'smaller' }}>{book.reviews.length} reviews<br />{book.ratings.length} ratings</p>
               </div>
             </div>
 
@@ -64,8 +88,9 @@ function BookCard({ book }) {
   );
 }
 
-function ExpandMenu({ menuName, content, headerNumber, headerClass = "" }) {
-  const [isExpanded, setExpanded] = useState(false);
+
+function ExpandMenu({ menuName, content, headerNumber, headerClass = "", initalExpanded = false }) {
+  const [isExpanded, setExpanded] = useState(initalExpanded);
 
   function toggleMenu() {
     setExpanded(!isExpanded);
@@ -311,7 +336,7 @@ function ReviewsFilter({ parameters, setParameters }) {
 
   return (
     <div className="mx-auto px-2">
-      <h6 className='mb-1'>Score:</h6>
+      <h6 className='mb-1'>Rating:</h6>
       <RatingSlider handleRating={handleRatingSelect} initialRating={parameters.reviews.rating} />
       <h6 className='mt-2 mb-1'>Sample size:</h6>
       <input
@@ -364,12 +389,54 @@ function DateFilter({ parameters, setParameters }) {
 }
 
 
-function SortAndFilters({ parameters, setParameters, setURLParameters }) {
+function SortAndFilters({ parameters, defaultParameters, setParameters, setURLParameters}) {
+
+  function setExpandedMenus() {
+    const callbacks = {
+      onValue: (value, keyPath, [expandedMenus, defaultParameters]) => {
+        const defaultValue = _.get(defaultParameters, keyPath);
+  
+        if (typeof value === 'string' || typeof value === 'number') {
+          const isDefault = value === defaultValue;
+  
+          if (expandedMenus.hasOwnProperty(keyPath[0])) {
+            expandedMenus[keyPath[0]] = expandedMenus[keyPath[0]] || !isDefault;
+          } else {
+            expandedMenus[keyPath[0]] = !isDefault;
+          }
+  
+        } else if (Array.isArray(value)) {
+          const defaultValue = keyPath.reduce((obj, key) => obj?.[key], defaultParameters);
+          const isDefault = value.length === defaultValue.length && value.every((element) => defaultValue.includes(element));
+  
+          if (expandedMenus.hasOwnProperty(keyPath[0])) {
+            expandedMenus[keyPath[0]] = expandedMenus[keyPath[0]] || !isDefault;
+          } else {
+            expandedMenus[keyPath[0]] = !isDefault;
+          }
+  
+        } else if (typeof onUnknown === 'function') {
+          console.log('Object not recognized');
+        }
+      },
+      onFinal: (value, [expandedMenus, defaultParameters]) => {
+        return expandedMenus;
+      }
+    };
+    return iterateObject(parameters, callbacks, [{}, defaultParameters]);
+
+  }
+
+  const expandedMenus = setExpandedMenus();
 
   return (
     <div className="filters-box">
       <div className='text-center mb-1 mt-2'>
-        <u className="border border-dark px-2 py-1 pointer" style={{ backgroundColor: "var(--primary-1)" }} onClick={() => setURLParameters()}>
+        <u
+          className="border border-dark px-2 py-1 pointer"
+          style={{ backgroundColor: "var(--primary-1)" }}
+          onClick={() => setURLParameters()}
+        >
           Apply Filters and Sort
         </u>
       </div>
@@ -381,6 +448,7 @@ function SortAndFilters({ parameters, setParameters, setURLParameters }) {
         }
         headerNumber="3"
         headerClass="pt-2"
+        initalExpanded={expandedMenus.sort}
       />
 
       <ExpandMenu
@@ -394,6 +462,7 @@ function SortAndFilters({ parameters, setParameters, setURLParameters }) {
                   <GenresFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
+                initalExpanded={expandedMenus.genres}
               />
             </div>
             <div className="mx-3 mt-2">
@@ -403,6 +472,7 @@ function SortAndFilters({ parameters, setParameters, setURLParameters }) {
                   <ClassificationFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
+                initalExpanded={expandedMenus.classifications}
               />
             </div>
             <div className="mx-3 mt-2">
@@ -412,6 +482,7 @@ function SortAndFilters({ parameters, setParameters, setURLParameters }) {
                   <AuthorFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
+                initalExpanded={expandedMenus.authors}
               />
             </div>
             <div className="mx-3 mt-2">
@@ -421,6 +492,7 @@ function SortAndFilters({ parameters, setParameters, setURLParameters }) {
                   <TitleFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
+                initalExpanded={expandedMenus.title}
               />
             </div>
             <div className="mx-3 mt-2">
@@ -430,6 +502,7 @@ function SortAndFilters({ parameters, setParameters, setURLParameters }) {
                   <LanguageFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
+                initalExpanded={expandedMenus.language}
               />
             </div>
             <div className="mx-3 mt-2">
@@ -439,6 +512,7 @@ function SortAndFilters({ parameters, setParameters, setURLParameters }) {
                   <WordsFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
+                initalExpanded={expandedMenus.words}
               />
             </div>
             <div className="mx-3 mt-2">
@@ -448,6 +522,7 @@ function SortAndFilters({ parameters, setParameters, setURLParameters }) {
                   <ReviewsFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
+                initalExpanded={expandedMenus.reviews}
               />
             </div>
             <div className="mx-3 mt-2">
@@ -457,12 +532,14 @@ function SortAndFilters({ parameters, setParameters, setURLParameters }) {
                   <DateFilter parameters={parameters} setParameters={setParameters} />
                 }
                 headerNumber="5"
+                initalExpanded={expandedMenus.date}
               />
             </div>
           </div>
         }
         headerNumber="3"
         headerClass="pt-2"
+        initalExpanded={Object.entries(expandedMenus).some(([key, value]) => key !== 'sort' && value === true)}
       />
 
     </div>
@@ -475,7 +552,6 @@ function Search() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
   const defaultParameters = {
     sort: '',
     genres: {
@@ -502,92 +578,81 @@ function Search() {
       max: ''
     }
   }
-
   const [parameters, setParameters] = useState(getURLParameters());
-
-  const [filteredBooks, setFilteredBooks] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState(getFilteredBooks(getURLParameters()));
   const [booksDisplayed, setBooksDisplayed] = useState([]);
   const [bookIndexes, setBookIndexes] = useState([0, 0]);
-  console.log("mount")
 
   useEffect(() => {
-    filterBooks(getURLParameters());
+    setFilteredBooks(getFilteredBooks(getURLParameters()));
   }, []);
 
-
-  function setURLParameters(obj = cloneDeep(parameters), initialObj = defaultParameters, keyPath = [], queryParams = new URLSearchParams()) {
-
-    for (const key in obj) {
-      const currentKeyPath = [...keyPath, key];
-
-      if (typeof obj[key] === 'object' && !Array.isArray(obj[key]) && obj[key] !== null) {
-        setURLParameters(obj[key], initialObj[key], currentKeyPath, queryParams);
-
-      } else if (typeof obj[key] === 'string' || typeof obj[key] === 'number') {
-        if (obj[key] !== initialObj[key]) {
-          queryParams.append(currentKeyPath.join('.'), obj[key]);
+  function getURLParameters() {
+    const callbacks = {
+      onValue: (value, keyPath, [newParams, queryParams]) => {
+        const newValue = queryParams.get(keyPath.join('.'));
+        
+        if (newValue !== null) {
+          if (typeof value === 'string') {
+            _.set(newParams, keyPath, newValue);
+          } else if (typeof value === 'number') {
+            _.set(newParams, keyPath, parseInt(newValue));
+          } else if (Array.isArray(value)) {
+            _.set(newParams, keyPath, newValue.split(','));
+          } else {
+            console.log('Object not recognised');
+          }
         }
-
-      } else if (Array.isArray(obj[key])) {
-        if (obj[key].length !== initialObj[key].length || !obj[key].every((element, index) => element === initialObj[key][index])) {
-          queryParams.append(currentKeyPath.join('.'), obj[key].join(','));
-        }
-
-      } else {
-        console.log('Object not recognised');
-        console.log(currentKeyPath);
-        console.log(obj[key]);
+      },
+      onFinal: (obj, [newParams, queryParams]) => {
+        return newParams;
       }
-
     }
-
-    if (keyPath.length === 0) {
-      navigate(`${location.pathname}?${queryParams.toString()}`);
-      filterBooks(obj);
-    }
+    return iterateObject(_.cloneDeep(defaultParameters), callbacks, [_.cloneDeep(defaultParameters), new URLSearchParams(location.search)]);
   }
 
-  function getURLParameters(obj = defaultParameters, initialObj = defaultParameters, keyPath = []) {
-
-    if (keyPath.length === 0) {
-      obj = cloneDeep(obj);
-    }
-
-    for (const key in obj) {
-      const currentKeyPath = [...keyPath, key];
-      if (typeof obj[key] === 'object' && !Array.isArray(obj[key]) && obj[key] !== null) {
-        getURLParameters(obj[key], initialObj[key], currentKeyPath);
-
-      } else if (typeof obj[key] === 'string') {
-        obj[key] = searchParams.get(currentKeyPath.join('.')) ?? initialObj[key];
-
-      } else if (typeof obj[key] === 'number') {
-        obj[key] = parseInt(searchParams.get(currentKeyPath.join('.'))) || initialObj[key];
-
-      } else if (Array.isArray(obj[key])) {
-        obj[key] = searchParams.get(currentKeyPath.join('.'))?.split(',') || initialObj[key];
-
-      } else {
-        console.log('Object not recognised');
-        console.log(currentKeyPath);
-        console.log(obj[key]);
+  function setURLParameters() {
+    const callbacks = {
+      onValue: (value, keyPath, [defaultParameters, queryParams]) => {
+        const defaultValue = _.get(defaultParameters, keyPath);
+  
+        if (typeof value === 'string' || typeof value === 'number') {
+          if (value !== defaultValue) {
+            queryParams.append(keyPath.join('.'), value);
+          }
+  
+        } else if (Array.isArray(value)) {
+          if (value.length !== defaultValue.length || !value.every((element, index) => element === defaultValue[index])) {
+            queryParams.append(keyPath.join('.'), value.join(','));
+          }
+  
+        } else {
+          console.log('Object not recognised');
+        }
+      },
+      onFinal: (obj, [defaultParameters, queryParams]) => {
+        navigate(`${location.pathname}?${queryParams.toString()}`);
+        setFilteredBooks(getFilteredBooks(obj))
       }
-
     }
-
-    if (keyPath.length === 0) {
-      return obj;
-    }
+    iterateObject(parameters, callbacks, [defaultParameters, new URLSearchParams()])
   }
 
-  function filterBooks(newParameters) {
+  function getFilteredBooks(params) {
     const newFilteredBooks = getAllBooks().filter(
-      (book) => newParameters.genres.include.every((genre) => book.genres.includes(genre)) &&
-      newParameters.genres.exclude.every((genre) => !book.genres.includes(genre))
+      (book) => params.genres.include.every((genre) => book.genres.includes(genre)) &&
+        params.genres.exclude.every((genre) => !book.genres.includes(genre)) &&
+        (params.classifications.length === 0 || params.classifications.includes(book.classification)) &&
+        (params.authors.include.length === 0 || params.authors.include.includes(book.author)) &&
+        (params.authors.exclude.length === 0 || !params.authors.exclude.includes(book.author)) &&
+        book.title.toLowerCase().includes(params.title.toLowerCase()) &&
+        (params.language === "" || book.language === params.language) &&
+        book.words >= params.words.min && book.words <= params.words.max &&
+        getAverageRating(book) >= params.reviews.rating &&
+        book.ratings.length + book.reviews.length >= params.reviews.sample
+        
     );
-    setFilteredBooks(newFilteredBooks);
-    setBooksDisplayed(newFilteredBooks.slice(0, 6));
-    setBookIndexes([0, 6]);
+    return newFilteredBooks;
   }
 
   function onPageChange(page) {
@@ -597,7 +662,7 @@ function Search() {
     setBookIndexes([startIndex, endIndex])
   }
 
-  
+
 
   return (
     <Container fluid>
@@ -612,7 +677,12 @@ function Search() {
           ))}
         </Col>
         <Col xxl={2} xs={4}>
-          <SortAndFilters parameters={parameters} setParameters={setParameters} setURLParameters={setURLParameters} />
+          <SortAndFilters
+            parameters={parameters}
+            defaultParameters={defaultParameters}
+            setParameters={setParameters}
+            setURLParameters={setURLParameters}
+          />
         </Col>
         <Col className=" " xxl={2} xs={0}></Col>
 

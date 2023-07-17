@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getBookById, getBookCover, getAverageScore, getScoreArray, getBookLists, setBookLists } from "../bookUtils";
+import { getBookById, getBookCover, getAverageRating, getRatingArray, getBookLists, setBookLists } from "../bookUtils";
 import RatingBox from "./RatingBox";
 import RatingSlider from "./RatingSlider";
 import ShowMore from "./ShowMore";
@@ -124,7 +124,7 @@ function Review({ review, style = {} }) {
       </div>
       <div className="d-flex">
         <div style={{ flex: '0 0 12%', maxWidth: '12%' }}>
-          <RatingBox score={review.score} textTag="h2" style={{ maxWidth: '80%' }} />
+          <RatingBox rating={review.rating} textTag="h2" style={{ maxWidth: '80%' }} />
         </div>
         <div style={{ flex: '0 0 88%', maxWidth: '88%' }}>
           <div className="ms-1">
@@ -140,14 +140,14 @@ function Review({ review, style = {} }) {
 
 function ReviewBarChart({ book, className = "" }) {
 
-  const scores = getScoreArray(book);
+  const ratings = getRatingArray(book);
 
   const bins = Array.from({ length: 10 }, (_, index) => ({
     bin: `${index + 1}`,
-    value: scores.filter((score) => score === index + 1).length,
+    value: ratings.filter((rating) => rating === index + 1).length,
   }));
 
-  function formatYAxis(tick) { return `${(tick / scores.length * 100).toFixed(0)}%` };
+  function formatYAxis(tick) { return `${(tick / ratings.length * 100).toFixed(0)}%` };
 
   return (
     <BarChart width={600} height={400} data={bins} className={className} margin={{ top: 20, right: 0, bottom: 0, left: 0 }}>
@@ -171,7 +171,7 @@ function BookInfo() {
   const { bookid } = useParams();
   const book = getBookById(bookid);
   const bookCover = getBookCover(book);
-  const avgScore = getAverageScore(book).toFixed(1);
+  const avgRating = getAverageRating(book).toFixed(1);
 
   function spoilersChange(event) {
     setSpoilers(event.target.value === 'yes');
@@ -202,8 +202,8 @@ function BookInfo() {
           </div>
           <br />
 
-          <RatingBox score={avgScore} textTag="h1" style={{ width: "50%" }} />
-          <p className="fs-5">{book.reviews.length} reviews - {book.scores.length} scores</p>
+          <RatingBox rating={avgRating} textTag="h1" style={{ width: "50%" }} />
+          <p className="fs-5">{book.reviews.length} reviews - {book.ratings.length} ratings</p>
 
           <button
             className="button-pill fs-5 text-white light-bold mt-3 px-4"

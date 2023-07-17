@@ -6,21 +6,20 @@ import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 function PaginationBar({ totalPages, onPageChange }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const initialPage = parseInt(searchParams.get('page')) || 1;
-  const [currentPage, setCurrentPage] = useState(initialPage);
+  const queryParams = new URLSearchParams(location.search);
+  const [currentPage, setCurrentPage] = useState(parseInt(queryParams.get('page')) || 1);
 
   useEffect(() => {
-    handlePageChange(initialPage);
-  }, [initialPage]);
+    const page = parseInt(queryParams.get('page')) || 1;
+    setCurrentPage(page);
+    onPageChange(page);
+  }, [location.search]);
 
   function handlePageChange(page) {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set('page', page);
     navigate(`${location.pathname}?${urlParams.toString()}`);
     window.scrollTo({ top: 0, behavior: 'instant' });
-    setCurrentPage(page);
-    onPageChange(page);
   };
 
   function renderPageNumbers() {

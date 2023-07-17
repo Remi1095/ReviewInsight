@@ -17,21 +17,21 @@ export function getBookCover(book) {
 }
 
 
-export function getAverageScore(book) {
-    var scoresSum = 0;
+export function getAverageRating(book) {
+    var ratingSum = 0;
     var reviewsSum = 0;
-    if (book.scores.length !== 0) {
-        scoresSum = book.scores.reduce((acc, s) => acc + s, 0);
+    if (book.ratings.length !== 0) {
+        ratingSum = book.ratings.reduce((acc, rating) => acc + rating, 0);
     }
     if (book.reviews.length !== 0) {
-        reviewsSum = book.reviews.reduce((acc, r) => acc + r.score, 0);
+        reviewsSum = book.reviews.reduce((acc, review) => acc + review.rating, 0);
     }
-    return (scoresSum + reviewsSum) / (book.scores.length + book.reviews.length);
+    return (ratingSum + reviewsSum) / (book.ratings.length + book.reviews.length);
 }
 
 
-export function getScoreArray(book) {
-    return book.reviews.map((review) => review.score).concat(book.scores);
+export function getRatingArray(book) {
+    return book.reviews.map((review) => review.rating).concat(book.ratings);
 }
 
 export function getAllAuthors() {

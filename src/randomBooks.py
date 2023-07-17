@@ -99,7 +99,7 @@ def createBook(series, id, volume, date):
         'description': randomDescription(random.randint(1,5)),
         'cover': 'book-cover-placeholder.png',
         'fakeCover': randomFakeCover(series['genres'][0]),
-        'scores': randomScores(random.randint(1,100), mean, std_dev),
+        'ratings': randomRatings(random.randint(1,100), mean, std_dev),
         'reviews': randomReviews(date, mean, std_dev)
     }
     return book
@@ -166,18 +166,18 @@ def randomDescription(num_paragraphs):
     description += fake.paragraph(8)
     return description
 
-def randomScores(num_scores, mean, std_dev):
-    return [round(min(max(numpy.random.normal(mean, std_dev), 1), 10)) for _ in range(num_scores)]
+def randomRatings(numRatings, mean, std_dev):
+    return [round(min(max(numpy.random.normal(mean, std_dev), 1), 10)) for _ in range(numRatings)]
 
 def randomReviews(book_date, mean, std_dev):
     num_reviews = random.randint(1, 50)
-    scores = randomScores(num_reviews, mean, std_dev)
+    ratings = randomRatings(num_reviews, mean, std_dev)
     reviews = []
     for i in range(num_reviews):
         review = {
             'name': fake.user_name(),
             'date': randomDate(book_date),
-            'score': scores[i],
+            'rating': ratings[i],
             'review': randomDescription(random.randint(1,3)),
             'spoiler': random.choice([True, False])
         }
