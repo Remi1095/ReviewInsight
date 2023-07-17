@@ -173,7 +173,7 @@ function BookInfo() {
   const bookCover = getBookCover(book);
   const avgRating = getAverageRating(book).toFixed(1);
 
-  function spoilersChange(event) {
+  function handleSpoilersSelect(event) {
     setSpoilers(event.target.value === 'yes');
   }
 
@@ -288,7 +288,7 @@ function BookInfo() {
                   type="radio"
                   value="yes"
                   checked={spoilers}
-                  onChange={spoilersChange}
+                  onChange={handleSpoilersSelect}
                 />
                 <span className="ms-2">Yes</span>
               </label>
@@ -298,7 +298,7 @@ function BookInfo() {
                   type="radio"
                   value="no"
                   checked={!spoilers}
-                  onChange={spoilersChange}
+                  onChange={handleSpoilersSelect}
                 />
                 <span className="ms-2">No</span>
               </label>

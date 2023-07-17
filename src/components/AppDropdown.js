@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 
-function AppDropdown({ items, handleItemSelect, emptyValue, initialValue="", index=null, className="" }) {
+function AppDropdown({ items, handleItemSelect, emptyValue, initialValue = "", index = null, hasReset = true, className = "" }) {
   const [selectedItem, setSelectedItem] = useState(initialValue);
 
   function handleItemClick(item) {
@@ -21,9 +21,16 @@ function AppDropdown({ items, handleItemSelect, emptyValue, initialValue="", ind
             {item}
           </Dropdown.Item>
         ))}
-        <Dropdown.Item className="light-bold" style={{color:"var(--primary-0)"}} key={""} onClick={() => handleItemClick("")}>
-          Reset
-        </Dropdown.Item>
+        {hasReset && (
+          <Dropdown.Item
+            className="light-bold"
+            style={{ color: "var(--primary-0)" }}
+            key={""}
+            onClick={() => handleItemClick("")}
+          >
+            Reset
+          </Dropdown.Item>
+        )}
       </Dropdown.Menu>
     </Dropdown>
   );

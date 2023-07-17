@@ -10,7 +10,7 @@ import AppDropdown from './AppDropdown';
 import Autosuggest from './Autosuggest';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretRight, faCaretDown, faL } from "@fortawesome/free-solid-svg-icons";
 import RatingSlider from './RatingSlider';
 
 function iterateObject(obj, callbacks = {}, ...args) {
@@ -47,7 +47,7 @@ function BookCard({ book }) {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
-  const bookCover = getBookCover(book);
+  //const bookCover = getBookCover(book);
   const avgRating = getAverageRating(book).toFixed(1);
 
   return (
@@ -121,18 +121,74 @@ function ExpandMenu({ menuName, content, headerNumber, headerClass = "", initalE
 }
 
 
+function Sort({ parameters, setParameters }) {
+  const sortOptions = ['Rating', 'Reviews', 'Date', 'Title', 'Author', 'Words', 'Random'];
+
+  function handleSortSelect(type) {
+    const newParameters = _.cloneDeep(parameters);
+    newParameters.sort.type = type;
+    setParameters(newParameters);
+  }
+
+  function handleDirectionSelect(event) {
+    const newParameters = _.cloneDeep(parameters);
+    newParameters.sort.ascending = event.target.value === "ascending";
+    setParameters(newParameters);
+  }
+
+  return (
+    <div className="ms-2">
+      <div className='text-center'>
+        <h6 className='d-inline me-2'>Sort by:</h6>
+        <AppDropdown
+          emptyValue="Sort by..."
+          initialValue={parameters.sort.type}
+          items={sortOptions}
+          handleItemSelect={handleSortSelect}
+          hasReset={false}
+          className='d-inline'
+        />
+      </div>
+
+      <div className="mt-2 text-center">
+        <label className="me-3">
+          <input
+            name="direction"
+            type="radio"
+            value="ascending"
+            checked={parameters.sort.ascending}
+            onChange={handleDirectionSelect}
+          />
+          <span className="ms-2">Ascending</span>
+        </label>
+        <label>
+          <input
+            name="direction"
+            type="radio"
+            value="descending"
+            checked={!parameters.sort.ascending}
+            onChange={handleDirectionSelect}
+          />
+          <span className="ms-2">Descending</span>
+        </label>
+      </div>
+    </div>
+  )
+
+}
+
 function GenresFilter({ parameters, setParameters }) {
 
   const genres = getBookValues().genres;
 
   function handleIncludeGenre(genres) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     newParameters.genres.include = genres;
     setParameters(newParameters);
   }
 
   function handleExcludeGenre(genres) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     newParameters.genres.exclude = genres;
     setParameters(newParameters);
   }
@@ -152,7 +208,7 @@ function ClassificationFilter({ parameters, setParameters }) {
   const classifications = getBookValues().classifications;
 
   function handleClassificationSelect(classification) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     const index = newParameters.classifications.indexOf(classification);
 
     if (index !== -1) {
@@ -186,13 +242,13 @@ function AuthorFilter({ parameters, setParameters }) {
   const authors = getAllAuthors();
 
   function handleIncludeAuthor(authors) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     newParameters.authors.include = authors;
     setParameters(newParameters);
   }
 
   function handleExcludeAuthor(authors) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     newParameters.authors.exclude = authors;
     setParameters(newParameters);
   }
@@ -212,7 +268,7 @@ function AuthorFilter({ parameters, setParameters }) {
 function TitleFilter({ parameters, setParameters }) {
 
   function handleTitleChange(event) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     newParameters.title = event.target.value;
     setParameters(newParameters);
   }
@@ -236,7 +292,7 @@ function LanguageFilter({ parameters, setParameters }) {
   const languages = getBookValues().languages;
 
   function handleLanguageSelect(language) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     newParameters.language = language;
     setParameters(newParameters);
   }
@@ -257,7 +313,7 @@ function LanguageFilter({ parameters, setParameters }) {
 function WordsFilter({ parameters, setParameters }) {
 
   function handleMinWordsChange(event) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     const value = event.target.value.replace(/\D/g, '');
     if (value === '') {
       newParameters.words.min = 0;
@@ -268,7 +324,7 @@ function WordsFilter({ parameters, setParameters }) {
   }
 
   function handleMaxWordsChange(event) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     const value = event.target.value.replace(/\D/g, '');
     if (value === '') {
       newParameters.words.max = Infinity;
@@ -318,13 +374,13 @@ function WordsFilter({ parameters, setParameters }) {
 
 function ReviewsFilter({ parameters, setParameters }) {
   function handleRatingSelect(rating) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     newParameters.reviews.rating = rating;
     setParameters(newParameters);
   }
 
   function handleSampleChange(event) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     const value = event.target.value.replace(/\D/g, '');
     if (value === '') {
       newParameters.reviews.sample = 0;
@@ -355,13 +411,13 @@ function ReviewsFilter({ parameters, setParameters }) {
 function DateFilter({ parameters, setParameters }) {
 
   function handleMinDateChange(event) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     newParameters.date.min = event.target.value;
     setParameters(newParameters);
   }
 
   function handleMaxDateChange(event) {
-    const newParameters = { ...parameters };
+    const newParameters = _.cloneDeep(parameters);
     newParameters.date.max = event.target.value;
     setParameters(newParameters);
   }
@@ -389,34 +445,34 @@ function DateFilter({ parameters, setParameters }) {
 }
 
 
-function SortAndFilters({ parameters, defaultParameters, setParameters, setURLParameters}) {
+function SortAndFilters({ parameters, defaultParameters, setParameters, setURLParameters }) {
 
   function setExpandedMenus() {
     const callbacks = {
       onValue: (value, keyPath, [expandedMenus, defaultParameters]) => {
         const defaultValue = _.get(defaultParameters, keyPath);
-  
-        if (typeof value === 'string' || typeof value === 'number') {
+
+        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
           const isDefault = value === defaultValue;
-  
+
           if (expandedMenus.hasOwnProperty(keyPath[0])) {
             expandedMenus[keyPath[0]] = expandedMenus[keyPath[0]] || !isDefault;
           } else {
             expandedMenus[keyPath[0]] = !isDefault;
           }
-  
+
         } else if (Array.isArray(value)) {
           const defaultValue = keyPath.reduce((obj, key) => obj?.[key], defaultParameters);
           const isDefault = value.length === defaultValue.length && value.every((element) => defaultValue.includes(element));
-  
+
           if (expandedMenus.hasOwnProperty(keyPath[0])) {
             expandedMenus[keyPath[0]] = expandedMenus[keyPath[0]] || !isDefault;
           } else {
             expandedMenus[keyPath[0]] = !isDefault;
           }
-  
+
         } else if (typeof onUnknown === 'function') {
-          console.log('Object not recognized');
+          console.log('Object not recognized in setExpandedMenus');
         }
       },
       onFinal: (value, [expandedMenus, defaultParameters]) => {
@@ -429,25 +485,20 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
 
   const expandedMenus = setExpandedMenus();
 
+  function resetParameters() {
+    setParameters(defaultParameters);
+  }
+
   return (
     <div className="filters-box">
-      <div className='text-center mb-1 mt-2'>
-        <u
-          className="border border-dark px-2 py-1 pointer"
-          style={{ backgroundColor: "var(--primary-1)" }}
-          onClick={() => setURLParameters()}
-        >
-          Apply Filters and Sort
-        </u>
-      </div>
 
       <ExpandMenu
         menuName="Sort"
         content={
-          <p>Unfinished</p>
+          <Sort parameters={parameters} setParameters={setParameters} />
         }
         headerNumber="3"
-        headerClass="pt-2"
+        headerClass="mt-1"
         initalExpanded={expandedMenus.sort}
       />
 
@@ -538,9 +589,26 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
           </div>
         }
         headerNumber="3"
-        headerClass="pt-2"
+        headerClass="mt-3"
         initalExpanded={Object.entries(expandedMenus).some(([key, value]) => key !== 'sort' && value === true)}
       />
+
+      <div className='text-center mt-4 mb-2'>
+        <u
+          className="border border-dark px-2 py-1 me-5 pointer"
+          style={{ backgroundColor: "var(--primary-1)" }}
+          onClick={() => setURLParameters()}
+        >
+          Apply All
+        </u>
+        <u
+          className="border border-dark px-2 py-1 pointer"
+          style={{ backgroundColor: "lightgray" }}
+          onClick={() => resetParameters()}
+        >
+          Reset All
+        </u>
+      </div>
 
     </div>
   )
@@ -553,7 +621,10 @@ function Search() {
   const navigate = useNavigate();
   const location = useLocation();
   const defaultParameters = {
-    sort: '',
+    sort: {
+      type: 'Date',
+      ascending: false
+    },
     genres: {
       include: [],
       exclude: []
@@ -582,6 +653,7 @@ function Search() {
   const [filteredBooks, setFilteredBooks] = useState(getFilteredBooks(getURLParameters()));
   const [booksDisplayed, setBooksDisplayed] = useState([]);
   const [bookIndexes, setBookIndexes] = useState([0, 0]);
+  console.log(parameters);
 
   useEffect(() => {
     setFilteredBooks(getFilteredBooks(getURLParameters()));
@@ -591,16 +663,18 @@ function Search() {
     const callbacks = {
       onValue: (value, keyPath, [newParams, queryParams]) => {
         const newValue = queryParams.get(keyPath.join('.'));
-        
+
         if (newValue !== null) {
           if (typeof value === 'string') {
             _.set(newParams, keyPath, newValue);
           } else if (typeof value === 'number') {
             _.set(newParams, keyPath, parseInt(newValue));
+          } else if (typeof value === 'boolean') {
+            _.set(newParams, keyPath, newValue === 'true');
           } else if (Array.isArray(value)) {
             _.set(newParams, keyPath, newValue.split(','));
           } else {
-            console.log('Object not recognised');
+            console.log('Object not recognised in getURLParameters');
           }
         }
       },
@@ -615,19 +689,19 @@ function Search() {
     const callbacks = {
       onValue: (value, keyPath, [defaultParameters, queryParams]) => {
         const defaultValue = _.get(defaultParameters, keyPath);
-  
-        if (typeof value === 'string' || typeof value === 'number') {
+
+        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
           if (value !== defaultValue) {
             queryParams.append(keyPath.join('.'), value);
           }
-  
+
         } else if (Array.isArray(value)) {
           if (value.length !== defaultValue.length || !value.every((element, index) => element === defaultValue[index])) {
             queryParams.append(keyPath.join('.'), value.join(','));
           }
-  
+
         } else {
-          console.log('Object not recognised');
+          console.log('Object not recognised in setURLParameters');
         }
       },
       onFinal: (obj, [defaultParameters, queryParams]) => {
@@ -646,12 +720,47 @@ function Search() {
         (params.authors.include.length === 0 || params.authors.include.includes(book.author)) &&
         (params.authors.exclude.length === 0 || !params.authors.exclude.includes(book.author)) &&
         book.title.toLowerCase().includes(params.title.toLowerCase()) &&
-        (params.language === "" || book.language === params.language) &&
+        (params.language === '' || book.language === params.language) &&
         book.words >= params.words.min && book.words <= params.words.max &&
         getAverageRating(book) >= params.reviews.rating &&
-        book.ratings.length + book.reviews.length >= params.reviews.sample
-        
+        book.ratings.length + book.reviews.length >= params.reviews.sample &&
+        (params.date.min === '' || new Date(book.published) >= new Date(params.date.min)) &&
+        (params.date.max === '' || new Date(book.published) <= new Date(params.date.max))
     );
+    newFilteredBooks.sort((a, b) => {
+      let comparison = 0; // Default value (for cases where params.sort.type is unknown)
+
+      switch (params.sort.type) {
+        case 'Rating':
+          comparison = getAverageRating(b) - getAverageRating(a);
+          break;
+        case 'Reviews':
+          comparison = (b.ratings.length + b.reviews.length) - (a.ratings.length + a.reviews.length);
+          break;
+        case 'Date':
+          comparison = new Date(b.published) - new Date(a.published);
+          break;
+        case 'Title':
+          comparison = b.title.localeCompare(a.title);
+          break;
+        case 'Author':
+          comparison = b.author.localeCompare(a.author);
+          break;
+        case 'Words':
+          comparison = b.words - a.words;
+          break;
+        case 'Random':
+          comparison = Math.random() - 0.5; // Randomize the order
+          break;
+        default:
+          console.log('Unknown value');
+      }
+
+      // Adjust the order based on params.sort.ascending
+      return params.sort.ascending ? -comparison : comparison;
+    });
+
+
     return newFilteredBooks;
   }
 
