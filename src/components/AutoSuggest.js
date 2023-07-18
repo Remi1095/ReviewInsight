@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 
-function Autosuggest({ elements, handleElements, suggestions, placeholder }) {
+function AutoSuggest({ elements, handleElements, suggestions, placeholder }) {
 
   const [hasEmptyRow, setHasEmptyRow] = useState(elements.length === 0);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
@@ -58,4 +58,4 @@ function Autosuggest({ elements, handleElements, suggestions, placeholder }) {
   );
 }
 
-export default Autosuggest;
+export default AutoSuggest;
