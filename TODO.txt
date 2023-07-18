@@ -3,14 +3,13 @@
     - Onclick de la liste de genres
     - Onclick des contributions récentes
     - Changer les images placholder 
+    - Translation
 
 - Search:
-    - UI des filtres
-    - Fonctionnalité des filtres (useParams)
-    - UI du triage
-    - Fonctionnalité du triage (useParams)
     - Tooltip/popup pour expliquer les filtres
-    - Bouton "Apply filters and sort"
+    - Fix page always scrolling to top when going back
+    - Error correction elements
+    - Add info to book cards
 
 - BookInfo:
     - Onclick de la liste de genres
@@ -20,10 +19,12 @@
     - Empêcher d'ajouter un livre a une liste plus qu'une fois
     - Fonctionalité pour enlever des livres des listes
     - Confirmation lors de l'ajout et l'enlevement d'un livre.
+    - Add/remove dropdown automatically
 
 - ReviewBook:
     - Fonctionnalité de "Submit your review"
     - Ajustement de textarea pour que le text ne fait pas apparaitre de scroll bar
+    - margin bottom for submit review
 
 - Contribute:
     - Toute l'implémentation
@@ -31,3 +32,9 @@
 - My Lists:
     - Fonctionalité pour enlever des livres
     - Fonctionalité pour créer et enlever des listes
+    - Rehaul ui
+
+
+
+
+
