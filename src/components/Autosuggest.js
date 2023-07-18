@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { getBookValues } from '../bookUtils';
-import { type } from '@testing-library/user-event/dist/type';
 
 
 function Autosuggest({ elements, handleElements, suggestions, placeholder }) {
