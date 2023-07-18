@@ -7,11 +7,11 @@ import ShowMore from './ShowMore';
 import BookCover from './BookCover';
 import PaginationBar from './PaginationBar';
 import AppDropdown from './AppDropdown';
-import Autosuggest from './Autosuggest';
+import AutoSuggest from './AutoSuggest';
+import RatingSlider from './RatingSlider';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown, faL } from "@fortawesome/free-solid-svg-icons";
-import RatingSlider from './RatingSlider';
 
 function iterateObject(obj, callbacks = {}, ...args) {
   const { onValue, onFinal } = callbacks;
@@ -196,9 +196,9 @@ function GenresFilter({ parameters, setParameters }) {
   return (
     <div>
       <h6 className='mb-1'>Include:</h6>
-      < Autosuggest elements={parameters.genres.include} handleElements={handleIncludeGenre} suggestions={genres} placeholder={"Type genres..."} />
+      < AutoSuggest elements={parameters.genres.include} handleElements={handleIncludeGenre} suggestions={genres} placeholder={"Type genres..."} />
       <h6 className='mt-2 mb-1'>Exclude:</h6>
-      < Autosuggest elements={parameters.genres.exclude} handleElements={handleExcludeGenre} suggestions={genres} placeholder={"Type genres..."}/>
+      < AutoSuggest elements={parameters.genres.exclude} handleElements={handleExcludeGenre} suggestions={genres} placeholder={"Type genres..."}/>
     </div>
   )
 }
@@ -257,9 +257,9 @@ function AuthorFilter({ parameters, setParameters }) {
   return (
     <div>
       <h6 className='mb-1'>Include:</h6>
-      < Autosuggest elements={parameters.authors.include} handleElements={handleIncludeAuthor} suggestions={authors} placeholder={"Author names..."} />
+      < AutoSuggest elements={parameters.authors.include} handleElements={handleIncludeAuthor} suggestions={authors} placeholder={"Author names..."} />
       <h6 className='mt-2 mb-1'>Exclude:</h6>
-      < Autosuggest elements={parameters.authors.exclude} handleElements={handleExcludeAuthor} suggestions={authors} placeholder={"Author names..."}  />
+      < AutoSuggest elements={parameters.authors.exclude} handleElements={handleExcludeAuthor} suggestions={authors} placeholder={"Author names..."}  />
     </div>
   )
 
