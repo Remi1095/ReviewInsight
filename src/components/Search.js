@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getAllBooks, getAverageRating, getBookCover, getBookValues, getAllAuthors } from '../bookUtils';
+import { iterateObject } from '../iterateObject';
 import _ from 'lodash'
 import RatingBox from './RatingBox';
 import ShowMore from './ShowMore';
@@ -12,30 +13,6 @@ import RatingSlider from './RatingSlider';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown, faL } from "@fortawesome/free-solid-svg-icons";
-
-function iterateObject(obj, callbacks = {}, ...args) {
-  const { onValue, onFinal } = callbacks;
-
-  for (const key in obj) {
-    iterateObjectRecursive(obj[key], onValue, [key], ...args);
-  }
-  if (typeof onFinal === 'function') {
-    return onFinal(obj, ...args);
-  }
-}
-
-function iterateObjectRecursive(obj, onValue, keyPath = [], ...args) {
-
-  if (typeof obj === 'object' && !Array.isArray(obj) && obj !== null) {
-    for (const key in obj) {
-      iterateObjectRecursive(obj[key], onValue, [...keyPath, key], ...args);
-    }
-  } else if (typeof onValue === 'function') {
-    onValue(obj, keyPath, ...args);
-  }
-
-}
-
 
 function BookCard({ book }) {
 
@@ -51,37 +28,34 @@ function BookCard({ book }) {
   const avgRating = getAverageRating(book).toFixed(1);
 
   return (
-    <div className="content-box" style={{ marginBottom: "20px", padding: "15px" }}>
+    <div className="content-box d-flex" style={{ marginBottom: "20px", padding: "15px" }}>
 
-      <div className="d-flex">
+      <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
+        <div className='pointer' onClick={toBookInfo} style={{ width: "90%" }}>
+          <BookCover bgColor={book.fakeCover.bgColor} iconColor={book.fakeCover.iconColor} icon={book.fakeCover.icon} />
+        </div>
+      </div>
 
-        <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-          <div className='pointer' onClick={toBookInfo} style={{ width: "90%" }}>
-            <BookCover bgColor={book.fakeCover.bgColor} iconColor={book.fakeCover.iconColor} icon={book.fakeCover.icon} />
-          </div>
+      <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
+
+        <div className='pointer' onClick={toBookInfo}>
+          <h4 className="d-inline">{book.title}</h4>
+          <p className="mb-2 fs-5">by {book.author} - published {book.published}</p>
         </div>
 
-        <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
+        <div className="d-flex">
 
-          <div className='pointer' onClick={toBookInfo}>
-            <h4 className="d-inline">{book.title}</h4>
-            <p className="mb-2 fs-5">by {book.author} - published {book.published}</p>
+          <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
+            <div className='pointer' onClick={toBookInfo}>
+              <RatingBox rating={avgRating} textTag="h2" style={{ width: "70%" }} />
+              <p className="mb-0 text-center" style={{ fontSize: 'smaller' }}>{book.reviews.length} reviews<br />{book.ratings.length} ratings</p>
+            </div>
           </div>
 
-          <div className="d-flex">
-
-            <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-              <div className='pointer' onClick={toBookInfo}>
-                <RatingBox rating={avgRating} textTag="h2" style={{ width: "70%" }} />
-                <p className="mb-0 text-center" style={{ fontSize: 'smaller' }}>{book.reviews.length} reviews<br />{book.ratings.length} ratings</p>
-              </div>
-            </div>
-
-            <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
-              <ShowMore text={book.description} lines={4} />
-            </div>
-
+          <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
+            <ShowMore text={book.description} lines={4} />
           </div>
+
         </div>
       </div>
     </div>
@@ -194,11 +168,11 @@ function GenresFilter({ parameters, setParameters }) {
   }
 
   return (
-    <div>
+    <div className="mx-auto px-2">
       <h6 className='mb-1'>Include:</h6>
       < AutoSuggest elements={parameters.genres.include} handleElements={handleIncludeGenre} suggestions={genres} placeholder={"Type genres..."} />
       <h6 className='mt-2 mb-1'>Exclude:</h6>
-      < AutoSuggest elements={parameters.genres.exclude} handleElements={handleExcludeGenre} suggestions={genres} placeholder={"Type genres..."}/>
+      < AutoSuggest elements={parameters.genres.exclude} handleElements={handleExcludeGenre} suggestions={genres} placeholder={"Type genres..."} />
     </div>
   )
 }
@@ -255,11 +229,12 @@ function AuthorFilter({ parameters, setParameters }) {
 
 
   return (
-    <div>
+    <div className="mx-auto px-2">
+
       <h6 className='mb-1'>Include:</h6>
       < AutoSuggest elements={parameters.authors.include} handleElements={handleIncludeAuthor} suggestions={authors} placeholder={"Author names..."} />
       <h6 className='mt-2 mb-1'>Exclude:</h6>
-      < AutoSuggest elements={parameters.authors.exclude} handleElements={handleExcludeAuthor} suggestions={authors} placeholder={"Author names..."}  />
+      < AutoSuggest elements={parameters.authors.exclude} handleElements={handleExcludeAuthor} suggestions={authors} placeholder={"Author names..."} />
     </div>
   )
 
@@ -492,6 +467,23 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
   return (
     <div className="filters-box">
 
+      <div className='text-center mt-2 mb-3'>
+        <u
+          className="border border-dark px-2 py-1 me-5 pointer"
+          style={{ backgroundColor: "var(--primary-1)" }}
+          onClick={() => setURLParameters()}
+        >
+          Apply All
+        </u>
+        <u
+          className="border border-dark px-2 py-1 pointer"
+          style={{ backgroundColor: "lightgray" }}
+          onClick={() => resetParameters()}
+        >
+          Reset All
+        </u>
+      </div>
+
       <ExpandMenu
         menuName="Sort"
         content={
@@ -592,23 +584,6 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
         headerClass="mt-3"
         initalExpanded={Object.entries(expandedMenus).some(([key, value]) => key !== 'sort' && value === true)}
       />
-
-      <div className='text-center mt-4 mb-2'>
-        <u
-          className="border border-dark px-2 py-1 me-5 pointer"
-          style={{ backgroundColor: "var(--primary-1)" }}
-          onClick={() => setURLParameters()}
-        >
-          Apply All
-        </u>
-        <u
-          className="border border-dark px-2 py-1 pointer"
-          style={{ backgroundColor: "lightgray" }}
-          onClick={() => resetParameters()}
-        >
-          Reset All
-        </u>
-      </div>
 
     </div>
   )

@@ -1,17 +1,117 @@
-import React from "react";
+import React, { useState } from "react";
+import { getAllBooks, getBookValues } from "../bookUtils";
+import { iterateObject } from "../iterateObject";
+import _ from 'lodash'
+import AutoSuggest from "./AutoSuggest";
+import AppDropdown from "./AppDropdown";
 import { Container, Row, Col } from 'react-bootstrap';
 
 function Contribute() {
 
-  return (
-    <Container>
-      <Row>
-        <Col xxl={3} lg={2} xs={1}></Col>
-        <Col xxl={6} lg={8} xs={10}>
+  const [book, setBook] = useState(iterateObject(getAllBooks()[0], {
+    onValue: (value, keyPath, [emptyBook]) => {
+      if (keyPath[0] === 'ratings' || keyPath[0] === 'reviews') {
+        _.set(emptyBook, keyPath, []);
+      } else {
+        _.set(emptyBook, keyPath, null);
+      }
+    },
+    onFinal: (value, [emptyBook]) => {
+      return emptyBook;
+    }
+  }, [{}]));
+  console.log(book);
 
-          <h1 className="text-center text-danger">Page Under Construction</h1>
+  return (
+    <Container fluid>
+      <Row>
+        <Col xxl={4} lg={3} xs={1} />
+        <Col xxl={4} lg={6} xs={10}>
+          <h1 className="text-center">Add a book</h1>
+          <div className="content-box text-center py-3">
+            <h5>Title</h5>
+            <input
+              type='text'
+              value={''}
+              onChange={() => null}
+              placeholder={'Book title...'}
+              style={{ width: "80%" }}
+            />
+
+            <h5 className="mt-3">Series</h5>
+            <input
+              type='text'
+              value={''}
+              onChange={() => null}
+              placeholder={'Series name...'}
+              style={{ width: "45%", marginRight: "5%" }}
+            />
+            <input
+              type='text'
+              value={''}
+              onChange={() => null}
+              placeholder={'Volume #'}
+              style={{ width: "30%" }}
+            />
+
+            <h5 className="mt-3">Author</h5>
+            <div className="mx-auto" style={{ width: "80%" }}>
+              <AutoSuggest elements={[]} handleElements={() => null} suggestions={[]} placeholder={'Author name...'} maxLines={1} />
+            </div>
+
+            <h5 className="mt-3">Genres</h5>
+            <div className="mx-auto" style={{ width: "80%" }}>
+              <AutoSuggest elements={[]} handleElements={() => null} suggestions={[]} placeholder={'Type genres...'} />
+            </div>
+
+            <div className="mt-3 mx-auto d-flex justify-content-center" style={{ width: "80%" }}>
+              <div className="w-100">
+                <h5>Language</h5>
+                <AppDropdown
+                  emptyValue="Select language"
+                  selectedItem={''}
+                  items={[]}
+                  handleItemSelect={() => null}
+                  className="d-inline"
+                />
+                <h5 className="mt-3">Number of words</h5>
+                <input
+                  type='text'
+                  value={''}
+                  onChange={() => null}
+                  placeholder={'Volume #'}
+                  style={{ width: "90%" }}
+                />
+              </div>
+              <div className="w-100">
+                <h5>Classification</h5>
+                <AppDropdown
+                  emptyValue="Select classification"
+                  selectedItem={''}
+                  items={[]}
+                  handleItemSelect={() => null}
+                  className="d-inline"
+                />
+                <h5 className="mt-3">Publication date</h5>
+                <input
+                  type='date'
+                  value={''}
+                  onChange={() => null}
+                  style={{ width: "90%" }}
+                />
+              </div>
+            </div>
+
+            <h5 className="mt-3">Publishing house</h5>
+            <div className="mx-auto" style={{ width: "80%" }}>
+              <AutoSuggest elements={[]} handleElements={() => null} suggestions={[]} placeholder={'Company name...'} maxLines={1} />
+            </div>
+          </div>
+
+
+
         </Col>
-        <Col xxl={3} lg={2} xs={1}></Col>
+        <Col xxl={4} lg={3} xs={1} />
       </Row>
 
     </Container>

@@ -16,7 +16,7 @@ function MyListsModal({ show, handleClose, bookid }) {
 
   const bookLists = getBookLists();
   const maxDropdowns = Object.keys(bookLists).length;
-  
+
   const [availableLists, setAvailableLists] = useState(Object.keys(bookLists));
 
   const [selectedLists, setSelectedLists] = useState(Array.from({ length: 1 }, () => ""));
@@ -116,23 +116,26 @@ function MyListsModal({ show, handleClose, bookid }) {
 function Review({ review, style = {} }) {
 
   return (
-    <div className="content-box mx-auto" style={{ ...style, marginBottom: "15px", paddingTop: "4px", paddingBottom: "8px", paddingInline: "8px" }}>
+    <div>
+      <div className="content-box mx-auto" style={{ ...style, marginBottom: "15px", paddingTop: "4px", paddingBottom: "8px", paddingInline: "8px" }}>
 
-      <div className="d-flex justify-content-between mb-2" style={{ fontSize: 'smaller' }}>
-        <span>{review.name}</span>
-        <span className="text-black-50">{review.date}</span>
-      </div>
-      <div className="d-flex">
-        <div style={{ flex: '0 0 12%', maxWidth: '12%' }}>
-          <RatingBox rating={review.rating} textTag="h2" style={{ maxWidth: '80%' }} />
+        <div className="d-flex justify-content-between mb-2" style={{ fontSize: 'smaller' }}>
+          <span>{review.name}</span>
+          <span className="text-black-50">{review.date}</span>
         </div>
-        <div style={{ flex: '0 0 88%', maxWidth: '88%' }}>
-          <div className="ms-1">
-            <ShowMore text={review.review} lines={3} />
+        <div className="d-flex">
+          <div style={{ flex: '0 0 12%', maxWidth: '12%' }}>
+            <RatingBox rating={review.rating} textTag="h2" style={{ maxWidth: '80%' }} />
+          </div>
+          <div style={{ flex: '0 0 88%', maxWidth: '88%' }}>
+            <div className="ms-1">
+              <ShowMore text={review.review} lines={3} />
+            </div>
           </div>
         </div>
       </div>
     </div>
+
   );
 
 }
@@ -198,7 +201,7 @@ function BookInfo() {
 
         <Col className="text-center" xxl={2} lg={3} xs={4}>
           <div className="mx-auto text-center" style={{ width: "80%" }}>
-          <BookCover bgColor={book.fakeCover.bgColor} iconColor={book.fakeCover.iconColor} icon={book.fakeCover.icon} />
+            <BookCover bgColor={book.fakeCover.bgColor} iconColor={book.fakeCover.iconColor} icon={book.fakeCover.icon} />
           </div>
           <br />
 

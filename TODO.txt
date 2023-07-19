@@ -1,4 +1,3 @@
-
 - Home:
     - Onclick de la liste de genres
     - Onclick des contributions récentes
