@@ -26,7 +26,8 @@
     - margin bottom for submit review
 
 - Contribute:
-    - Toute l'implémentation
+    - Reste du UI
+    - Fonctionalité
 
 - My Lists:
     - Fonctionalité pour enlever des livres
