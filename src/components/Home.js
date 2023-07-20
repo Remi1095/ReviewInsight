@@ -1,12 +1,13 @@
 import React from "react";
 import bookCover from "../img/book-cover-placeholder.png"
-import { Container, Row, Col, ListGroup } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, InputGroup } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faRocket, faDragon, faPuzzlePiece, faHeart, faPersonRunning, faSkull, faMasksTheater, faXmarksLines,
   faBookOpenReader, faLandmark, faFlask, faSackDollar, faBrain, faInfinity, faHandshakeSimple, faPalette
 } from "@fortawesome/free-solid-svg-icons";
 import BookCover from "./BookCover"
+import { getAllBooks } from "../bookUtils";
 
 function Home() {
   return (
@@ -19,7 +20,7 @@ function Home() {
         <Col xl={2}></Col>
         <Col xl={8}>
 
-          <div className="genres-box mx-auto mb-5" style={{maxWidth:"900px"}}>
+          <div className="genres-box mx-auto mb-5" style={{ maxWidth: "900px" }}>
 
             <h3 className="ms-3 pt-2 mb-0">Fiction</h3>
             <hr className="mb-1" />
@@ -57,14 +58,23 @@ function Home() {
 
           <h2 className="text-center mb-3">Recent contributions:</h2>
 
-          <div className="book-list-box mx-auto" style={{backgroundColor:"var(--accent-1)", maxWidth:"900px"}}>
-            <ListGroup horizontal className="justify-content-evenly">
-              <ListGroup.Item> <img className="py-2" style={{ width: "100%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
-              <ListGroup.Item> <img className="py-2" style={{ width: "100%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
-              <ListGroup.Item> <img className="py-2" style={{ width: "100%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
-              <ListGroup.Item> <img className="py-2" style={{ width: "100%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
-              <ListGroup.Item> <img className="py-2" style={{ width: "100%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
-            </ListGroup>
+          <div
+            className="d-flex flex-wrap content-box p-2 mx-auto"
+            style={{
+              width: "100%",
+              maxWidth: "900px",
+              backgroundColor: 'var(--accent-2)',
+              borderColor: "gray",
+              overflow: "scroll"
+            }}
+          >
+            {getAllBooks().slice(0, 5).map((book, index) => {
+              return (
+                <div key={index} className="p-1" style={{ flexBasis: "20%" }}>
+                  <BookCover bgColor={book.fakeCover.bgColor} iconColor={book.fakeCover.iconColor} icon={book.fakeCover.icon} />
+                </div>
+              );
+            })}
           </div>
 
         </Col>

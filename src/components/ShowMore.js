@@ -22,7 +22,7 @@ function ShowMore({ text, lines }) {
   const textArray = text.split('\n');
 
   return (
-    <div>
+    <>
       <p className="my-0" ref={textRef} style={{ maxHeight: showMore ? "none" : height, overflow: "hidden" }}>
         {textArray.map((line, index) => (
           <span  key={index}>
@@ -36,7 +36,7 @@ function ShowMore({ text, lines }) {
           <u>{showMore ? "Show Less" : "Show More"}</u>
         </strong>
       )}
-    </div>
+    </>
   );
 }
 

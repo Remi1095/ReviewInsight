@@ -5,6 +5,7 @@
   --primary-0: hsl(180, 100%, 25%);
   --primary-1: hsl(180, 40%, 60%);
   --primary-2: hsl(180, 40%, 75%);
+  --primary-3: hsl(180, 40%, 90%);
 
   --accent-0: hsl(39, 96%, 60%);
   --accent-1: hsl(39, 96%, 75%);
@@ -66,11 +67,7 @@ textarea {
   padding: 10px 20px;
   border-radius: 25px;
   background-color: var(--primary-2);
-  text-decoration: none;
-  border: none;
-  outline: none;
-  width: fit-content !important;
-  height: fit-content !important;
+  border: 2px solid var(--primary-1);
   margin: 0 auto;
   cursor: pointer;
 }
@@ -191,11 +188,13 @@ textarea {
   position: relative;
   display: flex;
   align-items: flex-end;
+  border: 1px solid gray;
 }
 
 .rating-fill {
   width: 100%;
   background-color: var(--accent-0);
+  border-top: 1px solid gray;
 }
 
 .rating-text {

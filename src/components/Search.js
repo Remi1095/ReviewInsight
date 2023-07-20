@@ -72,16 +72,16 @@ function ExpandMenu({ menuName, content, headerNumber, headerClass = "", initalE
   const Header = `h${headerNumber}`;
 
   return (
-    <div>
+    <>
       {isExpanded ? (
-        <div>
+        <>
           <Header className={`${headerClass} pointer`} onClick={toggleMenu}>
             <span className="mx-2"><FontAwesomeIcon icon={faCaretDown} /></span>
             <span>{menuName}</span>
             <hr />
           </Header>
           {content}
-        </div>
+        </>
       ) : (
         <Header className={`${headerClass} pointer`} onClick={toggleMenu}>
           <span className="mx-2"><FontAwesomeIcon icon={faCaretRight} /></span>
@@ -89,7 +89,7 @@ function ExpandMenu({ menuName, content, headerNumber, headerClass = "", initalE
           <hr />
         </Header>
       )}
-    </div>
+    </>
   );
 }
 
@@ -194,7 +194,7 @@ function ClassificationFilter({ parameters, setParameters }) {
   }
 
   return (
-    <div>
+    <>
       {classifications.map(classification => (
         <label key={classification} className='d-block ms-3'>
           <input
@@ -206,7 +206,7 @@ function ClassificationFilter({ parameters, setParameters }) {
           {classification}
         </label>
       ))}
-    </div>
+    </>
   )
 }
 
@@ -496,7 +496,7 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
       <ExpandMenu
         menuName="Filters"
         content={
-          <div>
+          <>
             <div className="mx-3 mt-2">
               <ExpandMenu
                 menuName="Genres"
@@ -577,7 +577,7 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                 initalExpanded={expandedMenus.date}
               />
             </div>
-          </div>
+          </>
         }
         headerNumber="3"
         headerClass="mt-3"

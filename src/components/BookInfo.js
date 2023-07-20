@@ -116,7 +116,7 @@ function MyListsModal({ show, handleClose, bookid }) {
 function Review({ review, style = {} }) {
 
   return (
-    <div>
+    <>
       <div className="content-box mx-auto" style={{ ...style, marginBottom: "15px", paddingTop: "4px", paddingBottom: "8px", paddingInline: "8px" }}>
 
         <div className="d-flex justify-content-between mb-2" style={{ fontSize: 'smaller' }}>
@@ -134,7 +134,7 @@ function Review({ review, style = {} }) {
           </div>
         </div>
       </div>
-    </div>
+    </>
 
   );
 
