@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getAllBooks, getAverageRating, getBookCover, getBookValues, getAllAuthors } from '../bookUtils';
+import { getAllBooks, getAverageRating, getBookValues, getAllAuthors } from '../bookUtils';
 import { iterateObject } from '../iterateObject';
 import _ from 'lodash'
 import RatingBox from './RatingBox';
@@ -12,7 +12,7 @@ import AutoSuggest from './AutoSuggest';
 import RatingSlider from './RatingSlider';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretRight, faCaretDown, faL } from "@fortawesome/free-solid-svg-icons";
+import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 function BookCard({ book }) {
 
@@ -24,7 +24,6 @@ function BookCard({ book }) {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
-  //const bookCover = getBookCover(book);
   const avgRating = getAverageRating(book).toFixed(1);
 
   return (
@@ -749,7 +748,7 @@ function Search() {
 
 
   return (
-    <Container fluid>
+    <Container fluid className="mb-5">
       <h3 className="text-center fw-normal mb-3">Showing {bookIndexes[0] + 1}-{bookIndexes[1]} of {filteredBooks.length} books</h3>
       <PaginationBar totalPages={Math.ceil(filteredBooks.length / 6)} onPageChange={onPageChange} />
 

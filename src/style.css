@@ -165,13 +165,11 @@ textarea {
   height: 30px;
 }
 
-.book-list-box {
-  border: 1px solid gray;
-  border-radius: 10px;
-}
-
-.book-list-box .list-group-item {
-  background-color: inherit !important;
+.book-item {
+  flex-basis: 25%; /* 25% to create a 4-column grid */
+  box-sizing: border-box;
+  padding: 8px; /* Add some spacing between the books */
+  min-width: 90px; /* Set the minimum width of each book container to 90px */
 }
 
 .content-box {

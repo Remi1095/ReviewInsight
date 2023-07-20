@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getBookById, getBookCover, getAverageRating, getRatingArray, getBookLists, setBookLists } from "../bookUtils";
+import { getBookById, getAverageRating, getRatingArray, getBookLists, setBookLists } from "../bookUtils";
 import RatingBox from "./RatingBox";
 import RatingSlider from "./RatingSlider";
 import ShowMore from "./ShowMore";
@@ -173,7 +173,6 @@ function BookInfo() {
   const navigate = useNavigate();
   const { bookid } = useParams();
   const book = getBookById(bookid);
-  const bookCover = getBookCover(book);
   const avgRating = getAverageRating(book).toFixed(1);
 
   function handleSpoilersSelect(event) {
@@ -193,7 +192,7 @@ function BookInfo() {
   }
 
   return (
-    <Container fluid>
+    <Container fluid className="mb-5">
       <MyListsModal show={showModal} handleClose={closeMyListsModal} bookid={book.id} />
       <Row className="pb-3" style={{ borderBottom: "1px solid lightgray" }}>
 

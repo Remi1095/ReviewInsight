@@ -10,7 +10,7 @@ import BookCover from "./BookCover"
 
 function Home() {
   return (
-    <Container fluid>
+    <Container fluid className="mb-5">
       <h1 className="text-center mt-3">Find the right book</h1>
       <p className="text-center">Read and write reviews for the best and worst books available!</p>
 
@@ -57,7 +57,7 @@ function Home() {
 
           <h2 className="text-center mb-3">Recent contributions:</h2>
 
-          <div className="book-list-box mx-auto mb-5" style={{backgroundColor:"var(--accent-1)", maxWidth:"900px"}}>
+          <div className="book-list-box mx-auto" style={{backgroundColor:"var(--accent-1)", maxWidth:"900px"}}>
             <ListGroup horizontal className="justify-content-evenly">
               <ListGroup.Item> <img className="py-2" style={{ width: "100%" }} src={bookCover} alt="book1" /> </ListGroup.Item>
               <ListGroup.Item> <img className="py-2" style={{ width: "100%" }} src={bookCover} alt="book1" /> </ListGroup.Item>

@@ -20,27 +20,27 @@ function ReviewBook() {
   const { bookid } = useParams();
   const book = getBookById(bookid);
   return (
-    <Container fluid>
+    <Container fluid className="mb-5">
 
       <Row>
         <Col xxl={3} lg={2} xs={1} />
         <Col xxl={6} lg={8} xs={10}>
-          <h2 className="text-center mb-3 light-bold">Review "{book.title}"</h2>
+          <h2 className="text-center light-bold">Review "{book.title}"</h2>
 
           <div className="mx-auto" style={{ width: "50%", minWidth: "320px" }}>
             <RatingSlider />
           </div>
-
-          <div className="content-box mt-3">
+          <div className="text-center mt-3">
             <textarea
               value={text}
               placeholder="Write your review here..."
               onChange={handleTextChange}
-              rows={20}
-              className="no-style px-2 py-1"
-              style={{ whiteSpace: 'pre' }}
+              rows={10}
+              className="px-2 py-2 mx-auto content-box"
+              style={{ width: "80%" }}
             />
           </div>
+            
 
           <div className="warning-box mx-auto mt-4 px-3 py-2">
             <p className="light-bold text-center mb-2">My review contains spoilers!</p>

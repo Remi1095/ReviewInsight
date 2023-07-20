@@ -1,6 +1,6 @@
 import React from "react";
 import BookCover from "./BookCover";
-import { getBookLists, setBookLists, getBookById, getBookCover } from "../bookUtils";
+import { getBookLists, setBookLists, getBookById } from "../bookUtils";
 import { Container, Row, Col, ListGroup } from 'react-bootstrap';
 
 function Contribute() {
@@ -8,34 +8,43 @@ function Contribute() {
   const bookLists = getBookLists();
 
   return (
-    <Container fluid>
+    <Container fluid className="mb-5">
       <Row>
-        <Col xxl={3} lg={2} xs={1}></Col>
-        <Col xxl={6} lg={8} xs={10}>
-          {Object.keys(bookLists).map((key, index) => (
-            <div className="mb-3">
-              <h3>{key} ({bookLists[key].length})</h3>
+        <Col xxl={1}></Col>
+        <Col xxl={10}>
+          <div className="d-flex flex-wrap justify-content-center">
+            {Object.keys(bookLists).map((key, index) => (
+              <div key={index} className="mx-3 mb-4">
+                  <h3>{key} ({bookLists[key].length})</h3>
 
-              {bookLists[key].length > 0 && (
-                <div className="d-flex book-list-box flex-wrap" style={{ width: "fit-content", backgroundColor: index % 2 === 0 ? 'var(--primary-2)' : 'var(--accent-1)' }}>
-                {bookLists[key].map((bookid, index) => {
-                  // Create a local variable
-                  const book = getBookById(bookid);
-              
-                  return (
-                    <div className="d-flex mx-3 my-3" key={bookid} style={{ width: "80px" }}>
-                      <BookCover bgColor={book.fakeCover.bgColor} iconColor={book.fakeCover.iconColor} icon={book.fakeCover.icon} />
+                  {bookLists[key].length > 0 && (
+                    <div
+                      className="d-flex content-box p-2 me-auto"
+                      style={{
+                        maxWidth: "90vw",
+                        width: "fit-content",
+                        backgroundColor: 'var(--primary-2)',
+                        borderColor: "gray",
+                        overflow: "scroll"
+                      }}
+                    >
+                      {bookLists[key].map((bookid, index) => {
+                        const book = getBookById(bookid);
+                        return (
+                          <div key={index} className="p-1" style={{ width:"90px"}}>
+                            <BookCover bgColor={book.fakeCover.bgColor} iconColor={book.fakeCover.iconColor} icon={book.fakeCover.icon} />
+                          </div>
+                        );
+                      })}
                     </div>
-                  );
-                })}
+                  )}
               </div>
-              )}
-            </div>
-          ))}
+            ))}
+          </div>
         </Col>
-        <Col xxl={3} lg={2} xs={1}></Col>
+        <Col xxl={1}></Col>
       </Row>
-    </Container>
+    </Container >
   );
 }
 
