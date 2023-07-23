@@ -42,6 +42,11 @@ def randomData(num_authors):
             'English',
             'Spanish',
             'French'
+        ],
+        'lists': [
+            'Favorites',
+            'To Read',
+            'Currently Reading'
         ]
     }
         

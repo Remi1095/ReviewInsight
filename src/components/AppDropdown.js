@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Dropdown from 'react-bootstrap/Dropdown';
 
-function AppDropdown({ items, selectedItem, handleItemSelect, emptyValue, index = null, hasReset = true, className = "" }) {
+function AppDropdown({ items, selectedItem, handleItemSelect, emptyValue, hasReset = true, className = "" }) {
 
   function handleItemClick(item) {
-    handleItemSelect(item, index);
+    handleItemSelect(item);
   };
 
   return (

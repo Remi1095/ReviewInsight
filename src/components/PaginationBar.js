@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-function PaginationBar({ totalPages, onPageChange }) {
+function PaginationBar({ totalPages, onPageChange, scrollTopRef }) {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -19,8 +19,7 @@ function PaginationBar({ totalPages, onPageChange }) {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set('page', page);
     navigate(`${location.pathname}?${urlParams.toString()}`);
-    console.log("scroll top");
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    scrollTopRef.current?.scrollIntoView({ behavior: "instant" });
   };
 
   function renderPageNumbers() {

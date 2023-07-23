@@ -1,8 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 
-function ShowMore({ text, lines }) {
+function ShowMore({ text, lines, showMore, handleShowMore }) {
   const textRef = useRef(null);
-  const [showMore, setShowMore] = useState(false);
   const [overflowing, setOverflowing] = useState(false);
   const [height, setHeight] = useState("");
 
@@ -14,10 +13,6 @@ function ShowMore({ text, lines }) {
       setOverflowing(textElement.scrollHeight > heightpx);
     }
   }, [textRef, lines]);
-
-  function toggleDescription() {
-    setShowMore(!showMore);
-  }
 
   const textArray = text.split('\n');
 
@@ -32,7 +27,7 @@ function ShowMore({ text, lines }) {
         ))}
       </p>
       {overflowing && (
-        <strong className="pointer" onClick={toggleDescription} style={{ fontSize: "smaller" }}>
+        <strong className="pointer" onClick={handleShowMore} style={{ fontSize: "smaller" }}>
           <u>{showMore ? "Show Less" : "Show More"}</u>
         </strong>
       )}

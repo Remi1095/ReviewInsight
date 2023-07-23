@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getAllBooks, getAverageRating, getBookValues, getAllAuthors } from '../bookUtils';
 import { iterateObject } from '../iterateObject';
@@ -15,9 +15,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 function BookCard({ book }) {
-
-
   const navigate = useNavigate();
+
+  const [showMore, setShowMore] = useState(false);
+  
+  function toggleShowMore() {
+    setShowMore(!showMore);
+  }
 
   function toBookInfo() {
     navigate(`/book-info/${book.id}`);
@@ -52,7 +56,7 @@ function BookCard({ book }) {
           </div>
 
           <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
-            <ShowMore text={book.description} lines={4} />
+            <ShowMore text={book.description} lines={4} showMore={showMore} handleShowMore={toggleShowMore} />
           </div>
 
         </div>
@@ -123,8 +127,8 @@ function Sort({ parameters, setParameters }) {
         />
       </div>
 
-      <div className="mt-2 text-center">
-        <label className="me-3">
+      <div className='d-flex flex-wrap justify-content-evenly mt-2'>
+        <label>
           <input
             name="direction"
             type="radio"
@@ -466,21 +470,25 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
   return (
     <div className="filters-box">
 
-      <div className='text-center mt-2 mb-3'>
-        <u
-          className="border border-dark px-2 py-1 me-5 pointer"
-          style={{ backgroundColor: "var(--primary-1)" }}
-          onClick={() => setURLParameters()}
-        >
-          Apply All
-        </u>
-        <u
-          className="border border-dark px-2 py-1 pointer"
-          style={{ backgroundColor: "lightgray" }}
-          onClick={() => resetParameters()}
-        >
-          Reset All
-        </u>
+      <div className='d-flex flex-wrap justify-content-evenly mt-2 mb-3'>
+        <div>
+          <u
+            className="border border-dark px-2 py-1 pointer"
+            style={{ backgroundColor: "var(--primary-1)" }}
+            onClick={() => setURLParameters()}
+          >
+            Apply All
+          </u>
+        </div>
+        <div>
+          <u
+            className="border border-dark px-2 py-1 pointer"
+            style={{ backgroundColor: "lightgray" }}
+            onClick={() => resetParameters()}
+          >
+            Reset All
+          </u>
+        </div>
       </div>
 
       <ExpandMenu
@@ -594,6 +602,7 @@ function Search() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const showingRef = useRef(null);
   const defaultParameters = {
     sort: {
       type: 'Date',
@@ -702,7 +711,7 @@ function Search() {
         (params.date.max === '' || new Date(book.published) <= new Date(params.date.max))
     );
     newFilteredBooks.sort((a, b) => {
-      let comparison = 0; // Default value (for cases where params.sort.type is unknown)
+      let comparison = 0;
 
       switch (params.sort.type) {
         case 'Rating':
@@ -745,21 +754,19 @@ function Search() {
     setBookIndexes([startIndex, endIndex])
   }
 
-
-
   return (
     <Container fluid className="mb-5">
-      <h3 className="text-center fw-normal mb-3">Showing {bookIndexes[0] + 1}-{bookIndexes[1]} of {filteredBooks.length} books</h3>
-      <PaginationBar totalPages={Math.ceil(filteredBooks.length / 6)} onPageChange={onPageChange} />
+      <h3 ref={showingRef} className="text-center fw-normal mb-3">Showing {bookIndexes[0] + 1}-{bookIndexes[1]} of {filteredBooks.length} books</h3>
+      <PaginationBar totalPages={Math.ceil(filteredBooks.length / 6)} onPageChange={onPageChange} scrollTopRef={showingRef} />
 
       <Row>
-        <Col xxl={2} xs={0}></Col>
+        <Col xxl={2}></Col>
         <Col xxl={6} xs={8}>
-          {booksDisplayed.map((book, index) => (
-            <BookCard key={index} book={book} />
+          {booksDisplayed.map((book) => (
+            <BookCard key={book.id} book={book} />
           ))}
         </Col>
-        <Col xxl={2} xs={4}>
+        <Col className='mb-3' xxl={2} xs={4}>
           <SortAndFilters
             parameters={parameters}
             defaultParameters={defaultParameters}
@@ -767,11 +774,11 @@ function Search() {
             setURLParameters={setURLParameters}
           />
         </Col>
-        <Col className=" " xxl={2} xs={0}></Col>
+        <Col xxl={2}></Col>
 
       </Row>
 
-      <PaginationBar totalPages={Math.ceil(filteredBooks.length / 6)} onPageChange={onPageChange} />
+      <PaginationBar totalPages={Math.ceil(filteredBooks.length / 6)} onPageChange={onPageChange} scrollTopRef={showingRef} />
 
     </Container >
   );

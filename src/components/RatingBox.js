@@ -6,7 +6,13 @@ function RatingBox({ rating, textTag, style={} }) {
 
   return (
     <div className="rating-box mx-auto" style={style}>
-      <div className="rating-fill" style={{ height: `${rating * 10}%` }}></div>
+      {rating && (
+      <div
+       className="rating-fill" 
+       style={{ 
+        height: `${rating * 10}%`, 
+        borderTop: (!rating || rating === 0 || rating === 10) ? 'none' : 'inherit'}}></div>
+      )}
       <TextTag className="rating-text">{rating}</TextTag>
     </div>
   );

@@ -5,12 +5,13 @@ import BookInfo from "./components/BookInfo";
 import ReviewBook from "./components/ReviewBook";
 import Contribute from "./components/Contribute";
 import MyLists from "./components/MyLists"
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer, Slide } from "react-toastify";
 
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer transition={Slide} />
       <div className="App">
         <AppNavbar />
         <br />

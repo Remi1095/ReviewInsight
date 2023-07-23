@@ -1,64 +1,36 @@
-import React, { useState } from "react";
-import { getBookById, getAverageRating, getRatingArray, getBookLists, setBookLists } from "../bookUtils";
+import React, { useEffect, useRef, useState } from "react";
+import { getBookById, getAverageRating, getRatingArray, getBookLists, getLists, setLists } from "../bookUtils";
+import { getUserRating, getUserReview, setUserRating } from "../userReviews";
 import RatingBox from "./RatingBox";
 import RatingSlider from "./RatingSlider";
 import ShowMore from "./ShowMore";
-import AppDropdown from "./AppDropdown"
 import BookCover from "./BookCover";
-import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
+import PaginationBar from "./PaginationBar";
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { Container, Row, Col, Modal } from 'react-bootstrap';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, LabelList } from 'recharts';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
-import Modal from 'react-bootstrap/Modal';
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { toast } from 'react-toastify';
 
-function MyListsModal({ show, handleClose, bookid }) {
 
-  const bookLists = getBookLists();
-  const maxDropdowns = Object.keys(bookLists).length;
 
-  const [availableLists, setAvailableLists] = useState(Object.keys(bookLists));
+function MyListsModal({ bookid, show, handleClose, handleConfirm }) {
 
-  const [selectedLists, setSelectedLists] = useState(Array.from({ length: 1 }, () => ""));
+  const allLists = getBookLists().lists;
 
-  function handleBookLists(list, index) {
-    const newAvailableLists = availableLists.filter(item => item !== list);
-    if (selectedLists[index] !== "") {
-      newAvailableLists.push(selectedLists[index]);
+  const [selectedLists, setSelectedLists] = useState(getLists(bookid));
+
+  useEffect(() => {
+    setSelectedLists(getLists(bookid));
+  }, [show]);
+
+  function handleListSelection(index) {
+    if (selectedLists.includes(allLists[index])) {
+      setSelectedLists(selectedLists.filter((list) => list !== allLists[index]));
+    } else {
+      setSelectedLists([...selectedLists, allLists[index]]);
     }
-    setAvailableLists(newAvailableLists);
-
-    const newSelectedLists = [...selectedLists];
-    newSelectedLists[index] = list;
-    setSelectedLists(newSelectedLists);
-
-
-  }
-
-  function addDropdown() {
-    const newSelectedLists = [...selectedLists, ""];
-    setSelectedLists(newSelectedLists);
-  }
-
-  function removeDropdown() {
-    const newSelectedLists = [...selectedLists];
-    const lastList = newSelectedLists.pop();
-    if (lastList !== "") {
-      const newAvailableLists = [...availableLists, lastList];
-      setAvailableLists(newAvailableLists);
-    }
-    setSelectedLists(newSelectedLists);
-
-  }
-
-  function handleSelection() {
-    selectedLists.forEach(list => {
-      if (list !== "") {
-        bookLists[list].push(bookid);
-      }
-    });
-    setBookLists(bookLists)
-    handleClose();
   }
 
   return (
@@ -67,44 +39,24 @@ function MyListsModal({ show, handleClose, bookid }) {
       onHide={handleClose}
       centered
     >
-      <Modal.Header closeButton>
-        <Modal.Title>Add this book to a list</Modal.Title>
+      <Modal.Header>
+        <Modal.Title className="fs-4">Save book to a list</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-
-        {selectedLists.map((list, index) => (
-          <AppDropdown
-            key={index}
-            className="d-inline mx-2"
-            emptyValue="Select list"
-            initialValue={selectedLists[index]}
-            items={availableLists}
-            handleItemSelect={handleBookLists}
-            index={index}
-          />
+        {allLists.map((list, index) => (
+          <label key={index} className='d-block ms-3'>
+            <input
+              type="checkbox"
+              checked={selectedLists.includes(list)}
+              onChange={() => handleListSelection(index)}
+              className='me-2'
+            />
+            {list}
+          </label>
         ))}
-        {selectedLists.length > 1 && (
-          <button
-            className="ms-2 px-2 py-1 button-pill d-inline"
-            style={{ backgroundColor: "lightgray" }}
-            onClick={removeDropdown}
-          >
-            <FontAwesomeIcon icon={faMinus} />
-          </button>
-        )}
-        {selectedLists.length < maxDropdowns && (
-          <button
-            className="ms-2 px-2 py-1 button-pill d-inline"
-            style={{ backgroundColor: "lightgray" }}
-            onClick={addDropdown}
-          >
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-        )}
       </Modal.Body>
       <Modal.Footer className="d-flex justify-content-evenly">
-
-        <button className="button-pill" onClick={handleSelection}>
+        <button className="button-pill px-2 py-1" onClick={() => handleConfirm(selectedLists)}>
           Confirm selection
         </button>
       </Modal.Footer>
@@ -114,12 +66,26 @@ function MyListsModal({ show, handleClose, bookid }) {
 
 
 function Review({ review, style = {} }) {
+  const [showMore, setShowMore] = useState(false);
+  function toggleShowMore() {
+    setShowMore(!showMore);
+  }
 
   return (
     <>
-      <div className="content-box mx-auto" style={{ ...style, marginBottom: "15px", paddingTop: "4px", paddingBottom: "8px", paddingInline: "8px" }}>
+      <div
+        className="content-box mx-auto"
+        style={{
+          ...style,
+          marginBottom: "15px",
+          paddingTop: "4px",
+          paddingBottom: "8px",
+          paddingInline: "8px",
+          backgroundColor: review.spoiler ? "var(--accent-2)" : "white"
+        }}
+      >
 
-        <div className="d-flex justify-content-between mb-2" style={{ fontSize: 'smaller' }}>
+        <div className="d-flex justify-content-between mb-1" style={{ fontSize: 'smaller' }}>
           <span>{review.name}</span>
           <span className="text-black-50">{review.date}</span>
         </div>
@@ -129,7 +95,7 @@ function Review({ review, style = {} }) {
           </div>
           <div style={{ flex: '0 0 88%', maxWidth: '88%' }}>
             <div className="ms-1">
-              <ShowMore text={review.review} lines={3} />
+              <ShowMore text={review.review} lines={3} showMore={showMore} handleShowMore={toggleShowMore} />
             </div>
           </div>
         </div>
@@ -166,17 +132,46 @@ function ReviewBarChart({ book, className = "" }) {
 
 
 function BookInfo() {
-
-  const [spoilers, setSpoilers] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-
   const navigate = useNavigate();
+  const location = useLocation();
   const { bookid } = useParams();
   const book = getBookById(bookid);
   const avgRating = getAverageRating(book).toFixed(1);
+  const showingRef = useRef(null);
+
+  const [showMore, setShowMore] = useState(false);
+  const [showSpoilers, setShowSpoilers] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [isChangedRating, setIsChangedRating] = useState(!!getUserRating(bookid))
+  const [sliderRating, setSliderRating] = useState(getUserRating(bookid) ?? 5);
+  const [filteredReviews, setFilteredReviews] = useState(book.reviews);
+  const [reviewsDisplayed, setReviewsDisplayed] = useState([]);
+  const [reviewIndexes, setReviewIndexes] = useState([0, 0]);
+
+
+  function toggleShowMore() {
+    setShowMore(!showMore);
+  }
+
+  function handleRateBook() {
+    setUserRating(bookid, sliderRating);
+    setIsChangedRating(true);
+    toast(`Book rated ${sliderRating}/10`, {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark",
+    });
+  }
 
   function handleSpoilersSelect(event) {
-    setSpoilers(event.target.value === 'yes');
+    setShowSpoilers(event.target.value === 'yes');
+    setFilteredReviews(book.reviews.filter((review) => event.target.value === 'yes' || !review.spoiler));
+    navigate(location.pathname);
   }
 
   function showMyListsModal() {
@@ -187,13 +182,35 @@ function BookInfo() {
     setShowModal(false);
   };
 
+  function confirmListSelection(selectedLists) {
+    setShowModal(false);
+    setLists(bookid, selectedLists)
+    toast('Book successfully saved', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "dark",
+    });
+  }
+
   function toReviewBook() {
     navigate(`/review-book/${book.id}`)
   }
 
+  function onPageChange(page) {
+    const startIndex = (page - 1) * 6;
+    const endIndex = Math.min(page * 6, filteredReviews.length)
+    setReviewsDisplayed(filteredReviews.slice(startIndex, endIndex))
+    setReviewIndexes([startIndex, endIndex])
+  }
+
   return (
     <Container fluid className="mb-5">
-      <MyListsModal show={showModal} handleClose={closeMyListsModal} bookid={book.id} />
+      <MyListsModal show={showModal} bookid={book.id} handleClose={closeMyListsModal} handleConfirm={confirmListSelection} />
       <Row className="pb-3" style={{ borderBottom: "1px solid lightgray" }}>
 
         <Col xxl={3} lg={1} xs={0}></Col>
@@ -229,7 +246,7 @@ function BookInfo() {
             ))}
           </p>
 
-          <ShowMore text={book.description} lines={5} />
+          <ShowMore text={book.description} lines={5} showMore={showMore} handleShowMore={toggleShowMore} />
 
           <p className="mt-4 mb-0 light-bold">Book details:</p>
           <table className="w-100">
@@ -273,11 +290,15 @@ function BookInfo() {
           <h3 className="text-center my-3">Ratings & Reviews</h3>
           <div className="d-flex justify-content-center text-center py-3" style={{ borderBottom: "1px solid lightgray" }}>
             <div className="me-5" style={{ width: "40%" }}>
-              <RatingSlider />
-              <u>Rate this book</u>
+              <RatingSlider rating={sliderRating} handleRating={setSliderRating} />
+              <div className="mt-2">
+                <u className="fs-5 pointer" onClick={handleRateBook}>{isChangedRating ? "Change your rating" : "Rate this book"}</u>
+              </div>
             </div>
             <div style={{ width: "40%" }}>
-              <button className="button-pill mt-3 fs-5 light-bold w-100" onClick={toReviewBook}>Write a review</button>
+              <button className="button-pill mt-3 fs-5 light-bold w-100" onClick={toReviewBook}>
+                {!getUserReview(bookid) ? "Write a review" : "Change your review"}
+              </button>
             </div>
           </div>
 
@@ -289,7 +310,7 @@ function BookInfo() {
                   name="spoiler"
                   type="radio"
                   value="yes"
-                  checked={spoilers}
+                  checked={showSpoilers}
                   onChange={handleSpoilersSelect}
                 />
                 <span className="ms-2">Yes</span>
@@ -299,7 +320,7 @@ function BookInfo() {
                   name="spoiler"
                   type="radio"
                   value="no"
-                  checked={!spoilers}
+                  checked={!showSpoilers}
                   onChange={handleSpoilersSelect}
                 />
                 <span className="ms-2">No</span>
@@ -313,12 +334,14 @@ function BookInfo() {
           </div>
 
 
-          <h4 className="text-center fw-normal mb-3">Showing 1-6 of {book.reviews.length} reviews</h4>
+          <h4 ref={showingRef} className="text-center fw-normal mb-3">Showing {reviewIndexes[0] + 1}-{reviewIndexes[1]} of {book.reviews.length} books reviews</h4>
+          <PaginationBar totalPages={Math.ceil(filteredReviews.length / 6)} onPageChange={onPageChange} scrollTopRef={showingRef} />
           <div className="w-100">
-            {book.reviews.map((review, index) => (
-              <Review review={review} style={{ width: "90%" }} key={index} />
+            {reviewsDisplayed.map((review, index) => (
+              <Review review={review} style={{ width: "90%" }} key={review.name} />
             ))}
           </div>
+          <PaginationBar totalPages={Math.ceil(filteredReviews.length / 6)} onPageChange={onPageChange} scrollTopRef={showingRef} />
         </Col>
         <Col xxl={3} lg={1} xs={0}></Col>
 

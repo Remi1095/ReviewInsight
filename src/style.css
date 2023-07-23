@@ -150,6 +150,7 @@ textarea {
   padding-block: 6px;
   margin: 10px 0;
   border-radius: 30px !important;
+  cursor: pointer;
 }
 
 .genre-list .list-group-item span {
@@ -232,8 +233,6 @@ textarea {
 
 .modal-dialog {
   width: fit-content !important;
-  min-width: 30% !important;
-  max-width: 100% !important;
 }
 
 .modal-content {
@@ -245,13 +244,14 @@ textarea {
   top: 100%;
   left: 0;
   width: 100%;
-  background-color: #fff;
+  background-color: white;
   border: 1px solid lightgray;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 9999;
   list-style: none;
   padding-left: 0;
+  text-align: left;
 }
 
 .suggestion-item {
@@ -261,4 +261,8 @@ textarea {
 
 .suggestion-item:hover {
   background-color: #f0f0f0;
+}
+
+.Toastify__toast-body {
+  white-space: pre-line;
 }

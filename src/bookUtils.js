@@ -9,7 +9,7 @@ export function getAllBooks() {
 }
 
 export function getBookById(id) {
-    return jsonData.books.find(book => book.id == id);
+    return jsonData.books.find(book => book.id === parseInt(id));
 }
 
 export function getBookCover(book) {
@@ -38,26 +38,31 @@ export function getAllAuthors() {
     return [...new Set(jsonData.books.map(book => book.author))];
 }
 
+export function getAllPublishers() {
+    return [...new Set(jsonData.books.map(book => book.publisher))];
+}
+
 export function getBookLists() {
     const jsonString = localStorage.getItem("bookLists");
-    var bookLists;
-    if (jsonString === null) {
-        bookLists = {
-            "To Read": [],
-            "Favorites": [],
-            "Currently Reading": [],
-            "Something": []
-        };
-    } else {
-        bookLists = JSON.parse(jsonString);
-    }
-
-    return bookLists;
+    return (jsonString === null) ? {"lists": jsonData.values.lists} : JSON.parse(jsonString);
 }
 
 export function setBookLists(bookLists) {
-    localStorage.clear()
-    const jsonString = JSON.stringify(bookLists);
-    localStorage.setItem("bookLists", jsonString);
+    localStorage.clear();
+    localStorage.setItem("bookLists", JSON.stringify(bookLists));
 }
 
+
+export function getLists(bookid) {
+    const jsonString = localStorage.getItem("bookLists");
+    return (jsonString === null) ? [] : JSON.parse(jsonString)[bookid] || [];
+}
+
+export function setLists(bookid, lists) {
+    const jsonString = localStorage.getItem("bookLists");
+    const bookLists = (jsonString === null) ? {"lists": jsonData.values.lists} : JSON.parse(jsonString);
+    bookLists[bookid] = lists;
+    const newLists = lists.filter((list) => !bookLists.lists.includes(list));
+    bookLists.lists.push(...newLists);
+    localStorage.setItem("bookLists", JSON.stringify(bookLists));
+}
