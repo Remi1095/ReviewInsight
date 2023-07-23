@@ -8,10 +8,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import BookCover from "./BookCover"
 import { getAllBooks } from "../bookUtils";
+import { useTranslation } from "react-i18next";
 
 
 function Home() {
-
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   function fiveRandomBooks() {
@@ -46,8 +47,8 @@ function Home() {
 
   return (
     <Container fluid className="mb-5">
-      <h1 className="text-center mt-3">Find the right book</h1>
-      <p className="text-center">Read and write reviews for the best and worst books available!</p>
+      <h1 className="text-center mt-3">{t('findTheRightBook')}</h1>
+      <p className="text-center">{t('readAndWriteReviews')}</p>
 
       <Row className="mt-5">
 
@@ -61,31 +62,31 @@ function Home() {
 
             <ListGroup horizontal className="genre-list justify-content-evenly">
               <ListGroup.Item onClick={() => toSearch("Sci-Fi")}>
-                <span>Sci-Fi</span> <span><FontAwesomeIcon icon={faRocket} /></span>
+                <span>{t('sci-fi')}</span> <span><FontAwesomeIcon icon={faRocket} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("Fantasy")}>
-                <span>Fantasy</span> <span><FontAwesomeIcon icon={faDragon} /></span>
+                <span>{t('fantasy')}</span> <span><FontAwesomeIcon icon={faDragon} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("Mystery")}>
-                <span>Mystery</span> <span><FontAwesomeIcon icon={faPuzzlePiece} /></span>
+                <span>{t('mystery')}</span> <span><FontAwesomeIcon icon={faPuzzlePiece} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("Romance")}>
-                <span>Romance</span> <span><FontAwesomeIcon icon={faHeart} /></span>
+                <span>{t('romance')}</span> <span><FontAwesomeIcon icon={faHeart} /></span>
               </ListGroup.Item>
             </ListGroup>
 
             <ListGroup horizontal className="genre-list justify-content-evenly">
               <ListGroup.Item onClick={() => toSearch("Thriller")}>
-                <span>Thriller</span> <span><FontAwesomeIcon icon={faPersonRunning} /></span>
+                <span>{t('thriller')}</span> <span><FontAwesomeIcon icon={faPersonRunning} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("Horror")}>
-                <span>Horror</span> <span><FontAwesomeIcon icon={faSkull} /></span>
+                <span>{t('horror')}</span> <span><FontAwesomeIcon icon={faSkull} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("Comedy")}>
-                <span>Comedy</span> <span><FontAwesomeIcon icon={faMasksTheater} /></span>
+                <span>{t('comedy')}</span> <span><FontAwesomeIcon icon={faMasksTheater} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("Dystopia")}>
-                <span>Dystopia</span> <span><FontAwesomeIcon icon={faXmarksLines} /></span>
+                <span>{t('dystopia')}</span> <span><FontAwesomeIcon icon={faXmarksLines} /></span>
               </ListGroup.Item>
             </ListGroup>
 
@@ -94,37 +95,37 @@ function Home() {
 
             <ListGroup horizontal className="genre-list justify-content-evenly">
               <ListGroup.Item onClick={() => toSearch("Biography")}>
-                <span>Biography</span> <span><FontAwesomeIcon icon={faBookOpenReader} /></span>
+                <span>{t('biography')}</span> <span><FontAwesomeIcon icon={faBookOpenReader} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("History")}>
-                <span>History</span> <span><FontAwesomeIcon icon={faLandmark} /></span>
+                <span>{t('history')}</span> <span><FontAwesomeIcon icon={faLandmark} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("Science")}>
-                <span>Science</span> <span><FontAwesomeIcon icon={faFlask} /></span>
+                <span>{t('science')}</span> <span><FontAwesomeIcon icon={faFlask} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("Finance")}>
-                <span>Finance</span> <span><FontAwesomeIcon icon={faSackDollar} /></span>
+                <span>{t('fiance')}</span> <span><FontAwesomeIcon icon={faSackDollar} /></span>
               </ListGroup.Item>
             </ListGroup>
 
             <ListGroup horizontal className="genre-list justify-content-evenly pb-2">
               <ListGroup.Item onClick={() => toSearch("Psychology")}>
-                <span>Psychology</span> <span><FontAwesomeIcon icon={faBrain} /></span>
+                <span>{t('psychology')}</span> <span><FontAwesomeIcon icon={faBrain} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("Philosophy")}>
-                <span>Philosophy</span> <span><FontAwesomeIcon icon={faInfinity} /></span>
+                <span>{t('philosophy')}</span> <span><FontAwesomeIcon icon={faInfinity} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("Politics")}>
-                <span>Politics</span> <span><FontAwesomeIcon icon={faHandshakeSimple} /></span>
+                <span>{t('politics')}</span> <span><FontAwesomeIcon icon={faHandshakeSimple} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("Art")}>
-                <span>Art</span> <span><FontAwesomeIcon icon={faPalette} /></span>
+                <span>{t('art')}</span> <span><FontAwesomeIcon icon={faPalette} /></span>
               </ListGroup.Item>
             </ListGroup>
 
           </div>
 
-          <h2 className="text-center mb-3">Recent contributions:</h2>
+          <h2 className="text-center mb-3">{t('recentContributions')}</h2>
 
           <div
             className="d-flex flex-wrap content-box p-2 mx-auto"

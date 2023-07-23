@@ -148,6 +148,11 @@ function BookInfo() {
   const [reviewsDisplayed, setReviewsDisplayed] = useState([]);
   const [reviewIndexes, setReviewIndexes] = useState([0, 0]);
 
+  function toSearch(genre) {
+    const queryParams = new URLSearchParams();
+    queryParams.set('genres.include', [genre]);
+    navigate(`/search?${queryParams.toString()}`);
+  }
 
   function toggleShowMore() {
     setShowMore(!showMore);
@@ -242,7 +247,7 @@ function BookInfo() {
           <p className="fs-5">
             <strong className="me-2">Genres:</strong>
             {book.genres.map((genre, index) => (
-              <u key={index} className="mx-2">{genre}</u>
+              <u key={index} className="mx-2 pointer" onClick={() => toSearch(genre)}>{genre}</u>
             ))}
           </p>
 

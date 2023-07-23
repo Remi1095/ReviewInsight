@@ -10,15 +10,16 @@ import PaginationBar from './PaginationBar';
 import AppDropdown from './AppDropdown';
 import AutoSuggest from './AutoSuggest';
 import RatingSlider from './RatingSlider';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons";
 
 function BookCard({ book }) {
   const navigate = useNavigate();
 
   const [showMore, setShowMore] = useState(false);
-  
+
   function toggleShowMore() {
     setShowMore(!showMore);
   }
@@ -65,34 +66,43 @@ function BookCard({ book }) {
   );
 }
 
+function HelpModal({ show, handleClose, name, content }) {
 
-function ExpandMenu({ menuName, content, headerNumber, headerClass = "", initalExpanded = false }) {
+  return (
+    <Modal
+      show={show}
+      onHide={handleClose}
+      centered
+    >
+      <Modal.Header className='py-1'>
+        <Modal.Title className="fs-5">{name}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body className='py-1'>
+        {content}
+      </Modal.Body>
+    </Modal>
+  );
+};
+
+
+function ExpandMenu({ menuName, size, content, helpContent = "", className = "", initalExpanded = false }) {
   const [isExpanded, setExpanded] = useState(initalExpanded);
+  const [showHelp, setShowHelp] = useState(false);
 
-  function toggleMenu() {
-    setExpanded(!isExpanded);
-  }
 
-  const Header = `h${headerNumber}`;
+  const Header = `h${size}`;
 
   return (
     <>
-      {isExpanded ? (
-        <>
-          <Header className={`${headerClass} pointer`} onClick={toggleMenu}>
-            <span className="mx-2"><FontAwesomeIcon icon={faCaretDown} /></span>
-            <span>{menuName}</span>
-            <hr />
-          </Header>
-          {content}
-        </>
-      ) : (
-        <Header className={`${headerClass} pointer`} onClick={toggleMenu}>
-          <span className="mx-2"><FontAwesomeIcon icon={faCaretRight} /></span>
+      <HelpModal show={showHelp} handleClose={() => setShowHelp(false)} name={menuName} content={helpContent} />
+      <Header className={`${className} pointer d-flex justify-content-between`} style={{ borderBottom: "2px solid black" }}>
+        <span className="pointer" onClick={() => setExpanded(!isExpanded)}>
+          <span className="mx-2"><FontAwesomeIcon icon={isExpanded ? faCaretDown : faCaretRight} /></span>
           <span>{menuName}</span>
-          <hr />
-        </Header>
-      )}
+        </span>
+        <span className="mx-2" onClick={() => setShowHelp(true)}><FontAwesomeIcon icon={faCircleQuestion} /></span>
+      </Header>
+      {isExpanded && (content)}
     </>
   );
 }
@@ -496,8 +506,25 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
         content={
           <Sort parameters={parameters} setParameters={setParameters} />
         }
-        headerNumber="3"
-        headerClass="mt-1"
+        helpContent={
+          <>
+            <p className='mb-1'>Sort books by specified field:</p>
+            <ul>
+              <li>Rating: Average rating score</li>
+              <li>Reviews: Total number of reviews</li>
+              <li>Date: Publication date</li>
+              <li>Title: Book title</li>
+              <li>Author: Author name</li>
+              <li>Words: Number of words</li>
+              <li>Random: Random order</li>
+            </ul>
+            <p className='mb-0'>Sort by ascending (lowest to highest value)</p>
+            <p className='mb-1'>or descending (highest to lowest value).</p>
+            <p className='mb-1'>Will sort by date descending by default.</p>
+          </>
+        }
+        size="3"
+        className="mt-1"
         initalExpanded={expandedMenus.sort}
       />
 
@@ -511,7 +538,18 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                 content={
                   <GenresFilter parameters={parameters} setParameters={setParameters} />
                 }
-                headerNumber="5"
+                helpContent={
+                  <>
+                    <p className='mb-1'>Filter books by genre:</p>
+                    <ul>
+                      <li>Include: Books must include all genres specified.</li>
+                      <li>Reviews: Books must exclude all genres specified.</li>
+                    </ul>
+                    <p className='mb-0'>Press Tab or select item to auto-complete.</p>
+                    <p className='mb-1'>Press Enter to add new item.</p>
+                  </>
+                }
+                size="5"
                 initalExpanded={expandedMenus.genres}
               />
             </div>
@@ -521,7 +559,19 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                 content={
                   <ClassificationFilter parameters={parameters} setParameters={setParameters} />
                 }
-                headerNumber="5"
+                helpContent={
+                  <>
+                    <p className='mb-1'>Filter books by classification:</p>
+                    <ul>
+                      <li>General: Book suitable for all ages.</li>
+                      <li>Teen: Book suitable for all teens and young adults.</li>
+                      <li>Mature: Book suitable for adults.</li>
+                      <li>Explicit: Book contains NSFW content.</li>
+                    </ul>
+                    <p className='mb-0'>Will show books that match one of the selected classification.</p>
+                  </>
+                }
+                size="5"
                 initalExpanded={expandedMenus.classifications}
               />
             </div>
@@ -531,7 +581,18 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                 content={
                   <AuthorFilter parameters={parameters} setParameters={setParameters} />
                 }
-                headerNumber="5"
+                helpContent={
+                  <>
+                    <p className='mb-1'>Filter books by author name:</p>
+                    <ul>
+                      <li>Include: Books must include one of the authors specified.</li>
+                      <li>Reviews: Books must exclude all of the authors specified.</li>
+                    </ul>
+                    <p className='mb-0'>Press Tab or select item to auto-complete.</p>
+                    <p className='mb-1'>Press Enter to add new item.</p>
+                  </>
+                }
+                size="5"
                 initalExpanded={expandedMenus.authors}
               />
             </div>
@@ -541,7 +602,13 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                 content={
                   <TitleFilter parameters={parameters} setParameters={setParameters} />
                 }
-                headerNumber="5"
+                helpContent={
+                  <>
+                    <p className='mb-1'>Filter books by book title.</p>
+                    <p className='mb-1'>Will show books whose title contain the text entered.</p>
+                  </>
+                }
+                size="5"
                 initalExpanded={expandedMenus.title}
               />
             </div>
@@ -551,17 +618,33 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                 content={
                   <LanguageFilter parameters={parameters} setParameters={setParameters} />
                 }
-                headerNumber="5"
+                helpContent={
+                  <>
+                    <p className='mb-1'>Filter books by language.</p>
+                    <p className='mb-1'>Will only show books which are in the specified language.</p>
+                  </>
+                }
+                size="5"
                 initalExpanded={expandedMenus.language}
               />
             </div>
             <div className="mx-3 mt-2">
               <ExpandMenu
-                menuName="Number of words"
+                menuName="Words"
                 content={
                   <WordsFilter parameters={parameters} setParameters={setParameters} />
                 }
-                headerNumber="5"
+                helpContent={
+                  <>
+                    <p className='mb-1'>Filter books by word count:</p>
+                    <ul>
+                      <li>Minimum: Word count must be higher than this.</li>
+                      <li>Maximum: Word count must be lower than this.</li>
+                    </ul>
+                    <p className='mb-0'>100 000 words is around 300 pages.</p>
+                  </>
+                }
+                size="5"
                 initalExpanded={expandedMenus.words}
               />
             </div>
@@ -571,24 +654,60 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                 content={
                   <ReviewsFilter parameters={parameters} setParameters={setParameters} />
                 }
-                headerNumber="5"
+                helpContent={
+                  <>
+                    <p className='mb-1'>Filter books by reviews:</p>
+                    <ul>
+                      <li>Rating: Specifies the minimum average rating.</li>
+                      <li>Sample size: Specifies the minimum number of total reviews plus ratings.</li>
+                    </ul>
+                    <p className='mb-0'>Ratings are scores left by users while reviews are scores with an associated text review.</p>
+                  </>
+                }
+                size="5"
                 initalExpanded={expandedMenus.reviews}
               />
             </div>
             <div className="mx-3 mt-2">
               <ExpandMenu
-                menuName="Date published"
+                menuName="Date"
                 content={
                   <DateFilter parameters={parameters} setParameters={setParameters} />
                 }
-                headerNumber="5"
+                helpContent={
+                  <>
+                    <p className='mb-1'>Filter books by published date:</p>
+                    <ul>
+                      <li>Minimum: Specifies the minimum date.</li>
+                      <li>Maximum: Specifies the maximum date.</li>
+                    </ul>
+                  </>
+                }
+                size="5"
                 initalExpanded={expandedMenus.date}
               />
             </div>
           </>
         }
-        headerNumber="3"
-        headerClass="mt-3"
+        helpContent={
+          <>
+            <p className='mb-1'>Filter books that do not satisfy all conditions:</p>
+            <ul>
+              <li>Genres: Includes and excludes all specified genres.</li>
+              <li>Classification: Includes one of the selected classification.</li>
+              <li>Author: Includes one of the authors specified.</li>
+              <li>Title: Book title must include the specified text.</li>
+              <li>Language: Book must be in the selected language.</li>
+              <li>Words: Book must have a minimum or maximum of words.</li>
+              <li>Reviews: Average rating and sample size must be higher than the number specified.</li>
+              <li>Date: Book must be published withing date range.</li>
+            </ul>
+            <p className='mb-0'>Leaving fields empty will not apply the associated filter.</p>
+            <p className='mb-1'>More detail in each sub-menu.</p>
+          </>
+        }
+        size="3"
+        className="mt-3"
         initalExpanded={Object.entries(expandedMenus).some(([key, value]) => key !== 'sort' && value === true)}
       />
 
