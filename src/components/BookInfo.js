@@ -150,8 +150,18 @@ function BookInfo() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
+
+    const spoilers = (queryParams.get('spoilers') || 'yes') === 'yes';
+    setShowSpoilers(spoilers)
+
+    const filteredReviews = book.reviews.filter((review) => spoilers || !review.spoiler);
+    setFilteredReviews(filteredReviews);
+
     const page = parseInt(queryParams.get('page')) || 1;
-    onPageChange(page);
+    const startIndex = (page - 1) * 6;
+    const endIndex = Math.min(page * 6, filteredReviews.length)
+    setReviewsDisplayed(filteredReviews.slice(startIndex, endIndex))
+    setReviewIndexes([startIndex, endIndex])
   }, [location.search]);
 
 
@@ -160,6 +170,12 @@ function BookInfo() {
     const endIndex = Math.min(page * 6, filteredReviews.length)
     setReviewsDisplayed(filteredReviews.slice(startIndex, endIndex))
     setReviewIndexes([startIndex, endIndex])
+  }
+
+  function handleSpoilersSelect(event) {
+    const queryParams = new URLSearchParams();
+    queryParams.append("spoilers", event.target.value);
+    navigate(`${location.pathname}?${queryParams.toString()}`);
   }
 
   function toSearch(genre) {
@@ -187,14 +203,6 @@ function BookInfo() {
     });
   }
 
-  function handleSpoilersSelect(event) {
-    setShowSpoilers(event.target.value === 'no');
-    setFilteredReviews(book.reviews.filter((review) => event.target.value === 'no' || !review.spoiler));
-    navigate(location.pathname);
-    if (!location.search) {
-      onPageChange(1);
-    }
-  }
 
   function showMyListsModal() {
     setShowModal(true);

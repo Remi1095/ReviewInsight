@@ -787,7 +787,6 @@ function Search() {
     const filteredBooks = getFilteredBooks(getURLParameters())
     setFilteredBooks(filteredBooks);
     const page = parseInt(queryParams.get('page')) || 1;
-    console.log(page);
     const startIndex = (page - 1) * 6;
     const endIndex = Math.min(page * 6, filteredBooks.length)
     setBooksDisplayed(filteredBooks.slice(startIndex, endIndex))
