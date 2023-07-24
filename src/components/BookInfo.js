@@ -188,8 +188,8 @@ function BookInfo() {
   }
 
   function handleSpoilersSelect(event) {
-    setShowSpoilers(event.target.value === 'yes');
-    setFilteredReviews(book.reviews.filter((review) => event.target.value === 'yes' || !review.spoiler));
+    setShowSpoilers(event.target.value === 'no');
+    setFilteredReviews(book.reviews.filter((review) => event.target.value === 'no' || !review.spoiler));
     navigate(location.pathname);
     if (!location.search) {
       onPageChange(1);
