@@ -170,7 +170,7 @@ function Contribute() {
               <div className="w-100">
                 <h5>{t("classification")}</h5>
                 <AppDropdown
-                  emptyValue="Select classification"
+                  emptyValue={t("selectClassification")}
                   selectedItem={book.classification ?? ''}
                   items={getBookValues().classifications}
                   handleItemSelect={(value) => setBookValue('classification', (value.length > 0) ? value : null)}

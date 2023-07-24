@@ -27,8 +27,10 @@ export function setUserReview(bookid, review, spoilers) {
     } else {
         const userReviews = JSON.parse(jsonString)
         console.log(userReviews)
-        if (!userReviews[bookid]?.review) {
+        if (!userReviews[bookid]) {
             userReviews[bookid] = { "review": { "review": review, "spoilers": spoilers }};
+        } else if (!userReviews[bookid].review) {
+            userReviews[bookid].review = { "review": review, "spoilers": spoilers }
         } else {
             userReviews[bookid].review.review = review;
             userReviews[bookid].review.spoilers = spoilers;

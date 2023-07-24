@@ -32,37 +32,36 @@ function BookCard({ book }) {
   const avgRating = getAverageRating(book).toFixed(1);
 
   return (
-    <div className="content-box d-flex" style={{ marginBottom: "20px", padding: "15px" }}>
+    <section className="content-box d-flex" style={{ marginBottom: "20px", padding: "15px" }}>
 
-      <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-        <div className='pointer' onClick={toBookInfo} style={{ width: "90%" }}>
+      <aside style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
+        <a className='pointer no-style' onClick={toBookInfo} style={{ width: "90%" }}>
           <BookCover bgColor={book.fakeCover.bgColor} iconColor={book.fakeCover.iconColor} icon={book.fakeCover.icon} />
-        </div>
-      </div>
+        </a>
+      </aside>
 
-      <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
+      <article style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
 
-        <div className='pointer' onClick={toBookInfo}>
+        <header className='ms-3 pointer' onClick={toBookInfo}>
           <h4 className="d-inline">{book.title}</h4>
           <p className="mb-2 fs-5">by {book.author} - published {book.published}</p>
-        </div>
+        </header>
 
         <div className="d-flex">
 
-          <div style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
-            <div className='pointer' onClick={toBookInfo}>
+          <aside style={{ flex: '0 0 16.666%', maxWidth: '16.666%' }}>
+            <a className='pointer no-style' onClick={toBookInfo}>
               <RatingBox rating={avgRating} textTag="h2" style={{ width: "70%" }} />
               <p className="mb-0 text-center" style={{ fontSize: 'smaller' }}>{book.reviews.length} reviews<br />{book.ratings.length} ratings</p>
-            </div>
-          </div>
+            </a>
+          </aside>
 
-          <div style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
+          <main style={{ flex: '0 0 83.333%', maxWidth: '83.333%' }}>
             <ShowMore text={book.description} lines={4} showMore={showMore} handleShowMore={toggleShowMore} />
-          </div>
+          </main>
 
-        </div>
-      </div>
-    </div>
+        </div>      </article>
+    </section>
   );
 }
 
@@ -85,23 +84,21 @@ function HelpModal({ show, handleClose, name, content }) {
 };
 
 
-function ExpandMenu({ menuName, size, content, helpContent = "", className = "", initalExpanded = false }) {
+function ExpandMenu({ menuName, content, helpContent = "", className = "", initalExpanded = false }) {
   const [isExpanded, setExpanded] = useState(initalExpanded);
   const [showHelp, setShowHelp] = useState(false);
 
 
-  const Header = `h${size}`;
-
   return (
     <>
       <HelpModal show={showHelp} handleClose={() => setShowHelp(false)} name={menuName} content={helpContent} />
-      <Header className={`${className} pointer d-flex justify-content-between`} style={{ borderBottom: "2px solid black" }}>
-        <span className="pointer" onClick={() => setExpanded(!isExpanded)}>
+      <header className={`${className} d-flex justify-content-between mb-2`} style={{ borderBottom: "2px solid black" }}>
+        <button className="no-style" onClick={() => setExpanded(!isExpanded)}>
           <span className="mx-2"><FontAwesomeIcon icon={isExpanded ? faCaretDown : faCaretRight} /></span>
           <span>{menuName}</span>
-        </span>
-        <span className="mx-2" onClick={() => setShowHelp(true)}><FontAwesomeIcon icon={faCircleQuestion} /></span>
-      </Header>
+        </button>
+        <button className="mx-2 no-style" onClick={() => setShowHelp(true)}><FontAwesomeIcon icon={faCircleQuestion} /></button>
+      </header>
       {isExpanded && (content)}
     </>
   );
@@ -124,8 +121,8 @@ function Sort({ parameters, setParameters }) {
   }
 
   return (
-    <div className="ms-2">
-      <div className='text-center'>
+    <section className="ms-2">
+      <header className='text-center'>
         <h6 className='d-inline me-2'>Sort by:</h6>
         <AppDropdown
           emptyValue="Sort by..."
@@ -135,9 +132,9 @@ function Sort({ parameters, setParameters }) {
           hasReset={false}
           className='d-inline'
         />
-      </div>
-
-      <div className='d-flex flex-wrap justify-content-evenly mt-2'>
+      </header>
+      <fieldset className='d-flex flex-wrap justify-content-evenly mt-2'>
+        <legend className="sr-only">Sort direction</legend>
         <label>
           <input
             name="direction"
@@ -158,8 +155,8 @@ function Sort({ parameters, setParameters }) {
           />
           <span className="ms-2">Descending</span>
         </label>
-      </div>
-    </div>
+      </fieldset>
+    </section>
   )
 
 }
@@ -181,12 +178,18 @@ function GenresFilter({ parameters, setParameters }) {
   }
 
   return (
-    <div className="mx-auto px-2">
-      <h6 className='mb-1'>Include:</h6>
-      < AutoSuggest elements={parameters.genres.include} handleElements={handleIncludeGenre} suggestions={genres} placeholder={"Type genres..."} />
-      <h6 className='mt-2 mb-1'>Exclude:</h6>
-      < AutoSuggest elements={parameters.genres.exclude} handleElements={handleExcludeGenre} suggestions={genres} placeholder={"Type genres..."} />
-    </div>
+    <section className="mx-auto px-2">
+      <div>
+        <h6 className='mb-1'>Include:</h6>
+        <AutoSuggest elements={parameters.genres.include} handleElements={handleIncludeGenre} suggestions={genres} placeholder={"Type genres..."} />
+      </div>
+
+      <div className='mt-2'>
+        <h6 className='mb-1'>Exclude:</h6>
+        <AutoSuggest elements={parameters.genres.exclude} handleElements={handleExcludeGenre} suggestions={genres} placeholder={"Type genres..."} />
+      </div>
+    </section>
+
   )
 }
 
@@ -208,7 +211,8 @@ function ClassificationFilter({ parameters, setParameters }) {
   }
 
   return (
-    <>
+    <fieldset>
+      <legend className="sr-only">Select classifications</legend>
       {classifications.map(classification => (
         <label key={classification} className='d-block ms-3'>
           <input
@@ -220,7 +224,7 @@ function ClassificationFilter({ parameters, setParameters }) {
           {classification}
         </label>
       ))}
-    </>
+    </fieldset>
   )
 }
 
@@ -242,13 +246,17 @@ function AuthorFilter({ parameters, setParameters }) {
 
 
   return (
-    <div className="mx-auto px-2">
+    <section className="mx-auto px-2">
+      <div>
+        <h6 className='mb-1'>Include:</h6>
+        <AutoSuggest elements={parameters.authors.include} handleElements={handleIncludeAuthor} suggestions={authors} placeholder={"Author names..."} />
+      </div>
 
-      <h6 className='mb-1'>Include:</h6>
-      < AutoSuggest elements={parameters.authors.include} handleElements={handleIncludeAuthor} suggestions={authors} placeholder={"Author names..."} />
-      <h6 className='mt-2 mb-1'>Exclude:</h6>
-      < AutoSuggest elements={parameters.authors.exclude} handleElements={handleExcludeAuthor} suggestions={authors} placeholder={"Author names..."} />
-    </div>
+      <div className='mt-2'>
+        <h6 className='mb-1'>Exclude:</h6>
+        <AutoSuggest elements={parameters.authors.exclude} handleElements={handleExcludeAuthor} suggestions={authors} placeholder={"Author names..."} />
+      </div>
+    </section>
   )
 
 }
@@ -337,26 +345,33 @@ function WordsFilter({ parameters, setParameters }) {
   }
 
   return (
-    <div className="mx-auto px-2">
-      <h6 className='mb-1'>Minimum:</h6>
-      <input
-        type='text'
-        value={(parameters.words.min !== 0) ? parseNumber(parameters.words.min) : ''}
-        onChange={handleMinWordsChange}
-        placeholder={'10 000'}
-        className='my-1'
-        style={{ width: "100%" }}
-      />
-      <h6 className='mt-2 mb-1'>Maximum:</h6>
-      <input
-        type='text'
-        value={(parameters.words.max !== Infinity) ? parseNumber(parameters.words.max) : ''}
-        onChange={handleMaxWordsChange}
-        placeholder={'500 000'}
-        className='my-1'
-        style={{ width: "100%" }}
-      />
-    </div>
+    <section className="mx-auto px-2">
+      <div>
+        <label htmlFor="min-words" className='m-0'><h6 className='m-0 mb-1'>Minimum:</h6></label>
+        <input
+          id="min-words"
+          type='text'
+          value={(parameters.words.min !== 0) ? parseNumber(parameters.words.min) : ''}
+          onChange={handleMinWordsChange}
+          placeholder={'10 000'}
+          className='m-0'
+          style={{ width: "100%" }}
+        />
+      </div>
+
+      <div className='mt-2'>
+        <label htmlFor="max-words" className='m-0'><h6 className='m-0 mb-1'>Maximum:</h6></label>
+        <input
+          id="max-words"
+          type='text'
+          value={(parameters.words.max !== Infinity) ? parseNumber(parameters.words.max) : ''}
+          onChange={handleMaxWordsChange}
+          placeholder={'500 000'}
+          className='m-0 mb-1'
+          style={{ width: "100%" }}
+        />
+      </div>
+    </section>
   )
 }
 
@@ -379,21 +394,26 @@ function ReviewsFilter({ parameters, setParameters }) {
   }
 
   return (
-    <div className="mx-auto px-2">
-      <h6 className='mb-1'>Rating:</h6>
-      <RatingSlider rating={parameters.reviews.rating} handleRating={handleRatingSelect} />
-      <h6 className='mt-2 mb-1'>Sample size:</h6>
-      <input
-        type='text'
-        value={(parameters.reviews.sample !== 0) ? parameters.reviews.sample.toString() : ''}
-        onChange={handleSampleChange}
-        placeholder={'100'}
-        className='my-1'
-        style={{ width: "100%" }}
-      />
-    </div>
-  )
+    <section className="mx-auto px-2">
+      <div>
+        <label htmlFor="rating-slider" className='m-0'><h6 className='m-0'>Rating:</h6></label>
+        <RatingSlider id="rating-slider" rating={parameters.reviews.rating} handleRating={handleRatingSelect} />
+      </div>
 
+      <div className='mt-2'>
+        <label htmlFor="sample-size" className='m-0'><h6 className='m-0'>Sample size:</h6></label>
+        <input
+          id="sample-size"
+          type='text'
+          value={(parameters.reviews.sample !== 0) ? parameters.reviews.sample.toString() : ''}
+          onChange={handleSampleChange}
+          placeholder={'100'}
+          className='m-0 mb-1'
+          style={{ width: "100%" }}
+        />
+      </div>
+    </section>
+  )
 }
 
 function DateFilter({ parameters, setParameters }) {
@@ -411,24 +431,32 @@ function DateFilter({ parameters, setParameters }) {
   }
 
   return (
-    <div className="mx-auto px-2">
-      <h6 className='mb-1'>Minimum:</h6>
-      <input
-        type='date'
-        value={parameters.date.min}
-        onChange={handleMinDateChange}
-        className='my-1'
-        style={{ width: "100%" }}
-      />
-      <h6 className='mt-2 mb-1'>Maximum:</h6>
-      <input
-        type='date'
-        value={parameters.date.max}
-        onChange={handleMaxDateChange}
-        className='my-1'
-        style={{ width: "100%" }}
-      />
-    </div>
+    <section className="mx-auto px-2">
+      <div>
+        <label htmlFor="min-date" className='m-0'><h6 className='m-0'>Minimum:</h6></label>
+        <input
+          id="min-date"
+          type='date'
+          value={parameters.date.min}
+          onChange={handleMinDateChange}
+          className='m-0'
+          style={{ width: "100%" }}
+        />
+      </div>
+
+      <div className='mt-2'>
+        <label htmlFor="max-date" className='m-0'><h6 className='m-0'>Maximum:</h6></label>
+        <input
+          id="max-date"
+          type='date'
+          value={parameters.date.max}
+          onChange={handleMaxDateChange}
+          className='m-0 mb-1'
+          style={{ width: "100%" }}
+        />
+      </div>
+    </section>
+
   )
 }
 
@@ -478,10 +506,10 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
   }
 
   return (
-    <div className="filters-box">
+    <section className="filters-box">
 
       <div className='d-flex flex-wrap justify-content-evenly mt-2 mb-3'>
-        <div>
+        <button className='no-style'>
           <u
             className="border border-dark px-2 py-1 pointer"
             style={{ backgroundColor: "var(--primary-1)" }}
@@ -489,8 +517,8 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
           >
             Apply All
           </u>
-        </div>
-        <div>
+        </button>
+        <button className='no-style'>
           <u
             className="border border-dark px-2 py-1 pointer"
             style={{ backgroundColor: "lightgray" }}
@@ -498,7 +526,7 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
           >
             Reset All
           </u>
-        </div>
+        </button>
       </div>
 
       <ExpandMenu
@@ -523,8 +551,7 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
             <p className='mb-1'>Will sort by date descending by default.</p>
           </>
         }
-        size="3"
-        className="mt-1"
+        className="mt-1 fs-3 light-bold"
         initalExpanded={expandedMenus.sort}
       />
 
@@ -545,11 +572,11 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                       <li>Include: Books must include all genres specified.</li>
                       <li>Reviews: Books must exclude all genres specified.</li>
                     </ul>
-                    <p className='mb-0'>Press Tab or select item to auto-complete.</p>
-                    <p className='mb-1'>Press Enter to add new item.</p>
+                    <p className='mb-0'>Press Enter or select item to auto-complete.</p>
+                    <p className='mb-1'>Press Enter again to add new item.</p>
                   </>
                 }
-                size="5"
+                className='fs-5 light-bold'
                 initalExpanded={expandedMenus.genres}
               />
             </div>
@@ -571,7 +598,7 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                     <p className='mb-0'>Will show books that match one of the selected classification.</p>
                   </>
                 }
-                size="5"
+                className='fs-5 light-bold'
                 initalExpanded={expandedMenus.classifications}
               />
             </div>
@@ -588,11 +615,11 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                       <li>Include: Books must include one of the authors specified.</li>
                       <li>Reviews: Books must exclude all of the authors specified.</li>
                     </ul>
-                    <p className='mb-0'>Press Tab or select item to auto-complete.</p>
-                    <p className='mb-1'>Press Enter to add new item.</p>
+                    <p className='mb-0'>Press Enter or select item to auto-complete.</p>
+                    <p className='mb-1'>Press Enter again to add new item.</p>
                   </>
                 }
-                size="5"
+                className='fs-5 light-bold'
                 initalExpanded={expandedMenus.authors}
               />
             </div>
@@ -608,7 +635,7 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                     <p className='mb-1'>Will show books whose title contain the text entered.</p>
                   </>
                 }
-                size="5"
+                className='fs-5 light-bold'
                 initalExpanded={expandedMenus.title}
               />
             </div>
@@ -624,7 +651,7 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                     <p className='mb-1'>Will only show books which are in the specified language.</p>
                   </>
                 }
-                size="5"
+                className='fs-5 light-bold'
                 initalExpanded={expandedMenus.language}
               />
             </div>
@@ -644,7 +671,7 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                     <p className='mb-0'>100 000 words is around 300 pages.</p>
                   </>
                 }
-                size="5"
+                className='fs-5 light-bold'
                 initalExpanded={expandedMenus.words}
               />
             </div>
@@ -664,7 +691,7 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                     <p className='mb-0'>Ratings are scores left by users while reviews are scores with an associated text review.</p>
                   </>
                 }
-                size="5"
+                className='fs-5 light-bold'
                 initalExpanded={expandedMenus.reviews}
               />
             </div>
@@ -683,7 +710,7 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
                     </ul>
                   </>
                 }
-                size="5"
+                className='fs-5 light-bold'
                 initalExpanded={expandedMenus.date}
               />
             </div>
@@ -706,12 +733,11 @@ function SortAndFilters({ parameters, defaultParameters, setParameters, setURLPa
             <p className='mb-1'>More detail in each sub-menu.</p>
           </>
         }
-        size="3"
-        className="mt-3"
+        className="mt-3 fs-3 light-bold"
         initalExpanded={Object.entries(expandedMenus).some(([key, value]) => key !== 'sort' && value === true)}
       />
 
-    </div>
+    </section>
   )
 
 }
@@ -755,11 +781,18 @@ function Search() {
   const [filteredBooks, setFilteredBooks] = useState(getFilteredBooks(getURLParameters()));
   const [booksDisplayed, setBooksDisplayed] = useState([]);
   const [bookIndexes, setBookIndexes] = useState([0, 0]);
-  //console.log(parameters);
 
   useEffect(() => {
-    setFilteredBooks(getFilteredBooks(getURLParameters()));
-  }, []);
+    const queryParams = new URLSearchParams(location.search);
+    const filteredBooks = getFilteredBooks(getURLParameters())
+    setFilteredBooks(filteredBooks);
+    const page = parseInt(queryParams.get('page')) || 1;
+    console.log(page);
+    const startIndex = (page - 1) * 6;
+    const endIndex = Math.min(page * 6, filteredBooks.length)
+    setBooksDisplayed(filteredBooks.slice(startIndex, endIndex))
+    setBookIndexes([startIndex, endIndex])
+  }, [location.search]);
 
   function getURLParameters() {
     const callbacks = {
@@ -866,40 +899,44 @@ function Search() {
     return newFilteredBooks;
   }
 
-  function onPageChange(page) {
-    const startIndex = (page - 1) * 6;
-    const endIndex = Math.min(page * 6, filteredBooks.length)
-    setBooksDisplayed(filteredBooks.slice(startIndex, endIndex))
-    setBookIndexes([startIndex, endIndex])
-  }
-
   return (
-    <Container fluid className="mb-5">
-      <h3 ref={showingRef} className="text-center fw-normal mb-3">Showing {bookIndexes[0] + 1}-{bookIndexes[1]} of {filteredBooks.length} books</h3>
-      <PaginationBar totalPages={Math.ceil(filteredBooks.length / 6)} onPageChange={onPageChange} scrollTopRef={showingRef} />
+    <main className="mb-5">
+      <Container fluid>
+        <header>
+          <h3 ref={showingRef} className="text-center fw-normal mb-3">
+            Showing {bookIndexes[0] + 1}-{bookIndexes[1]} of {filteredBooks.length} books
+          </h3>
+        </header>
 
-      <Row>
-        <Col xxl={2}></Col>
-        <Col xxl={6} xs={8}>
-          {booksDisplayed.map((book) => (
-            <BookCard key={book.id} book={book} />
-          ))}
-        </Col>
-        <Col className='mb-3' xxl={2} xs={4}>
-          <SortAndFilters
-            parameters={parameters}
-            defaultParameters={defaultParameters}
-            setParameters={setParameters}
-            setURLParameters={setURLParameters}
-          />
-        </Col>
-        <Col xxl={2}></Col>
+        <PaginationBar totalPages={Math.ceil(filteredBooks.length / 6)} scrollTopRef={showingRef} />
 
-      </Row>
+        <Row as="section">
+          <Col xxl={2}></Col>
+          <Col xxl={6} xs={8}>
+            <section>
+              {booksDisplayed.map((book) => (
+                <article key={book.id}>
+                  <BookCard book={book} />
+                </article>
+              ))}
+            </section>
+          </Col>
+          <Col className='mb-3' xxl={2} xs={4}>
+            <SortAndFilters
+              parameters={parameters}
+              defaultParameters={defaultParameters}
+              setParameters={setParameters}
+              setURLParameters={setURLParameters}
+            />
+          </Col>
 
-      <PaginationBar totalPages={Math.ceil(filteredBooks.length / 6)} onPageChange={onPageChange} scrollTopRef={showingRef} />
+          <Col xxl={2}></Col>
+        </Row>
 
-    </Container >
+        <PaginationBar totalPages={Math.ceil(filteredBooks.length / 6)} scrollTopRef={showingRef} />
+
+      </Container>
+    </main>
   );
 }
 

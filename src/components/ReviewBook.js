@@ -27,7 +27,7 @@ function ReviewBook() {
 
   function handleSubmitReview() {
     if (text.length > 0) {
-      setUserRating(bookid, sliderRating)
+      setUserRating(bookid, sliderRating);
       setUserReview(bookid, text, containsSpoilers);
       navigate(`/book-info/${bookid}`);
       window.scrollTo({ top: 0, behavior: 'instant' });

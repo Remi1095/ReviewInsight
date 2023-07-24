@@ -1,5 +1,4 @@
 export function iterateObject(obj, callbacks = {}, ...args) {
-    console.log(args);
     const { onValue, onFinal } = callbacks;
 
     for (const key in obj) {

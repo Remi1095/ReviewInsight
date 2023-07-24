@@ -123,7 +123,7 @@ function ReviewBarChart({ book, className = "" }) {
       <CartesianGrid strokeDasharray="8 8" />
       <XAxis dataKey="bin" stroke="black" />
       <YAxis tickFormatter={formatYAxis} stroke="black" />
-      <Bar dataKey="value" fill="var(--accent-0)">
+      <Bar isAnimationActive={false} dataKey="value" fill="var(--accent-0)">
         <LabelList dataKey="value" position="top" fill="black" />
       </Bar>
     </BarChart>
@@ -147,6 +147,20 @@ function BookInfo() {
   const [filteredReviews, setFilteredReviews] = useState(book.reviews);
   const [reviewsDisplayed, setReviewsDisplayed] = useState([]);
   const [reviewIndexes, setReviewIndexes] = useState([0, 0]);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const page = parseInt(queryParams.get('page')) || 1;
+    onPageChange(page);
+  }, [location.search]);
+
+
+  function onPageChange(page) {
+    const startIndex = (page - 1) * 6;
+    const endIndex = Math.min(page * 6, filteredReviews.length)
+    setReviewsDisplayed(filteredReviews.slice(startIndex, endIndex))
+    setReviewIndexes([startIndex, endIndex])
+  }
 
   function toSearch(genre) {
     const queryParams = new URLSearchParams();
@@ -177,6 +191,9 @@ function BookInfo() {
     setShowSpoilers(event.target.value === 'yes');
     setFilteredReviews(book.reviews.filter((review) => event.target.value === 'yes' || !review.spoiler));
     navigate(location.pathname);
+    if (!location.search) {
+      onPageChange(1);
+    }
   }
 
   function showMyListsModal() {
@@ -204,13 +221,6 @@ function BookInfo() {
 
   function toReviewBook() {
     navigate(`/review-book/${book.id}`)
-  }
-
-  function onPageChange(page) {
-    const startIndex = (page - 1) * 6;
-    const endIndex = Math.min(page * 6, filteredReviews.length)
-    setReviewsDisplayed(filteredReviews.slice(startIndex, endIndex))
-    setReviewIndexes([startIndex, endIndex])
   }
 
   return (

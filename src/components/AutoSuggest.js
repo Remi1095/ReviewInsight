@@ -8,7 +8,6 @@ function AutoSuggest({ elements, handleElements, suggestions, placeholder, maxLi
   const [showSuggestions, setShowSuggestions] = useState(true);
   const textareaRef = useRef(null);
 
-
   useEffect(() => {
     // Add event listener to document for click events
     document.addEventListener('click', handleClickOutside);
@@ -57,15 +56,13 @@ function AutoSuggest({ elements, handleElements, suggestions, placeholder, maxLi
   };
 
   function handleKeyTab(event) {
-    if (event.key === 'Tab') {
+    if (event.key === 'Enter' && filteredSuggestions.length > 0) {
       event.preventDefault();
       const values = event.target.value.split('\n');
-      if (filteredSuggestions.length > 0) {
-        if (values.length > 0) {
-          values[values.length - 1] = filteredSuggestions[0];
-        } else {
-          values.push(filteredSuggestions[0]);
-        }
+      if (values.length > 0) {
+        values[values.length - 1] = filteredSuggestions[0];
+      } else {
+        values.push(filteredSuggestions[0]);
       }
       setFilteredSuggestions([]);
       handleElements(values.filter((value) => value !== ''));
@@ -75,7 +72,7 @@ function AutoSuggest({ elements, handleElements, suggestions, placeholder, maxLi
 
 
   return (
-    <div style={{ position: "relative"}}>
+    <div style={{ position: "relative" }}>
       <textarea
         ref={textareaRef}
         value={elements.join('\n') + ((hasEmptyRow && elements.length > 0) ? '\n' : '')}

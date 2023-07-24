@@ -104,7 +104,7 @@ function Home() {
                 <span>{t('science')}</span> <span><FontAwesomeIcon icon={faFlask} /></span>
               </ListGroup.Item>
               <ListGroup.Item onClick={() => toSearch("Finance")}>
-                <span>{t('fiance')}</span> <span><FontAwesomeIcon icon={faSackDollar} /></span>
+                <span>{t('finance')}</span> <span><FontAwesomeIcon icon={faSackDollar} /></span>
               </ListGroup.Item>
             </ListGroup>
 
@@ -133,8 +133,7 @@ function Home() {
               width: "100%",
               maxWidth: "900px",
               backgroundColor: 'var(--accent-2)',
-              borderColor: "gray",
-              overflow: "scroll"
+              borderColor: "gray"
             }}
           >
             {fiveRandomBooks().map((book, index) => {

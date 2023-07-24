@@ -14,13 +14,13 @@ function AppDropdown({ items, selectedItem, handleItemSelect, emptyValue, hasRes
   return (
     <Dropdown className={className}>
       <Dropdown.Toggle>
-        {selectedItem !== "" ? t(selectedItem.toLowerCase()) : emptyValue}
+        {selectedItem !== "" ? selectedItem : emptyValue}
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
         {items.map((item) => (
           <Dropdown.Item key={item} onClick={() => handleItemClick(item)}>
-            {t(item.toLowerCase())}
+            {item}
           </Dropdown.Item>
         ))}
         {hasReset && (
@@ -30,7 +30,7 @@ function AppDropdown({ items, selectedItem, handleItemSelect, emptyValue, hasRes
             key={""}
             onClick={() => handleItemClick("")}
           >
-            {t("reset")}
+            Reset
           </Dropdown.Item>
         )}
       </Dropdown.Menu>

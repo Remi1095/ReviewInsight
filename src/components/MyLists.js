@@ -143,7 +143,7 @@ function MyLists() {
                       maxWidth: "100%",
                       backgroundColor: 'var(--primary-3)',
                       borderColor: "gray",
-                      overflow: "scroll"
+                      overflowX: "auto"
                     }}
                   >
                     {parsedBookLists[list].map((bookid, index) => {
@@ -297,7 +297,14 @@ function MyLists() {
                 <div className="my-3" style={{ borderBottom: "1px solid lightgray" }} />
 
                 <div className="d-flex justify-content-center">
-                  <div className='my-auto me-4'>
+
+                  <AppDropdown
+                    emptyValue="Select list"
+                    selectedItem={removedList}
+                    items={Object.keys(parsedBookLists)}
+                    handleItemSelect={(list) => setRemovedList(list)}
+                  />
+                  <div className='my-auto ms-4'>
                     <u
                       className="border border-dark px-2 py-1 pointer"
                       style={{ backgroundColor: "var(--accent-2)" }}
@@ -306,12 +313,6 @@ function MyLists() {
                       Remove list
                     </u>
                   </div>
-                  <AppDropdown
-                    emptyValue="Select list"
-                    selectedItem={removedList}
-                    items={Object.keys(parsedBookLists)}
-                    handleItemSelect={(list) => setRemovedList(list)}
-                  />
 
                 </div>
 
