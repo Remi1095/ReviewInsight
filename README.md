@@ -16,3 +16,5 @@ The project was organized like this:
 * Week 5 and 6: Make the final version.
 
 The website was made using [React](https://react.dev/) and [Bootstrap 5](https://getbootstrap.com/). The fake data was generated using [Faker](https://faker.readthedocs.io/en/master/)
+
+The grade received was <ins>98%</ins>
