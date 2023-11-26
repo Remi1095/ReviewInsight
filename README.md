@@ -1,10 +1,10 @@
 # ReviewInsight
 
 First Version:
-[](https://reviewinsight.netlify.app/)
+https://reviewinsight.netlify.app/
 
 Final Version:
-[](https://reviewinsight2.netlify.app/)
+https://reviewinsight2.netlify.app/
 
 Website I made for SEG3525: Design and analysis of user interfaces.
 
